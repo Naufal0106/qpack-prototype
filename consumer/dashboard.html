@@ -1,33 +1,210 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="QPack — Kemasan biodegradable dengan ekosistem digital sustainability.">
-<title>Dashboard Konsumen — QPack</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/qpack.css"></head>
-<body>
-<div class="app-frame">
-<header class="topbar"><div class="topbar-inner">
-        <button class="icon-btn mobile-menu-btn" type="button"><img src="../assets/icons/sidemenu-icon.svg" alt=""></button>
-        <a class="brand" href="dashboard.html"><img src="../assets/logo/Qpack Logo FINAL.png" alt="QPack"></a>
-        <div class="topbar-actions"><button class="icon-btn" type="button"><img src="../assets/icons/bell-icon.svg" alt="Notifikasi"></button></div>
-    </div></header>
-<main class="main"><div class="container">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Consumer Dashboard — Q-Pack" />
+    <title>Dashboard Konsumen — Q-Pack</title>
 
-<section class="hero-card"><h1>Halo, Green Warrior! 🌿</h1><p>Setiap pilihan kecil berdampak besar pada bumi kita.</p><div class="hero-actions"><a class="btn" href="scan.html">Scan QR</a><a class="btn" href="reward.html">Lihat Reward</a></div></section>
-<section class="section"><div class="grid grid-2"><div class="card card-pad"><strong>Go Green, Choose Better</strong><p style="color:#686868;font-size:12px">Dukung produk ramah lingkungan untuk masa depan yang lebih baik.</p></div><div class="points-card"><span>Point Kamu</span><div class="points">865</div><small>↑5 poin dari minggu lalu</small></div></div></section>
-<section class="section"><div class="section-title"><h2>Info Merchant</h2></div><a class="card card-pad" href="#"><div class="info-row" style="padding:0;border:0"><div class="left"><img src="../assets/icons/merchant-icon2.svg"><div><strong>Toko Baju Mas Pur</strong><small>Menyediakan produk berkualitas dengan kemasan ramah lingkungan QPack.</small></div></div><span>›</span></div></a></section>
-<section class="section"><div class="section-title"><h2>Bahan Baku Kemasan</h2></div><div class="grid grid-2">
-<a class="material-card" href="#"><img src="../assets/images/bahan-baku-kulit-singkong.png" alt=""><div><strong>Kulit Singkong</strong><small>Diolah menjadi bioplastik alami yang biodegradable.</small></div></a>
-<a class="material-card" href="#"><img src="../assets/images/sisik-ikan.png" alt=""><div><strong>Sisik Ikan</strong><small>Mengandung kolagen alami untuk meningkatkan kekuatan kemasan.</small></div></a>
-</div></section>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-</div></main>
-<nav class="bottom-nav"><a href="dashboard.html" class="active"><img src="../assets/icons/bottom-navbar-home-icon.svg" alt=""><span>Dashboard</span></a><a href="scan.html" class=""><img src="../assets/icons/scan-icon.svg" alt=""><span>Scan</span></a><a href="reward.html" class=""><img src="../assets/icons/reward-icon.svg" alt=""><span>Reward</span></a><a href="akun.html" class=""><img src="../assets/icons/usr-form-login-role-icon.svg" alt=""><span>Akun</span></a><a href="dashboard.html" class=""><img src="../assets/icons/more-icon.svg" alt=""><span>More</span></a></nav>
-</div>
-<script src="../js/app.js" defer></script>
-</body>
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .progress-bar-container {
+        width: 100%;
+        height: 10px;
+        background: #e2e8f0;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: var(--color-primary);
+        border-radius: 999px;
+        transition: width 0.5s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/index.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+        </div>
+        <div class="q-header__right">
+          <img src="/assets/icons/bell-icon.svg" alt="Notifikasi" class="q-header__icon" />
+          <img src="/assets/icons/cust-role-icon.svg" alt="Profil" class="q-header__icon" />
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- User Greeting -->
+        <div class="dashboard-greeting">
+          <h1 class="dashboard-greeting__title" id="consumer-name">Halo, Budi Santoso 👋</h1>
+          <p class="dashboard-greeting__desc">Kumpulkan kemasan ramah lingkungan dan dapatkan poin sirkularitas.</p>
+        </div>
+
+        <!-- Point Card -->
+        <div class="reward-card">
+          <div class="row-between">
+            <div class="reward-card__label">Saldo Poin Q-Pack</div>
+            <span class="status-badge status-badge--success">Aktif</span>
+          </div>
+          <div class="reward-card__points" id="consumer-points-val">0 <span style="font-size: 16px; font-weight: 500;">Points</span></div>
+          <p style="font-size: 10px; color: var(--color-primary-dark); margin-top: 6px;">
+            Dapatkan +50 poin setiap kali Anda memindai kemasan fisik unik Q-Pack.
+          </p>
+        </div>
+
+        <!-- Collection Progress Card (1/10 Unique Packages Collected) -->
+        <div class="ui-card" style="margin-top: 16px;">
+          <div class="row-between">
+            <div style="font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; color: var(--color-text-muted);">
+              Kemasan Terkumpul (Collected)
+            </div>
+            <span class="status-badge status-badge--warning" id="collection-badge">0 / 10 Terkumpul</span>
+          </div>
+
+          <div style="margin-top: 8px;">
+            <div class="row-between">
+              <span style="font-size: var(--fs-sm); font-weight: 700;" id="collection-count-text">0 / 10 Q-Pack Unik</span>
+              <span style="font-size: 11px; font-weight: 600; color: var(--color-primary);" id="collection-percentage-text">0%</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="dashboard-progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 10px; line-height: 1.45;">
+            Kumpulkan hingga <strong>10 kemasan unik</strong> untuk membuka hak sirkular: Kompos Mandiri atau Pengembalian ke Bank Sampah (tahap berikutnya).
+          </p>
+        </div>
+
+        <!-- Primary Action: Scan QR -->
+        <div style="margin-top: 18px;">
+          <a href="/consumer/scan.html" class="btn btn--primary btn--full" style="padding: 14px; font-size: var(--fs-base);">
+            <img src="/assets/icons/cam-icon.svg" style="width: 22px; filter: brightness(0) invert(1);" alt="" />
+            Pindai QR Kemasan Baru
+          </a>
+        </div>
+
+        <!-- Recent Scans / History -->
+        <div style="margin-top: 24px;">
+          <div class="row-between" style="margin-bottom: 10px;">
+            <h3 class="section-title" style="margin-bottom: 0;">Riwayat Pemindaian</h3>
+            <span style="font-size: 10px; color: var(--color-text-muted);" id="total-scans-label">0 Scan</span>
+          </div>
+
+          <div id="recent-scans-container" class="menu-list">
+            <div style="padding: 20px; text-align: center; font-size: 11px; color: var(--color-text-muted);">
+              Memuat riwayat...
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo Utility Box -->
+        <div class="ui-card" style="margin-top: 24px; background: var(--color-surface);">
+          <div class="row-between">
+            <div>
+              <div style="font-size: 11px; font-weight: 600;">Panel Kontrol Demo</div>
+              <div style="font-size: 9px; color: var(--color-text-muted);">Reset poin & scan untuk demonstrasi ulang juri</div>
+            </div>
+            <button id="btn-reset-demo" class="btn btn--danger btn--sm">
+              Reset Demo
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Nav Consumer -->
+      <nav class="bottom-nav bottom-nav--consumer" aria-label="Navigasi Bawah">
+        <a href="/consumer/dashboard.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/consumer/scan.html" class="bottom-nav__item">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Scan</span>
+        </a>
+        <a href="/consumer/reward.html" class="bottom-nav__item">
+          <img src="/assets/icons/reward-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Reward</span>
+        </a>
+        <a href="/consumer/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/usr-form-login-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Script Execution -->
+    <script type="module">
+      import { getConsumerProfile, resetDemo, getActiveConsumer } from '/js/app.js';
+
+      async function loadDashboard() {
+        try {
+          const activeConsumer = getActiveConsumer();
+          const profileData = await getConsumerProfile(activeConsumer.id);
+          const cons = profileData.consumer;
+          const scans = profileData.recent_scans || [];
+
+          document.getElementById('consumer-name').textContent = `Halo, ${cons.name} 👋`;
+          document.getElementById('consumer-points-val').innerHTML = `${cons.points} <span style="font-size: 16px; font-weight: 500;">Points</span>`;
+          document.getElementById('collection-badge').textContent = `${cons.unique_packages_collected} / ${cons.collection_target} Terkumpul`;
+          document.getElementById('collection-count-text').textContent = `${cons.unique_packages_collected} / ${cons.collection_target} Q-Pack Unik`;
+          document.getElementById('collection-percentage-text').textContent = `${cons.collection_percentage}%`;
+          document.getElementById('dashboard-progress-fill').style.width = `${cons.collection_percentage}%`;
+          document.getElementById('total-scans-label').textContent = `${cons.total_scans} Total Scan`;
+
+          const container = document.getElementById('recent-scans-container');
+          if (scans.length === 0) {
+            container.innerHTML = `
+              <div style="padding: 24px; text-align: center; font-size: 12px; color: var(--color-text-muted);">
+                Belum ada kemasan yang dipindai.<br />
+                <a href="/consumer/scan.html" style="color: var(--color-primary); font-weight: 600; text-decoration: underline; margin-top: 4px; display: inline-block;">
+                  Pindai kemasan pertama Anda sekarang
+                </a>
+              </div>
+            `;
+          } else {
+            container.innerHTML = scans.map(item => `
+              <a href="/p/${encodeURIComponent(item.qr_code)}" class="menu-item">
+                <img src="/assets/icons/traceability-icon.svg" class="menu-item__icon" alt="" />
+                <div class="menu-item__body">
+                  <div class="menu-item__title">${item.qr_code} — ${item.product_name}</div>
+                  <div class="menu-item__desc">${item.merchant_brand_name} • ${new Date(item.scanned_at).toLocaleString('id-ID')}</div>
+                </div>
+                <div style="font-size: 11px; font-weight: 700; color: ${item.points_awarded > 0 ? 'var(--color-primary)' : 'var(--color-text-muted)'};">
+                  ${item.points_awarded > 0 ? `+${item.points_awarded} Pts` : 'Tercatat'}
+                </div>
+              </a>
+            `).join('');
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      document.getElementById('btn-reset-demo').addEventListener('click', async () => {
+        if (confirm('Yakin ingin mereset data demo pemindaian dan poin ke 0?')) {
+          await resetDemo();
+          loadDashboard();
+        }
+      });
+
+      window.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+  </body>
 </html>

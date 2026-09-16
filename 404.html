@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Paket Tidak Ditemukan — Q-Pack" />
+    <title>Paket Tidak Ditemukan — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/index.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 80vh; gap: 20px;">
+        <div style="width: 80px; height: 80px; border-radius: 50%; background: #fdecec; display: grid; place-items: center; color: var(--color-danger); font-size: 36px; font-weight: bold;">
+          ✕
+        </div>
+
+        <div>
+          <span class="status-badge status-badge--danger" style="margin-bottom: 12px;">Identitas Tidak Dikenali</span>
+          <h1 style="font-size: var(--fs-xl); margin-top: 8px;">Kemasan Tidak Ditemukan</h1>
+          <p class="text-muted" style="font-size: var(--fs-sm); max-width: 320px; margin: 8px auto 0;">
+            Kode QR kemasan yang Anda buka tidak terdaftar dalam basis data identitas sirkular Q-Pack.
+          </p>
+        </div>
+
+        <div class="ui-card" style="width: 100%; max-width: 360px; text-align: left; background: var(--color-surface);">
+          <div style="font-size: 11px; font-weight: 600; color: var(--color-text-muted); margin-bottom: 6px;">
+            KEMUNGKINAN PENYEBAB:
+          </div>
+          <ul style="font-size: 12px; line-height: 1.6; color: var(--color-text); padding-left: 16px; list-style: disc;">
+            <li>Format URL atau kode QR salah ketik.</li>
+            <li>Kemasan bukan merupakan produk resmi mitra Q-Pack.</li>
+            <li>Identitas kemasan belum diaktifkan oleh merchant.</li>
+          </ul>
+        </div>
+
+        <div style="width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 10px;">
+          <a href="/consumer/scan.html" class="btn btn--primary btn--full">
+            <img src="/assets/icons/cam-icon.svg" style="width: 18px; filter: brightness(0) invert(1);" alt="" />
+            Pindai QR Kemasan Lain
+          </a>
+          <a href="/p/QR-DEMO-001" class="btn btn--secondary btn--full">
+            Coba Kemasan Demo (QR-DEMO-001)
+          </a>
+          <a href="/index.html" class="btn btn--outline btn--full">
+            Kembali ke Beranda
+          </a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

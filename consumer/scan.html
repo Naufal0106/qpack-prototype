@@ -1,33 +1,183 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="QPack — Kemasan biodegradable dengan ekosistem digital sustainability.">
-<title>Scan QR — QPack</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/qpack.css"></head>
-<body>
-<div class="app-frame">
-<header class="topbar"><div class="topbar-inner">
-        <button class="icon-btn mobile-menu-btn" type="button"><img src="../assets/icons/sidemenu-icon.svg" alt=""></button>
-        <a class="brand" href="dashboard.html"><img src="../assets/logo/Qpack Logo FINAL.png" alt="QPack"></a>
-        <div class="topbar-actions"><button class="icon-btn" type="button"><img src="../assets/icons/bell-icon.svg" alt="Notifikasi"></button></div>
-    </div></header>
-<main class="main"><div class="container">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Pindai QR Kemasan — Q-Pack" />
+    <title>Pindai QR Kemasan — Q-Pack</title>
 
-<div class="page-heading"><h1>Scan QR</h1><p>Gunakan kamera untuk mengenali kemasan QPack.</p></div>
-<div class="scanner">
-    <div style="width:100%;max-width:450px"><strong style="font-size:17px">Arahkan kamera ke QR code</strong><p style="font-size:12px;color:#ddd">Pastikan QR code berada di dalam kotak untuk hasil yang optimal.</p>
-    <div class="scanner-frame"><div class="fake-qr" aria-label="Simulasi QR Code"></div></div>
-    <p style="font-size:12px;color:#ddd">Gunakan pencahayaan yang cukup untuk hasil pemindaian yang lebih baik.</p>
-    <button class="btn" data-scan-demo type="button">Lihat Hasil Scan</button></div>
-</div>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-</div></main>
-<nav class="bottom-nav"><a href="dashboard.html" class="active"><img src="../assets/icons/bottom-navbar-home-icon.svg" alt=""><span>Dashboard</span></a><a href="scan.html" class=""><img src="../assets/icons/scan-icon.svg" alt=""><span>Scan</span></a><a href="reward.html" class=""><img src="../assets/icons/reward-icon.svg" alt=""><span>Reward</span></a><a href="akun.html" class=""><img src="../assets/icons/usr-form-login-role-icon.svg" alt=""><span>Akun</span></a><a href="dashboard.html" class=""><img src="../assets/icons/more-icon.svg" alt=""><span>More</span></a></nav>
-</div>
-<script src="../js/app.js" defer></script>
-</body>
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .scanner-overlay-line {
+        width: 100%;
+        height: 2px;
+        background: #2a8725;
+        box-shadow: 0 0 10px #2a8725;
+        animation: scanMove 2.2s ease-in-out infinite alternate;
+      }
+      @keyframes scanMove {
+        0% { transform: translateY(10px); }
+        100% { transform: translateY(220px); }
+      }
+      .qr-asset-preview {
+        width: 58px;
+        height: 58px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--color-border);
+        background: #fff;
+        padding: 3px;
+        flex-shrink: 0;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell" style="background: #111;">
+      <!-- Header dark style -->
+      <header class="q-header" style="background: #151515; border-bottom: 1px solid #282828;">
+        <div class="q-header__left">
+          <a href="/consumer/dashboard.html">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </a>
+          <span style="color: #fff; font-weight: 600; font-size: var(--fs-base);">Pindai QR Kemasan</span>
+        </div>
+      </header>
+
+      <main style="padding-bottom: calc(var(--bottom-nav-height) + 20px);">
+        <!-- Camera Simulator Area -->
+        <div class="qr-scanner">
+          <div class="qr-scanner__hint" style="margin-top: 10px;">
+            Arahkan kamera ke kode QR fisik pada kemasan Q-Pack Anda
+          </div>
+
+          <div class="qr-scanner__frame">
+            <div class="scanner-overlay-line"></div>
+          </div>
+
+          <p style="font-size: 11px; color: #aaa; text-align: center; max-width: 280px;">
+            QR merupakan pintu masuk identitas digital kemasan (Digital Passport), bukan pelacak lokasi/GPS.
+          </p>
+        </div>
+
+        <!-- Physical QR Code Cards & Demo Triggers -->
+        <div style="background: #fff; border-top-left-radius: var(--radius-xl); border-top-right-radius: var(--radius-xl); padding: 20px var(--content-pad);">
+          <div class="row-between" style="margin-bottom: 12px;">
+            <span style="font-size: var(--fs-sm); font-weight: 700;">Barcode QR Fisik Demo</span>
+            <span class="status-badge status-badge--success">Siap Pindai HP</span>
+          </div>
+
+          <p style="font-size: 11px; color: var(--color-text-muted); margin-bottom: 14px;">
+            Arahkan kamera smartphone Anda ke barcode di bawah, atau klik kartu untuk simulasi instan:
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Canonical Demo 1 -->
+            <div class="ui-card" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px;" onclick="navigateToCode('QP-2027-000001')">
+              <img src="/assets/qr/QP-2027-000001.png" alt="QR 1" class="qr-asset-preview" />
+              <div style="flex: 1;">
+                <div class="row-between">
+                  <span style="font-size: 12px; font-weight: 700; color: var(--color-primary);">QP-2027-000001</span>
+                  <span class="status-badge status-badge--success" style="font-size: 9px;">Demo 1</span>
+                </div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--color-black);">Cassava Mailer (Size M)</div>
+                <div style="font-size: 10px; color: var(--color-text-muted);">Singkong • EcoFashion ID</div>
+              </div>
+            </div>
+
+            <!-- Canonical Demo 2 -->
+            <div class="ui-card" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px;" onclick="navigateToCode('QP-2027-000002')">
+              <img src="/assets/qr/QP-2027-000002.png" alt="QR 2" class="qr-asset-preview" />
+              <div style="flex: 1;">
+                <div class="row-between">
+                  <span style="font-size: 12px; font-weight: 700; color: var(--color-primary);">QP-2027-000002</span>
+                  <span class="status-badge status-badge--success" style="font-size: 9px;">Demo 2</span>
+                </div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--color-black);">Marine Chitosan Mailer (Size L)</div>
+                <div style="font-size: 10px; color: var(--color-text-muted);">Sisik Ikan • Bumi Organics</div>
+              </div>
+            </div>
+
+            <!-- Canonical Demo 3 -->
+            <div class="ui-card" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px;" onclick="navigateToCode('QP-2027-000003')">
+              <img src="/assets/qr/QP-2027-000003.png" alt="QR 3" class="qr-asset-preview" />
+              <div style="flex: 1;">
+                <div class="row-between">
+                  <span style="font-size: 12px; font-weight: 700; color: var(--color-primary);">QP-2027-000003</span>
+                  <span class="status-badge status-badge--success" style="font-size: 9px;">Demo 3</span>
+                </div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--color-black);">Corn & Bamboo Pouch (Size S)</div>
+                <div style="font-size: 10px; color: var(--color-text-muted);">Pati Jagung • Nusantara Coffee</div>
+              </div>
+            </div>
+
+            <!-- Test Invalid QR -->
+            <button class="btn btn--danger btn--full btn--sm" style="justify-content: flex-start; text-align: left; margin-top: 4px;" onclick="navigateToCode('QP-INVALID-999')">
+              <span style="background: var(--color-danger); color: #fff; padding: 1px 5px; border-radius: 3px; font-size: 9px; margin-right: 6px;">TEST</span>
+              Uji Kode QR Tidak Valid (Menampilkan Halaman Not Found)
+            </button>
+          </div>
+
+          <!-- Manual Code Input -->
+          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--color-border-light);">
+            <label class="form-label" for="manual-qr-input">Atau Ketik Kode Manual:</label>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+              <input type="text" id="manual-qr-input" class="form-control" placeholder="Contoh: QP-2027-000001" />
+              <button class="btn btn--primary" style="flex-shrink: 0;" onclick="submitManualCode()">
+                Buka
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <nav class="bottom-nav bottom-nav--consumer" aria-label="Navigasi Bawah">
+        <a href="/consumer/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/consumer/scan.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Scan</span>
+        </a>
+        <a href="/consumer/reward.html" class="bottom-nav__item">
+          <img src="/assets/icons/reward-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Reward</span>
+        </a>
+        <a href="/consumer/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/usr-form-login-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <script>
+      function navigateToCode(code) {
+        window.location.href = `/p/${encodeURIComponent(code)}`;
+      }
+
+      function submitManualCode() {
+        const input = document.getElementById('manual-qr-input');
+        const val = input.value.trim();
+        if (val) {
+          navigateToCode(val);
+        } else {
+          alert('Silakan ketikkan kode kemasan.');
+        }
+      }
+    </script>
+  </body>
 </html>

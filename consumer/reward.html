@@ -1,36 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="QPack — Kemasan biodegradable dengan ekosistem digital sustainability.">
-<title>Reward & Impact — QPack</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/qpack.css"></head>
-<body>
-<div class="app-frame">
-<header class="topbar"><div class="topbar-inner">
-        <button class="icon-btn mobile-menu-btn" type="button"><img src="../assets/icons/sidemenu-icon.svg" alt=""></button>
-        <a class="brand" href="dashboard.html"><img src="../assets/logo/Qpack Logo FINAL.png" alt="QPack"></a>
-        <div class="topbar-actions"><button class="icon-btn" type="button"><img src="../assets/icons/bell-icon.svg" alt="Notifikasi"></button></div>
-    </div></header>
-<main class="main"><div class="container">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Reward & Sirkularitas — Q-Pack" />
+    <title>Reward Sirkular — Q-Pack</title>
 
-<div class="page-heading"><h1>Reward & Impact</h1><p>Lihat kontribusi, poin, dan pembelajaran sustainability.</p></div>
-<div class="points-card"><span>Poin Kamu</span><div class="points">865</div><small>↑5 poin dari minggu lalu</small><div style="margin-top:15px"><button class="btn btn-primary btn-sm">Tukar Poin</button></div></div>
-<section class="section"><div class="card card-pad"><div class="section-title"><h2>Impact Tracker</h2><span class="badge">Aktif</span></div><div class="grid grid-3"><div><strong>5</strong><small style="display:block;color:#686868">QR discan</small></div><div><strong>1,2 kg</strong><small style="display:block;color:#686868">plastik terukur</small></div><div><strong>0,8 kg</strong><small style="display:block;color:#686868">estimasi CO₂</small></div></div></div></section>
-<section class="section"><div class="section-title"><h2>Menu Lainnya</h2></div><div class="reward-menu">
-<a class="reward-item" href="hasil-scan.html"><img src="../assets/icons/traceability-icon.svg"><div><strong>Traceability Bahan Baku</strong><small>Lihat informasi asal bahan baku.</small></div><span>›</span></a>
-<a class="reward-item" href="#"><img src="../assets/icons/impact-tracker.svg"><div><strong>Impact Tracker</strong><small>Lihat dampak yang dihasilkan.</small></div><span>›</span></a>
-<a class="reward-item" href="#"><img src="../assets/icons/edu-icon.svg"><div><strong>Edukasi Sustainability</strong><small>Artikel dan tips hidup berkelanjutan.</small></div><span>›</span></a>
-<a class="reward-item" href="#"><img src="../assets/icons/help-icon.svg"><div><strong>Bantuan & Pusat Bantuan</strong><small>FAQ dan hubungi tim QPack.</small></div><span>›</span></a>
-</div></section>
-<section class="section return-card"><h3 style="margin-bottom:6px">Kembalikan Kemasan</h3><p style="font-size:12px;color:#686868">Kemasan yang sudah digunakan dapat dikembalikan melalui drop point untuk mendukung circular economy.</p><a class="btn btn-soft btn-sm" href="#">Cari Drop Point</a></section>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-</div></main>
-<nav class="bottom-nav"><a href="dashboard.html" class="active"><img src="../assets/icons/bottom-navbar-home-icon.svg" alt=""><span>Dashboard</span></a><a href="scan.html" class=""><img src="../assets/icons/scan-icon.svg" alt=""><span>Scan</span></a><a href="reward.html" class=""><img src="../assets/icons/reward-icon.svg" alt=""><span>Reward</span></a><a href="akun.html" class=""><img src="../assets/icons/usr-form-login-role-icon.svg" alt=""><span>Akun</span></a><a href="dashboard.html" class=""><img src="../assets/icons/more-icon.svg" alt=""><span>More</span></a></nav>
-</div>
-<script src="../js/app.js" defer></script>
-</body>
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/consumer/dashboard.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <div class="page-heading">
+          <h1 class="page-heading__title">Reward Sirkularitas</h1>
+          <p class="page-heading__desc">Tukarkan poin dan kumpulkan kemasan untuk insentif ramah lingkungan.</p>
+        </div>
+
+        <div class="reward-card">
+          <div class="row-between">
+            <div class="reward-card__label">Poin Anda Saat Ini</div>
+            <span class="status-badge status-badge--success">Tersedia</span>
+          </div>
+          <div class="reward-card__points" id="reward-page-points">0 <span style="font-size: 16px; font-weight: 500;">Points</span></div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <h3 class="section-title">Pilihan Sirkular (Target 10 Kemasan)</h3>
+          <div class="ui-card" style="margin-bottom: 12px; border-left: 4px solid var(--color-primary);">
+            <div class="row-between">
+              <div style="font-weight: 700; font-size: 13px;">Opsi A: Kompos Mandiri di Rumah</div>
+              <span class="status-badge status-badge--warning">Tahap 2</span>
+            </div>
+            <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 4px;">
+              Setelah mengumpulkan 10 kemasan, komposkan di pekarangan Anda dan klaim sertifikat serta voucher belanja hijau.
+            </p>
+          </div>
+
+          <div class="ui-card" style="border-left: 4px solid var(--color-accent);">
+            <div class="row-between">
+              <div style="font-weight: 700; font-size: 13px;">Opsi B: Kembalikan ke Bank Sampah</div>
+              <span class="status-badge status-badge--warning">Tahap 2</span>
+            </div>
+            <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 4px;">
+              Bawa kemasan terkumpul ke drop point Bank Sampah mitra Q-Pack untuk diverifikasi petugas dan dapatkan saldo e-wallet.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <a href="/consumer/scan.html" class="btn btn--primary btn--full">
+            Pindai Kemasan untuk Tambah Poin
+          </a>
+        </div>
+      </main>
+
+      <nav class="bottom-nav bottom-nav--consumer" aria-label="Navigasi Bawah">
+        <a href="/consumer/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/consumer/scan.html" class="bottom-nav__item">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Scan</span>
+        </a>
+        <a href="/consumer/reward.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/reward-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Reward</span>
+        </a>
+        <a href="/consumer/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/usr-form-login-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <script type="module">
+      import { getConsumerProfile, getActiveConsumer } from '/js/app.js';
+      async function init() {
+        const cons = getActiveConsumer();
+        const data = await getConsumerProfile(cons.id);
+        document.getElementById('reward-page-points').innerHTML = `${data.consumer.points} <span style="font-size: 16px; font-weight: 500;">Points</span>`;
+      }
+      window.addEventListener('DOMContentLoaded', init);
+    </script>
+  </body>
 </html>

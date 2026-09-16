@@ -1,37 +1,387 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="QPack — Kemasan biodegradable dengan ekosistem digital sustainability.">
-<title>Hasil Scan QR — QPack</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/qpack.css"></head>
-<body>
-<div class="app-frame">
-<header class="topbar"><div class="topbar-inner">
-        <button class="icon-btn mobile-menu-btn" type="button"><img src="../assets/icons/sidemenu-icon.svg" alt=""></button>
-        <a class="brand" href="dashboard.html"><img src="../assets/logo/Qpack Logo FINAL.png" alt="QPack"></a>
-        <div class="topbar-actions"><button class="icon-btn" type="button"><img src="../assets/icons/bell-icon.svg" alt="Notifikasi"></button></div>
-    </div></header>
-<main class="main"><div class="container">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Q-Pack Digital Passport — Identitas Digital Kemasan Sirkular" />
+    <title>Q-Pack Digital Passport</title>
 
-<div class="page-heading"><h1>Hasil Scan QR</h1><p>Informasi kemasan yang berhasil dipindai.</p></div>
-<div class="result-success"><div class="success-icon">✓</div><h2 style="color:#2f980d">Produk Asli Q-Pack</h2><p>Terima kasih telah memilih kemasan ramah lingkungan!</p></div>
-<section class="section card card-pad"><div class="info-list">
-<div class="info-row"><div class="left"><img src="../assets/icons/merchant-icon2.svg"><div><strong>Dari Merchant</strong><small>Toko Baju Mas Pur</small></div></div></div>
-<div class="info-row"><div class="left"><img src="../assets/icons/production-date-icon.svg"><div><strong>Tanggal Produksi</strong><small>10 Mei 2026</small></div></div></div>
-</div>
-<h3 style="font-size:15px;margin-top:18px">Informasi Bahan Baku</h3>
-<div class="material-grid">
-<div class="material-card"><img src="../assets/images/sisik-ikan.png" alt=""><div><strong>Sisik Ikan</strong><small>Bahan sumber kitosan.</small></div></div>
-<div class="material-card"><img src="../assets/images/bahan-baku-kulit-singkong.png" alt=""><div><strong>Kulit Singkong</strong><small>Sumber pati alami.</small></div></div>
-</div></section>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-</div></main>
-<nav class="bottom-nav"><a href="dashboard.html" class="active"><img src="../assets/icons/bottom-navbar-home-icon.svg" alt=""><span>Dashboard</span></a><a href="scan.html" class=""><img src="../assets/icons/scan-icon.svg" alt=""><span>Scan</span></a><a href="reward.html" class=""><img src="../assets/icons/reward-icon.svg" alt=""><span>Reward</span></a><a href="akun.html" class=""><img src="../assets/icons/usr-form-login-role-icon.svg" alt=""><span>Akun</span></a><a href="dashboard.html" class=""><img src="../assets/icons/more-icon.svg" alt=""><span>More</span></a></nav>
-</div>
-<script src="../js/app.js" defer></script>
-</body>
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .progress-bar-container {
+        width: 100%;
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 6px;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: var(--color-primary);
+        border-radius: 999px;
+        transition: width 0.5s ease;
+      }
+      .passport-header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--color-primary-soft);
+        color: var(--color-primary-dark);
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .qr-badge-preview {
+        width: 64px;
+        height: 64px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-border);
+        background: #fff;
+        padding: 4px;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/index.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+        </div>
+        <div class="q-header__right">
+          <a href="/consumer/dashboard.html" title="Dashboard Konsumen">
+            <img src="/assets/icons/cust-role-icon.svg" alt="User" class="q-header__icon" />
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- 1. LOADING STATE -->
+        <div id="state-loading" style="padding: 40px 16px; text-align: center;">
+          <div style="width: 50px; height: 50px; margin: 0 auto 16px; border: 4px solid var(--color-primary-soft); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+          <h2 style="font-size: var(--fs-lg); margin-bottom: 6px;">Membuka Digital Passport...</h2>
+          <p class="text-muted" style="font-size: var(--fs-xs);">Memverifikasi identitas digital kemasan di database Q-Pack</p>
+        </div>
+
+        <!-- 2. ERROR STATE (INVALID QR / NOT FOUND) -->
+        <div id="state-error" class="hidden" style="padding: 30px 16px; text-align: center;">
+          <div style="width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: #fdecec; display: grid; place-items: center; color: var(--color-danger); font-size: 28px; font-weight: bold;">
+            ✕
+          </div>
+          <span class="status-badge status-badge--danger" id="error-badge">QR Tidak Terdaftar</span>
+          <h2 id="error-title" style="font-size: var(--fs-lg); margin-top: 10px;">Kemasan Tidak Ditemukan</h2>
+          <p id="error-message" class="text-muted" style="font-size: var(--fs-xs); margin: 8px 0 24px;">
+            Kode QR tidak terdaftar dalam database identitas kemasan Q-Pack.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="/consumer/scan.html" class="btn btn--primary btn--full">Pindai Kode Lain</a>
+            <a href="/p/QP-2027-000001" class="btn btn--secondary btn--full">Coba Demo: QP-2027-000001</a>
+            <a href="/index.html" class="btn btn--outline btn--full">Kembali ke Beranda</a>
+          </div>
+        </div>
+
+        <!-- 3. SUCCESS CONTENT: Q-PACK DIGITAL PASSPORT -->
+        <div id="state-success" class="hidden">
+          <!-- Digital Passport Header -->
+          <div class="ui-card" style="border-top: 4px solid var(--color-primary); background: #ffffff;">
+            <div class="row-between" style="align-items: flex-start;">
+              <div>
+                <div class="passport-header-badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  Q-Pack Digital Passport
+                </div>
+                <h1 style="font-size: var(--fs-xl); font-weight: 700; margin-top: 8px;" id="pkg-qr-code">
+                  QP-2027-000001
+                </h1>
+                <p style="font-size: var(--fs-xs); color: var(--color-text-muted);" id="pkg-product-name">
+                  Q-Pack Cassava Mailer (Size M)
+                </p>
+              </div>
+
+              <img id="pkg-qr-img" src="/assets/qr/QP-2027-000001.png" alt="QR Code" class="qr-badge-preview" onerror="this.style.display='none'" />
+            </div>
+          </div>
+
+          <!-- Reward & Gamification Notification Banner -->
+          <div id="reward-banner" style="margin-top: 14px;">
+            <!-- Rendered dynamically: First unique claim (+50 Pts) or Duplicate scan warning (0 Pts) -->
+          </div>
+
+          <!-- Consumer Stats: Point Balance & Collection Progress -->
+          <div class="ui-card ui-card--soft" style="margin-top: 14px;">
+            <div class="row-between" style="align-items: flex-start;">
+              <div>
+                <span style="font-size: 10px; font-weight: 600; color: var(--color-primary-dark); text-transform: uppercase;">Saldo Poin Anda</span>
+                <div style="font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--color-primary);" id="consumer-points">
+                  0 Pts
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase;">Kemasan Terkumpul</span>
+                <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--color-black);" id="collection-progress">
+                  0/10
+                </div>
+              </div>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="collection-progress-bar" style="width: 0%;"></div>
+            </div>
+            <p style="font-size: 10px; color: var(--color-text-muted); margin-top: 6px;" id="collection-hint">
+              Kumpulkan 10 kemasan unik untuk membuka opsi sirkular Bank Sampah atau Kompos mandiri.
+            </p>
+          </div>
+
+          <!-- Package Traceability & Identity Specs (NO GPS) -->
+          <div style="margin-top: 20px;">
+            <h3 class="section-title">Spesifikasi Identitas & Ketertelusuran</h3>
+            <div class="ui-card">
+              <div class="menu-item" style="padding: 8px 0;">
+                <img src="/assets/icons/merchant-role-icon.svg" class="menu-item__icon" alt="" />
+                <div class="menu-item__body">
+                  <div class="menu-item__desc">Mitra Merchant / Brand</div>
+                  <div class="menu-item__title" id="pkg-merchant-brand">-</div>
+                </div>
+              </div>
+
+              <div class="menu-item" style="padding: 8px 0;">
+                <img src="/assets/icons/traceability-icon.svg" class="menu-item__icon" alt="" />
+                <div class="menu-item__body">
+                  <div class="menu-item__desc">Nomor Batch Produksi</div>
+                  <div class="menu-item__title" id="pkg-batch-number">-</div>
+                </div>
+              </div>
+
+              <div class="menu-item" style="padding: 8px 0;">
+                <img src="/assets/icons/production-date-icon.svg" class="menu-item__icon" alt="" />
+                <div class="menu-item__body">
+                  <div class="menu-item__desc">Tanggal Produksi</div>
+                  <div class="menu-item__title" id="pkg-production-date">-</div>
+                </div>
+              </div>
+
+              <div class="menu-item" style="padding: 8px 0;">
+                <img src="/assets/icons/green-product-icon.svg" class="menu-item__icon" alt="" />
+                <div class="menu-item__body">
+                  <div class="menu-item__desc">Kategori & Ukuran Fisik</div>
+                  <div class="menu-item__title" id="pkg-category-size">-</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Material & Sourcing Information -->
+          <div style="margin-top: 20px;">
+            <h3 class="section-title">Bahan Baku Alami</h3>
+            <div class="material-card">
+              <img id="material-image" src="/assets/images/bahan-baku-kulit-singkong.png" alt="Material" class="material-card__image" />
+              <div class="material-card__body">
+                <div class="material-card__title" id="material-name">-</div>
+                <div class="material-card__desc" id="material-desc">-</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sustainability Impact Card -->
+          <div style="margin-top: 20px;">
+            <h3 class="section-title">Dampak Keberlanjutan</h3>
+            <div class="ui-card" style="border-left: 4px solid var(--color-primary);">
+              <div class="row-between">
+                <span class="status-badge status-badge--success" id="sustainability-co2">-65% Emisi CO2</span>
+                <span style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark);" id="sustainability-days">
+                  Terurai 180 Hari
+                </span>
+              </div>
+              <p style="font-size: 11px; line-height: 1.55; color: var(--color-text); margin-top: 8px;" id="sustainability-info">
+                -
+              </p>
+            </div>
+          </div>
+
+          <!-- Circular Action Clarification -->
+          <div class="ui-card" style="margin-top: 18px; background: #fafafa; border: 1px dashed var(--color-border);">
+            <div style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase;">
+              Status Sirkularitas Kemasan
+            </div>
+            <div style="font-size: 11px; color: var(--color-text); margin-top: 4px;">
+              Status saat ini: <strong style="color: var(--color-primary-dark);">Terkumpul (Collected)</strong> oleh konsumen.<br />
+              <span style="font-size: 10px; color: var(--color-text-muted);">
+                *Pemindaian QR mencatat kepemilikan dan mengumpulkan progress, bukan menandakan kemasan telah dikembalikan (Returned).
+              </span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 10px;">
+            <a href="/consumer/dashboard.html" class="btn btn--primary btn--full">
+              Buka Dashboard Konsumen
+            </a>
+            <a href="/consumer/scan.html" class="btn btn--secondary btn--full">
+              Pindai Kemasan Lain
+            </a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Nav Consumer -->
+      <nav class="bottom-nav bottom-nav--consumer" aria-label="Navigasi Bawah">
+        <a href="/consumer/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/consumer/scan.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Scan</span>
+        </a>
+        <a href="/consumer/reward.html" class="bottom-nav__item">
+          <img src="/assets/icons/reward-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Reward</span>
+        </a>
+        <a href="/consumer/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/usr-form-login-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Script Execution -->
+    <script type="module">
+      import { submitScan, getActiveConsumer } from '/js/app.js';
+
+      function getTargetQRCode() {
+        const path = window.location.pathname;
+        if (path.includes('/p/')) {
+          const parts = path.split('/p/');
+          if (parts[1] && parts[1].trim()) {
+            return decodeURIComponent(parts[1].trim());
+          }
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('code');
+      }
+
+      async function initPage() {
+        const qrCode = getTargetQRCode();
+
+        if (!qrCode) {
+          showError('Kode Tidak Disertakan', 'Parameter kode QR kemasan tidak ditemukan di URL.');
+          return;
+        }
+
+        try {
+          const activeConsumer = getActiveConsumer();
+          const result = await submitScan(qrCode, activeConsumer.id);
+          renderSuccess(result);
+        } catch (err) {
+          showError('Kemasan Tidak Ditemukan', err.message || 'Kode QR tidak valid atau belum terdaftar.');
+        }
+      }
+
+      function showError(title, message) {
+        document.getElementById('state-loading').classList.add('hidden');
+        document.getElementById('state-success').classList.add('hidden');
+        const errContainer = document.getElementById('state-error');
+        errContainer.classList.remove('hidden');
+
+        document.getElementById('error-title').textContent = title;
+        document.getElementById('error-message').textContent = message;
+      }
+
+      function renderSuccess(result) {
+        document.getElementById('state-loading').classList.add('hidden');
+        document.getElementById('state-error').classList.add('hidden');
+        document.getElementById('state-success').classList.remove('hidden');
+
+        const pkg = result.package;
+        const scan = result.scan;
+        const consumer = result.consumer;
+
+        // Digital Passport Identity
+        document.getElementById('pkg-qr-code').textContent = pkg.qr_code;
+        document.getElementById('pkg-product-name').textContent = pkg.product_name;
+        document.getElementById('pkg-merchant-brand').textContent = `${pkg.merchant_brand_name} (${pkg.merchant_name})`;
+        document.getElementById('pkg-batch-number').textContent = pkg.batch_number;
+        document.getElementById('pkg-production-date').textContent = pkg.production_date;
+        document.getElementById('pkg-category-size').textContent = `${pkg.product_category} • ${pkg.product_size}`;
+
+        // QR asset preview
+        const qrImg = document.getElementById('pkg-qr-img');
+        qrImg.src = `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
+        qrImg.style.display = 'block';
+
+        // Material info
+        document.getElementById('material-name').textContent = pkg.material_name;
+        document.getElementById('material-desc').textContent = pkg.material_desc;
+        if (pkg.material_image_url) {
+          document.getElementById('material-image').src = pkg.material_image_url;
+        }
+
+        // Sustainability
+        document.getElementById('sustainability-co2').textContent = pkg.co2_reduction || '-65% Emisi CO2';
+        document.getElementById('sustainability-days').textContent = `Terurai ±${pkg.compostable_days} Hari`;
+        document.getElementById('sustainability-info').textContent = pkg.sustainability_info;
+
+        // Consumer Point & Collection Progress
+        document.getElementById('consumer-points').textContent = `${consumer.points} Pts`;
+        document.getElementById('collection-progress').textContent = consumer.collection_progress;
+        document.getElementById('collection-progress-bar').style.width = `${consumer.collection_percentage}%`;
+
+        // Render Reward Banner (Anti-duplicate verification)
+        const bannerContainer = document.getElementById('reward-banner');
+        if (scan.is_first_scan) {
+          bannerContainer.innerHTML = `
+            <div class="ui-card ui-card--soft" style="border: 1.5px solid var(--color-primary); background: #eaf6e5;">
+              <div class="row" style="gap: 12px;">
+                <img src="/assets/icons/reward-icon.svg" style="width: 32px; height: 32px; flex-shrink: 0;" alt="Reward" />
+                <div>
+                  <div style="font-weight: 700; color: var(--color-primary); font-size: 14px;">
+                    +${scan.points_awarded} Poin Q-Pack Ditambahkan! 🎉
+                  </div>
+                  <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;">
+                    ${scan.message}
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          bannerContainer.innerHTML = `
+            <div class="ui-card" style="border: 1.5px solid var(--color-accent); background: #fffbe6;">
+              <div class="row" style="gap: 12px;">
+                <img src="/assets/icons/check-icon.svg" style="width: 28px; height: 28px; flex-shrink: 0;" alt="Checked" />
+                <div>
+                  <div style="font-weight: 700; color: #8a5b00; font-size: 13px;">
+                    Kemasan Sudah Pernah Anda Pindai
+                  </div>
+                  <div style="font-size: 11px; color: #8a5b00; margin-top: 2px;">
+                    ${scan.message}
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', initPage);
+    </script>
+  </body>
 </html>

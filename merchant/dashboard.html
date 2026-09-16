@@ -1,54 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="QPack — Kemasan biodegradable dengan ekosistem digital sustainability.">
-<title>Dashboard Merchant — QPack</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/qpack.css"></head>
-<body>
-<div class="app-frame">
-<header class="topbar"><div class="topbar-inner">
-        <button class="icon-btn mobile-menu-btn" type="button"><img src="../assets/icons/sidemenu-icon.svg" alt=""></button>
-        <a class="brand" href="dashboard.html"><img src="../assets/logo/Qpack Logo FINAL.png" alt="QPack"></a>
-        <div class="topbar-actions"><button class="icon-btn" type="button"><img src="../assets/icons/bell-icon.svg" alt="Notifikasi"></button></div>
-    </div></header>
-<main class="main"><div class="container">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Merchant Dashboard Analytics — Q-Pack" />
+    <title>Dashboard Merchant — Q-Pack</title>
 
-<section class="hero-card">
-    <h1>Halo, Merchant!</h1>
-    <p>Pantau konsumen terlacak dan lihat performa kemasan ramah lingkungan.</p>
-    <div class="hero-actions"><a class="btn" href="produk.html">Pesan Kemasan</a><a class="btn" href="esg.html">Lihat ESG</a></div>
-</section>
-<section class="section">
-    <div class="grid grid-3">
-        <div class="stat-card"><div class="label">Konsumen Terlacak (QR)</div><div class="value">505</div><div class="delta">↑18% dari minggu lalu</div></div>
-        <div class="stat-card"><div class="label">Paket Terkirim</div><div class="value">865</div><div class="delta">↑10% dari April</div></div>
-        <div class="stat-card"><div class="label">Plastik Terukur</div><div class="value">50 kg</div><div class="delta">Dampak tercatat</div></div>
-    </div>
-</section>
-<section class="section">
-    <div class="section-title"><h2>Menu Utama</h2></div>
-    <div class="grid grid-3">
-        <a class="card card-pad" href="produk.html"><img src="../assets/icons/green-product-icon.svg" style="width:32px" alt=""><strong>Produk Kemasan</strong><p style="margin:6px 0 0;color:#686868;font-size:12px">Pesan dan pantau produksi.</p></a>
-        <a class="card card-pad" href="esg.html"><img src="../assets/icons/bottom-navbar-ESG-icon.svg" style="width:32px" alt=""><strong>ESG & Go Green</strong><p style="margin:6px 0 0;color:#686868;font-size:12px">Lihat dampak bisnis.</p></a>
-        <a class="card card-pad" href="laporan.html"><img src="../assets/icons/bottom-navbar-report-icon.svg" style="width:32px" alt=""><strong>Laporan AI</strong><p style="margin:6px 0 0;color:#686868;font-size:12px">Buat laporan otomatis.</p></a>
-    </div>
-</section>
-<section class="section">
-    <div class="section-title"><h2>Produk Unggulan</h2><a href="produk.html">Lihat semua →</a></div>
-    <div class="product-card" style="display:grid;grid-template-columns:150px 1fr;align-items:center">
-        <div class="product-image"><img src="../assets/images/Prototype Polymailer.png" alt="Bioplastic Polymailer"></div>
-        <div class="product-body"><span class="badge">Eco Packaging</span><h3>Bioplastic Polymailer</h3><p>Berbasis singkong & sisik ikan, kuat dan fleksibel.</p><a class="btn btn-primary btn-sm" href="produk.html">Pesan</a></div>
-    </div>
-</section>
-<section class="section"><div class="card card-pad"><div class="section-title"><h2>Monetisasi ESG</h2><span class="badge">Aktif</span></div><p style="color:#686868;font-size:13px">Data dampak yang terdokumentasi membantu bisnis menyiapkan laporan keberlanjutan.</p><a class="btn btn-soft btn-sm" href="laporan.html">Lihat Laporan AI</a></div></section>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-</div></main>
-<nav class="bottom-nav"><a href="dashboard.html" class="active"><img src="../assets/icons/bottom-navbar-home-icon.svg" alt=""><span>Dashboard</span></a><a href="produk.html" class=""><img src="../assets/icons/bottom-navbar-product-icon.svg" alt=""><span>Produk</span></a><a href="esg.html" class=""><img src="../assets/icons/bottom-navbar-ESG-icon.svg" alt=""><span>ESG</span></a><a href="laporan.html" class=""><img src="../assets/icons/bottom-navbar-report-icon.svg" alt=""><span>Laporan</span></a><a href="akun.html" class=""><img src="../assets/icons/usr-form-login-role-icon.svg" alt=""><span>Akun</span></a></nav>
-</div>
-<script src="../js/app.js" defer></script>
-</body>
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/index.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+        </div>
+        <div class="q-header__right">
+          <div style="text-align: right;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
+            <div style="font-size: 9px; color: var(--color-text-muted);">Verified Green Partner</div>
+          </div>
+          <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Merchant Greeting -->
+        <div class="dashboard-greeting">
+          <h1 class="dashboard-greeting__title">Analitik Interaksi Kemasan</h1>
+          <p class="dashboard-greeting__desc">Pantau keterlibatan konsumen melalui rekaman pemindaian kode QR digital passport kemasan.</p>
+        </div>
+
+        <!-- Metric Cards Grid -->
+        <div class="stat-grid">
+          <!-- Card 1: Total QR Scans -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Total QR Scans</div>
+            <div class="stat-card__value" id="stat-total-scans" style="color: var(--color-primary);">0</div>
+            <div class="stat-card__meta">Akumulasi interaksi QR</div>
+          </div>
+
+          <!-- Card 2: Unique Packages Scanned -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Unique Packages Scanned</div>
+            <div class="stat-card__value" id="stat-unique-packages" style="color: var(--color-accent);">0</div>
+            <div class="stat-card__meta">Kemasan fisik unik</div>
+          </div>
+
+          <!-- Card 3: Consumer Engagement Rate -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Consumer Engagement</div>
+            <div class="stat-card__value" id="stat-engagement-rate">0%</div>
+            <div class="stat-card__meta">Rasio kemasan terpindai</div>
+          </div>
+
+          <!-- Card 4: Total Registered Packages -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Total Kemasan Terdaftar</div>
+            <div class="stat-card__value" id="stat-total-packages">3</div>
+            <div class="stat-card__meta">Aktif di ekosistem</div>
+          </div>
+        </div>
+
+        <!-- Data Source Notice (No fake realtime claim) -->
+        <div style="margin-top: 10px; font-size: 10px; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--color-primary);"></span>
+          Diperbarui dari rekaman interaksi QR (Updated from recorded QR interactions)
+        </div>
+
+        <!-- Recorded Scan Event Activity Stream -->
+        <div style="margin-top: 24px;">
+          <div class="row-between" style="margin-bottom: 10px;">
+            <h3 class="section-title" style="margin-bottom: 0;">Rekaman Pemindaian Terakhir</h3>
+            <span class="status-badge status-badge--success">Tercatat</span>
+          </div>
+
+          <div id="merchant-feed-container" class="menu-list">
+            <div style="padding: 20px; text-align: center; font-size: 11px; color: var(--color-text-muted);">
+              Memuat data aktivitas...
+            </div>
+          </div>
+        </div>
+
+        <!-- Canonical Packages Demo Links -->
+        <div style="margin-top: 24px;">
+          <h3 class="section-title">Daftar Kemasan Digital Aktif</h3>
+          <div class="menu-list">
+            <a href="/p/QP-2027-000001" class="menu-item">
+              <img src="/assets/qr/QP-2027-000001.png" class="menu-item__icon" alt="" style="width: 32px; height: 32px; object-fit: contain;" />
+              <div class="menu-item__body">
+                <div class="menu-item__title">QP-2027-000001 • Cassava Mailer M</div>
+                <div class="menu-item__desc">BATCH-2026-03-A • EcoFashion ID</div>
+              </div>
+              <span class="status-badge status-badge--success">Buka Passport</span>
+            </a>
+
+            <a href="/p/QP-2027-000002" class="menu-item">
+              <img src="/assets/qr/QP-2027-000002.png" class="menu-item__icon" alt="" style="width: 32px; height: 32px; object-fit: contain;" />
+              <div class="menu-item__body">
+                <div class="menu-item__title">QP-2027-000002 • Marine Chitosan L</div>
+                <div class="menu-item__desc">BATCH-2026-03-B • Bumi Organics</div>
+              </div>
+              <span class="status-badge status-badge--success">Buka Passport</span>
+            </a>
+
+            <a href="/p/QP-2027-000003" class="menu-item">
+              <img src="/assets/qr/QP-2027-000003.png" class="menu-item__icon" alt="" style="width: 32px; height: 32px; object-fit: contain;" />
+              <div class="menu-item__body">
+                <div class="menu-item__title">QP-2027-000003 • Corn & Bamboo S</div>
+                <div class="menu-item__desc">BATCH-2026-03-C • Nusantara Coffee</div>
+              </div>
+              <span class="status-badge status-badge--success">Buka Passport</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Switch View Button -->
+        <div style="margin-top: 20px;">
+          <a href="/consumer/dashboard.html" class="btn btn--outline btn--full">
+            Beralih ke Tampilan Konsumen
+          </a>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation Merchant -->
+      <nav class="bottom-nav bottom-nav--merchant" aria-label="Navigasi Mitra">
+        <a href="/merchant/dashboard.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/merchant/produk.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-product-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Produk</span>
+        </a>
+        <a href="/merchant/esg.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-ESG-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">ESG</span>
+        </a>
+        <a href="/merchant/laporan.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-report-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Laporan</span>
+        </a>
+        <a href="/merchant/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Script Execution -->
+    <script type="module">
+      import { getMerchantAnalytics } from '/js/app.js';
+
+      async function loadMerchantData() {
+        try {
+          const analytics = await getMerchantAnalytics();
+
+          document.getElementById('stat-total-scans').textContent = analytics.total_scans;
+          document.getElementById('stat-unique-packages').textContent = analytics.unique_packages_scanned;
+          document.getElementById('stat-engagement-rate').textContent = analytics.consumer_engagement_rate;
+          document.getElementById('stat-total-packages').textContent = analytics.total_packages_created;
+
+          const container = document.getElementById('merchant-feed-container');
+          const recent = analytics.recent_scans || [];
+
+          if (recent.length === 0) {
+            container.innerHTML = `
+              <div style="padding: 20px; text-align: center; font-size: 11px; color: var(--color-text-muted);">
+                Belum ada pemindaian kemasan tercatat.
+              </div>
+            `;
+          } else {
+            container.innerHTML = recent.map(item => `
+              <div class="menu-item">
+                <img src="/assets/icons/check-icon.svg" class="menu-item__icon" alt="" />
+                <div class="menu-item__body">
+                  <div class="menu-item__title">${item.qr_code} • ${item.consumer_name || 'Konsumen'}</div>
+                  <div class="menu-item__desc">${item.product_name} • ${new Date(item.scanned_at).toLocaleTimeString('id-ID')}</div>
+                </div>
+                <span class="status-badge status-badge--success">Tercatat</span>
+              </div>
+            `).join('');
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', loadMerchantData);
+    </script>
+  </body>
 </html>

@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/p/(.*)",
+      "destination": "/consumer/hasil-scan.html"
+    }
+  ]
+}

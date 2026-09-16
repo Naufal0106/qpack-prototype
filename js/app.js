@@ -1,118 +1,87 @@
-/* ================================================================
-   QPACK PROTOTYPE — INTERACTION
-   Frontend-only prototype behavior
-   ================================================================ */
+/**
+ * app.js — Client-side API & State Manager untuk Q-Pack
+ */
 
-document.addEventListener("DOMContentLoaded", () => {
-    initRoleSelector();
-    initTabs();
-    initSizeSelector();
-    initFakeForms();
-    initReportDownload();
-    initScanner();
-    initNavHighlight();
-});
+const API_BASE = window.location.origin;
 
-function initRoleSelector() {
-    const roles = document.querySelectorAll("[data-role]");
-    if (!roles.length) return;
+// Consumer Session Management
+const DEFAULT_CONSUMER = {
+  id: 'cons_demo_001',
+  name: 'Budi Santoso',
+  email: 'budi.santoso@qpack.id'
+};
 
-    roles.forEach(role => {
-        role.addEventListener("click", () => {
-            roles.forEach(item => item.classList.remove("selected"));
-            role.classList.add("selected");
-            const input = document.querySelector("#selected-role");
-            if (input) input.value = role.dataset.role;
-        });
-    });
+export function getActiveConsumer() {
+  const saved = localStorage.getItem('qpack_consumer');
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch {
+      // fallback
+    }
+  }
+  localStorage.setItem('qpack_consumer', JSON.stringify(DEFAULT_CONSUMER));
+  return DEFAULT_CONSUMER;
 }
 
-function initTabs() {
-    document.querySelectorAll("[data-tab-group]").forEach(group => {
-        const buttons = group.querySelectorAll("[data-tab]");
-        const panels = group.querySelectorAll("[data-panel]");
-
-        buttons.forEach(button => {
-            button.addEventListener("click", () => {
-                const target = button.dataset.tab;
-                buttons.forEach(item => item.classList.remove("active"));
-                panels.forEach(panel => panel.hidden = true);
-                button.classList.add("active");
-                const panel = group.querySelector(`[data-panel="${target}"]`);
-                if (panel) panel.hidden = false;
-            });
-        });
-    });
+export function setActiveConsumer(consumer) {
+  localStorage.setItem('qpack_consumer', JSON.stringify(consumer));
 }
 
-function initSizeSelector() {
-    document.querySelectorAll(".size-option").forEach(option => {
-        option.addEventListener("click", () => {
-            option.parentElement.querySelectorAll(".size-option")
-                .forEach(item => item.classList.remove("selected"));
-            option.classList.add("selected");
-        });
-    });
+// 1. Ambil detail kemasan berdasarkan QR Code
+export async function getPackageByQR(qrCode) {
+  const res = await fetch(`${API_BASE}/api/packages/${encodeURIComponent(qrCode)}`);
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Gagal mengambil data kemasan.');
+  }
+  return data.data;
 }
 
-function initFakeForms() {
-    document.querySelectorAll("[data-demo-form]").forEach(form => {
-        form.addEventListener("submit", event => {
-            event.preventDefault();
-
-            if (form.closest(".auth-card") && document.querySelector("#selected-role")) {
-                const role = document.querySelector("#selected-role").value;
-                window.location.href = role === "consumer"
-                    ? "consumer/dashboard.html"
-                    : "merchant/dashboard.html";
-                return;
-            }
-
-            const target = form.dataset.demoForm;
-            if (target) window.location.href = target;
-        });
-    });
+// 2. Kirim scan event untuk mencatat pemindaian dan klaim poin
+export async function submitScan(qrCode, consumerId = null) {
+  const consumer = consumerId ? { id: consumerId } : getActiveConsumer();
+  const res = await fetch(`${API_BASE}/api/scan`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      qr_code: qrCode,
+      consumer_id: consumer.id
+    })
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Gagal mencatat pemindaian.');
+  }
+  return data;
 }
 
-function initReportDownload() {
-    document.querySelectorAll("[data-report-download]").forEach(button => {
-        button.addEventListener("click", () => {
-            const content = [
-                "QPack — Laporan ESG",
-                "Periode: Mei 2026",
-                "",
-                "Ringkasan:",
-                "- 865 paket terkirim",
-                "- 50 kg plastik terkurangi",
-                "- Engagement QR: 18%",
-                "- Data dampak tercatat secara digital",
-                "",
-                "Dokumen ini merupakan prototype laporan otomatis QPack."
-            ].join("\n");
-
-            const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "QPack-ESG-Report-Mei-2026.txt";
-            link.click();
-            URL.revokeObjectURL(url);
-        });
-    });
+// 3. Ambil profil konsumen & progress koleksi
+export async function getConsumerProfile(consumerId = null) {
+  const consumer = consumerId ? { id: consumerId } : getActiveConsumer();
+  const res = await fetch(`${API_BASE}/api/consumer/${encodeURIComponent(consumer.id)}/profile`);
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Gagal mengambil profil konsumen.');
+  }
+  return data;
 }
 
-function initScanner() {
-    document.querySelectorAll("[data-scan-demo]").forEach(button => {
-        button.addEventListener("click", () => {
-            window.location.href = "hasil-scan.html";
-        });
-    });
+// 4. Ambil analitik dashboard merchant
+export async function getMerchantAnalytics(merchantId = null) {
+  const url = merchantId 
+    ? `${API_BASE}/api/merchant/analytics?merchant_id=${encodeURIComponent(merchantId)}`
+    : `${API_BASE}/api/merchant/analytics`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Gagal mengambil analitik merchant.');
+  }
+  return data.analytics;
 }
 
-function initNavHighlight() {
-    const current = window.location.pathname.split("/").pop();
-    document.querySelectorAll(".bottom-nav a").forEach(link => {
-        const href = link.getAttribute("href") || "";
-        if (href === current) link.classList.add("active");
-    });
+// 5. Reset demo data
+export async function resetDemo() {
+  const res = await fetch(`${API_BASE}/api/demo/reset`, { method: 'POST' });
+  return await res.json();
 }

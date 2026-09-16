@@ -1,0 +1,31 @@
+{
+  "name": "qpack-prototype",
+  "version": "1.0.0",
+  "description": "Q-Pack Biodegradable Polymailer Digital Ecosystem Prototype",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node src/db/seed.js",
+    "seed:supabase": "node src/db/supabase-seed.js",
+    "generate:qr": "node src/utils/generateQRCodes.js",
+    "generate:qr:prod": "node src/utils/generateQRCodes.js --prod",
+    "test": "node test-phase1.mjs",
+    "test:prod": "node test-production.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "qrcode": "^1.5.4"
+  },
+  "keywords": [
+    "qpack",
+    "sustainability",
+    "circular-economy",
+    "qr-tracking",
+    "digital-passport"
+  ],
+  "author": "Q-Pack Team",
+  "license": "ISC"
+}
