@@ -12,10 +12,12 @@ Panduan langkah demi langkah untuk mengaktifkan database produksi persisten (**S
 | **Produksi (Production)** | `supabase` | Supabase Cloud (PostgreSQL Persisten) | `https://qpackprototype.vercel.app` |
 
 > [!IMPORTANT]
-> **Keamanan Kredensial**:
-> - Jangan pernah melakukan commit file `.env` ke Git.
-> - Kredensial Supabase dimasukkan langsung ke dashboard Vercel (**Environment Variables**), bukan ditulis di dalam kode frontend.
-> - Sistem menggunakan `SUPABASE_ANON_KEY` (atau `SUPABASE_PUBLISHABLE_KEY`) yang aman dipadukan dengan *Row Level Security (RLS)*.
+> **Arsitektur Keamanan Kredensial**:
+> - **Zero Client Exposure**: Browser / frontend **TIDAK PERNAH** terhubung langsung ke Supabase dan tidak memegang API key apa pun. Seluruh komunikasi melalui backend API Express Q-Pack di Vercel (`Browser -> Express API -> Supabase`).
+> - **Anti-Tampering**: Logika bisnis (anti-duplikasi scan, kalkulasi poin, kuota progress) diproses dan divalidasi secara terpusat di `ScanService` backend.
+> - **Rekomendasi Kunci**: Gunakan **`SUPABASE_SECRET_KEY`** (atau `service_role key`) di Environment Variables Vercel. Kunci ini hanya hidup di serverless backend Vercel yang terpercaya dan tidak akan pernah bocor ke publik atau Git.
+> - **Dukungan Fallback**: Kode backend juga tetap mendukung `SUPABASE_ANON_KEY` / `SUPABASE_PUBLISHABLE_KEY` jika Anda memilih menggunakan anon key bersama RLS.
+> - Jangan pernah melakukan commit file `.env` ke Git!
 
 ---
 
@@ -67,8 +69,12 @@ Panduan langkah demi langkah untuk mengaktifkan database produksi persisten (**S
 ## F. Kunci API yang Dibutuhkan (API Key)
 Di halaman **Project Settings** > **API** yang sama:
 - Cari bagian **Project API keys**.
-- Salin kunci bertanda **`anon` `public`** (JWT panjang yang diawali `eyJhbGci...` atau kunci berlabel *Publishable key*).
-- *Catatan Semantik Kredensial*: Sistem Q-Pack membaca variabel `SUPABASE_ANON_KEY` (atau alias `SUPABASE_PUBLISHABLE_KEY`). Karena seluruh tabel telah dilengkapi kebijakan RLS publik untuk alur pemindaian dan klaim poin, kunci anon/publishable ini sudah mencukupi dan aman.
+- **Opsi Utama (Sangat Disarankan)**: Cari kunci bertanda **`service_role` `secret`** (atau di dashboard Supabase baru berlabel *Secret key*).
+  - Salin kunci rahasia ini.
+  - Kunci ini digunakan di server backend Express Vercel sebagai **`SUPABASE_SECRET_KEY`**. Karena Express berjalan di lingkungan server yang aman (*server-side only*), kunci ini memiliki hak penuh untuk mengeksekusi operasi database sesuai logika bisnis aplikasi tanpa dibatasi atau dieksploitasi oleh akses luar.
+- **Opsi Cadangan (Fallback)**: Jika Anda ingin menggunakan kunci publik/anon, salin kunci bertanda **`anon` `public`** (atau *Publishable key*).
+  - Variabelnya adalah **`SUPABASE_ANON_KEY`**.
+  - Kode backend Q-Pack secara otomatis mendukung fallback ini jika `SUPABASE_SECRET_KEY` tidak disetel.
 
 ---
 
@@ -79,12 +85,13 @@ Buka browser dan login ke dashboard Vercel Anda:
 3. Klik menu **Environment Variables** di bilah kiri.
 4. Masukkan variabel-variabel berikut satu per satu:
 
-| Key | Value | Keterangan |
+| Key | Value Contoh | Keterangan & Prioritas |
 |---|---|---|
-| `DB_PROVIDER` | `supabase` | Menentukan adapter database aktif |
-| `APP_BASE_URL` | `https://qpackprototype.vercel.app` | Domain kanonikal HTTPS produksi |
-| `SUPABASE_URL` | `https://<project-ref>.supabase.co` | Diambil dari Langkah E |
-| `SUPABASE_ANON_KEY` | `eyJhbGci...` | Diambil dari Langkah F |
+| `DB_PROVIDER` | `supabase` | **Wajib** — Mengaktifkan adapter Supabase |
+| `APP_BASE_URL` | `https://qpackprototype.vercel.app` | **Wajib** — Domain kanonikal HTTPS produksi |
+| `SUPABASE_URL` | `https://xyzprojectref.supabase.co` | **Wajib** — Diambil dari Langkah E |
+| `SUPABASE_SECRET_KEY` | `eyJhbGciOi...` *(service_role / secret key)* | **Rekomendasi Utama** — Server-side secure key (Langkah F) |
+| `SUPABASE_ANON_KEY` | `eyJhbGciOi...` *(anon / public key)* | *Opsional Fallback* — Hanya jika tidak menggunakan secret key |
 
 ---
 
