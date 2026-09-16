@@ -129,3 +129,4 @@ CREATE POLICY "Public update consumers" ON consumers FOR UPDATE USING (true);
 -- Allow public read and insert for scan_events
 CREATE POLICY "Public read scan_events" ON scan_events FOR SELECT USING (true);
 CREATE POLICY "Public insert scan_events" ON scan_events FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public delete scan_events" ON scan_events FOR DELETE USING (true);
