@@ -126,7 +126,7 @@ CREATE POLICY "Public read consumers" ON consumers FOR SELECT USING (true);
 CREATE POLICY "Public insert consumers" ON consumers FOR INSERT WITH CHECK (true);
 CREATE POLICY "Public update consumers" ON consumers FOR UPDATE USING (true);
 
--- Allow public read and insert for scan_events
+-- Allow public read and insert for scan_events (DELETE is strictly prohibited for public/anon access)
 CREATE POLICY "Public read scan_events" ON scan_events FOR SELECT USING (true);
 CREATE POLICY "Public insert scan_events" ON scan_events FOR INSERT WITH CHECK (true);
-CREATE POLICY "Public delete scan_events" ON scan_events FOR DELETE USING (true);
+-- Note: NO public DELETE policy is granted on any table. Server-side demo reset/cleanup requires SUPABASE_SECRET_KEY / service_role.
