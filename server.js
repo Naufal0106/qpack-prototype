@@ -31,17 +31,69 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 2. Diagnostic Endpoint (Task 11: Proves database provider in use)
+// 2. Diagnostic Endpoint (Task 11 & Production Diagnostics)
 app.get('/api/diagnostic', async (req, res) => {
   try {
-    const testPackage = await packageRepository.findByQRCode('QP-2027-000001');
+    let projectRef = 'local-sqlite';
+    let packagesCount = 0;
+    let canonicalQrExists = false;
+    let matchingQrCodes = [];
+    let queryError = null;
+    let testPackage = null;
+
+    if (DB_PROVIDER === 'supabase') {
+      const url = process.env.SUPABASE_URL || '';
+      const match = url.match(/https:\/\/([^.]+)\.supabase\.co/);
+      projectRef = match ? match[1] : (url ? url.split('//')[1]?.split('.')[0] : 'not_configured');
+
+      const client = packageRepository.getClient();
+
+      // Query 1: count packages (Task 2)
+      const countRes = await client.from('packages').select('*', { count: 'exact', head: true });
+      if (countRes.error) {
+        queryError = `count query error: ${countRes.error.message}`;
+      } else {
+        packagesCount = countRes.count || 0;
+      }
+
+      // Query 2: canonical QR query (Task 2)
+      const samplesRes = await client
+        .from('packages')
+        .select('id, qr_code, status')
+        .in('qr_code', ['QP-2027-000001', 'QP-2027-000002', 'QP-2027-000003']);
+
+      if (samplesRes.error) {
+        queryError = queryError ? `${queryError}; samples query error: ${samplesRes.error.message}` : `samples query error: ${samplesRes.error.message}`;
+      } else if (samplesRes.data) {
+        matchingQrCodes = samplesRes.data.map(p => p.qr_code);
+        canonicalQrExists = matchingQrCodes.includes('QP-2027-000001');
+      }
+
+      // Query 3: full repository lookup test
+      try {
+        testPackage = await packageRepository.findByQRCode('QP-2027-000001');
+      } catch (repoErr) {
+        queryError = queryError ? `${queryError}; lookup error: ${repoErr.message}` : `lookup error: ${repoErr.message}`;
+      }
+    } else {
+      packagesCount = await packageRepository.count();
+      testPackage = await packageRepository.findByQRCode('QP-2027-000001');
+      canonicalQrExists = !!testPackage;
+      matchingQrCodes = testPackage ? [testPackage.qr_code] : [];
+    }
+
     res.json({
       status: 'ok',
       database_provider: DB_PROVIDER,
       environment: ENVIRONMENT,
-      lookup_source: DB_PROVIDER === 'supabase' ? 'Supabase PostgreSQL (Production)' : 'SQLite (Local Development)',
+      project_ref: projectRef,
+      packages_count: packagesCount,
+      canonical_qr_exists: canonicalQrExists,
+      matching_qr_codes: matchingQrCodes,
       sample_record_verified: !!testPackage,
       sample_package_id: testPackage ? testPackage.qr_code : null,
+      lookup_test: !!testPackage,
+      query_error: queryError,
       timestamp: new Date().toISOString()
     });
   } catch (err) {

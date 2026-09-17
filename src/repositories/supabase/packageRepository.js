@@ -46,7 +46,12 @@ export class SupabasePackageRepository {
       .ilike('qr_code', qrCode.trim())
       .maybeSingle();
 
-    if (error || !data) return null;
+    if (error) {
+      console.error('[SupabasePackageRepository] findByQRCode error:', error);
+      throw new Error(`Database query error: ${error.message} (code: ${error.code || 'UNKNOWN'}, details: ${error.details || 'none'}, hint: ${error.hint || 'none'})`);
+    }
+
+    if (!data) return null;
 
     const prod = data.products || {};
     const batch = data.batches || {};
