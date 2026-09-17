@@ -2,7 +2,10 @@
 -- Q-PACK SUPABASE PRODUCTION SEED DATA
 -- ==========================================
 
--- Clean tables before seeding
+-- Clean tables before seeding (in correct reverse foreign key dependency order)
+DELETE FROM return_verifications;
+DELETE FROM returns;
+DELETE FROM bank_sampah;
 DELETE FROM scan_events;
 DELETE FROM packages;
 DELETE FROM batches;

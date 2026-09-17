@@ -40,11 +40,12 @@ Panduan langkah demi langkah untuk mengaktifkan database produksi persisten (**S
 
 ## C. Menjalankan SQL Pertama: Schema DDL & Keamanan RLS
 1. Buka file [`src/db/supabase-schema.sql`](../src/db/supabase-schema.sql) di text editor / VS Code Anda.
+   *(PENTING: Pastikan menyalin file `src/db/supabase-schema.sql`, yang dirancang khusus untuk dialek PostgreSQL/Supabase).*
 2. Salin (**Copy**) seluruh isi file tersebut.
 3. Tempel (**Paste**) ke dalam SQL Editor di Supabase.
 4. Klik tombol **Run** (atau tekan `Ctrl + Enter`).
 5. Pastikan muncul pesan sukses: `Success. No rows returned`.
-   *(Tabel `merchants`, `products`, `batches`, `packages`, `consumers`, `scan_events`, serta kebijakan keamanan RLS telah aktif).*
+   *(Tabel `merchants`, `products`, `batches`, `packages`, `consumers`, `scan_events`, `bank_sampah`, `returns`, `return_verifications`, serta kebijakan keamanan RLS telah aktif).*
 
 ---
 

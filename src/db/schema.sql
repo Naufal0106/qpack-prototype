@@ -1,4 +1,4 @@
--- Q-Pack Schema
+-- Q-Pack Schema (SQLite & PostgreSQL Compatible)
 
 CREATE TABLE IF NOT EXISTS merchants (
   id TEXT PRIMARY KEY,
@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS merchants (
   brand_name TEXT NOT NULL,
   email TEXT,
   logo_url TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS products (
   sustainability_info TEXT,
   co2_reduction TEXT,
   compostable_days INTEGER DEFAULT 180,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (merchant_id) REFERENCES merchants(id)
 );
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS batches (
   product_id TEXT NOT NULL,
   production_date DATE NOT NULL,
   total_quantity INTEGER DEFAULT 1000,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS packages (
   merchant_id TEXT NOT NULL,
   batch_id TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'active', -- active, scanned, collected, returned
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (product_id) REFERENCES products(id),
   FOREIGN KEY (merchant_id) REFERENCES merchants(id),
   FOREIGN KEY (batch_id) REFERENCES batches(id)
@@ -54,14 +54,14 @@ CREATE TABLE IF NOT EXISTS consumers (
   name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
   points INTEGER NOT NULL DEFAULT 0,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS scan_events (
   id TEXT PRIMARY KEY,
   package_id TEXT NOT NULL,
   consumer_id TEXT NOT NULL,
-  scanned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  scanned_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   points_awarded INTEGER NOT NULL DEFAULT 0,
   ip_address TEXT,
   user_agent TEXT,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS bank_sampah (
   address TEXT NOT NULL,
   city TEXT,
   contact TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS returns (
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS returns (
   bank_sampah_id TEXT,
   return_type TEXT NOT NULL, -- 'compost' or 'bank_sampah'
   status TEXT NOT NULL DEFAULT 'pending', -- pending, verified, rejected
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (package_id) REFERENCES packages(id),
   FOREIGN KEY (consumer_id) REFERENCES consumers(id),
   FOREIGN KEY (bank_sampah_id) REFERENCES bank_sampah(id)
@@ -98,6 +98,6 @@ CREATE TABLE IF NOT EXISTS return_verifications (
   verified_by TEXT NOT NULL,
   verification_notes TEXT,
   reward_awarded INTEGER DEFAULT 0,
-  verified_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  verified_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (return_id) REFERENCES returns(id)
 );
