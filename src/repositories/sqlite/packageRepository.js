@@ -47,6 +47,55 @@ export class SQLitePackageRepository {
     };
   }
 
+  async findAll({ merchantId = null, limit = 50 } = {}) {
+    let sql = `
+      SELECT 
+        p.id AS package_id,
+        p.qr_code,
+        p.status AS package_status,
+        p.created_at AS package_created_at,
+        prod.id AS product_id,
+        prod.name AS product_name,
+        prod.category AS product_category,
+        prod.size AS product_size,
+        prod.image_url AS product_image_url,
+        prod.material_name,
+        prod.material_desc,
+        prod.material_image_url,
+        prod.sustainability_info,
+        prod.co2_reduction,
+        prod.compostable_days,
+        b.id AS batch_id,
+        b.batch_number,
+        b.production_date,
+        b.total_quantity AS batch_quantity,
+        m.id AS merchant_id,
+        m.name AS merchant_name,
+        m.brand_name AS merchant_brand_name,
+        m.email AS merchant_email,
+        m.logo_url AS merchant_logo_url
+      FROM packages p
+      JOIN products prod ON p.product_id = prod.id
+      JOIN merchants m ON p.merchant_id = m.id
+      JOIN batches b ON p.batch_id = b.id
+    `;
+    const params = [];
+    if (merchantId) {
+      sql += ' WHERE p.merchant_id = ?';
+      params.push(merchantId);
+    }
+    sql += ' ORDER BY p.created_at DESC LIMIT ?';
+    params.push(limit);
+
+    const rows = queryAll(sql, ...params);
+    return rows.map(row => ({
+      ...row,
+      material_name: sanitizeMaterialName(row.material_name),
+      material_desc: sanitizeMaterialDesc(row.material_desc),
+      materials: QPACK_CANONICAL_MATERIALS
+    }));
+  }
+
   async count(merchantId = null) {
     if (merchantId) {
       const row = queryOne('SELECT COUNT(*) AS count FROM packages WHERE merchant_id = ?', merchantId);

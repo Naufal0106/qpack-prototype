@@ -87,6 +87,93 @@ export class SupabasePackageRepository {
     };
   }
 
+  async findAll({ merchantId = null, limit = 50 } = {}) {
+    const client = this.getClient();
+    let query = client
+      .from('packages')
+      .select(`
+        id,
+        qr_code,
+        status,
+        created_at,
+        merchant_id,
+        products (
+          id,
+          name,
+          category,
+          size,
+          image_url,
+          material_name,
+          material_desc,
+          material_image_url,
+          sustainability_info,
+          co2_reduction,
+          compostable_days
+        ),
+        batches (
+          id,
+          batch_number,
+          production_date,
+          total_quantity
+        ),
+        merchants (
+          id,
+          name,
+          brand_name,
+          email,
+          logo_url
+        )
+      `)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (merchantId) {
+      query = query.eq('merchant_id', merchantId);
+    }
+
+    const { data, error } = await query;
+    if (error) {
+      console.error('[SupabasePackageRepository] findAll error:', error);
+      throw new Error(`Database query error: ${error.message} (code: ${error.code || 'UNKNOWN'}, details: ${error.details || 'none'})`);
+    }
+
+    if (!data) return [];
+
+    return data.map(item => {
+      const prod = item.products || {};
+      const batch = item.batches || {};
+      const merchant = item.merchants || {};
+
+      return {
+        package_id: item.id,
+        qr_code: item.qr_code,
+        package_status: item.status,
+        package_created_at: item.created_at,
+        product_id: prod.id,
+        product_name: prod.name,
+        product_category: prod.category,
+        product_size: prod.size,
+        product_image_url: prod.image_url,
+        material_name: sanitizeMaterialName(prod.material_name),
+        material_desc: sanitizeMaterialDesc(prod.material_desc),
+        material_image_url: prod.material_image_url,
+        sustainability_info: prod.sustainability_info,
+        co2_reduction: prod.co2_reduction,
+        compostable_days: prod.compostable_days,
+        batch_id: batch.id,
+        batch_number: batch.batch_number,
+        production_date: batch.production_date,
+        batch_quantity: batch.total_quantity,
+        merchant_id: item.merchant_id || merchant.id,
+        merchant_name: merchant.name,
+        merchant_brand_name: merchant.brand_name,
+        merchant_email: merchant.email,
+        merchant_logo_url: merchant.logo_url,
+        materials: QPACK_CANONICAL_MATERIALS
+      };
+    });
+  }
+
   async count(merchantId = null) {
     const client = this.getClient();
     let query = client.from('packages').select('*', { count: 'exact', head: true });

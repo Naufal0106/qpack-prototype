@@ -143,8 +143,24 @@ try {
   assert(reopenProfileRes.body.consumer.collection_progress === '2/10', 'Global collection progress must remain 2/10');
   console.log('✅ TEST P8 PASSED: Reopened QP-001 confirmed Saldo Akun: 100 Pts and Reward Kemasan status: Sudah diklaim.\n');
 
+  // 9. Merchant Packages Listing & QR Management API on Production
+  console.log('TEST P9: Verifying Merchant Packages & QR Management on Production...');
+  const packagesRes = await request('/api/merchant/packages');
+  assert(packagesRes.status === 200, `Expected 200, got ${packagesRes.status}`);
+  assert(packagesRes.body.success === true, 'Success must be true');
+  assert(Array.isArray(packagesRes.body.packages), 'Packages must be array');
+  assert(packagesRes.body.packages.length >= 3, 'Must have at least 3 packages in production database');
+  const prodPkg1 = packagesRes.body.packages.find(p => p.qr_code === 'QP-2027-000001');
+  assert(prodPkg1 !== undefined, 'QP-2027-000001 must exist in merchant packages response');
+  assert(prodPkg1.qr_image_url.includes('QP-2027-000001.png'), 'Must have qr_image_url');
+  assert(prodPkg1.destination_url.includes('/p/QP-2027-000001'), 'Must have destination_url');
+  assert(Array.isArray(prodPkg1.materials), 'Must have circular materials array');
+  assert(prodPkg1.materials.some(m => m.name === 'Kulit Singkong'), 'Must include Kulit Singkong');
+  assert(prodPkg1.materials.some(m => m.name === 'Sisik Ikan'), 'Must include Sisik Ikan');
+  console.log('✅ TEST P9 PASSED: Production QR Management API verified with full metadata and URLs.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P8) PASSED!');
+  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P9) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {

@@ -62,6 +62,11 @@
           <a href="/index.html">
             <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
           </a>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/consumer/dashboard.html" class="q-header__nav-link">Dashboard Konsumen</a>
+            <a href="/consumer/scan.html" class="q-header__nav-link is-active">Pindai QR</a>
+            <a href="/merchant/qr" class="q-header__nav-link">Manajemen QR</a>
+          </nav>
         </div>
         <div class="q-header__right">
           <a href="/consumer/dashboard.html" title="Dashboard Konsumen">
@@ -99,205 +104,238 @@
 
         <!-- 3. SUCCESS CONTENT: Q-PACK DIGITAL PASSPORT -->
         <div id="state-success" class="hidden">
-          <!-- Digital Passport Header -->
-          <div class="ui-card" style="border-top: 4px solid var(--color-primary); background: #ffffff;">
-            <div class="row-between" style="align-items: flex-start;">
-              <div>
-                <div class="passport-header-badge">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                  Q-Pack Digital Passport
+          <div class="passport-desktop-grid">
+            <!-- Left Column: Primary Identity, Claim/Reward, Wallet, Materials, Circular Status -->
+            <div class="passport-main-col">
+              <!-- Digital Passport Header -->
+              <div class="ui-card" style="border-top: 4px solid var(--color-primary); background: #ffffff;">
+                <div class="row-between" style="align-items: flex-start;">
+                  <div>
+                    <div class="passport-header-badge">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Q-Pack Digital Passport
+                    </div>
+                    <h1 style="font-size: var(--fs-xl); font-weight: 700; margin-top: 8px;" id="pkg-qr-code">
+                      QP-2027-000001
+                    </h1>
+                    <p style="font-size: var(--fs-xs); color: var(--color-text-muted);" id="pkg-product-name">
+                      Q-Pack Cassava Mailer (Size M)
+                    </p>
+                  </div>
+
+                  <img id="pkg-qr-img" src="/assets/qr/QP-2027-000001.png" alt="QR Code" class="qr-badge-preview" onerror="this.style.display='none'" />
                 </div>
-                <h1 style="font-size: var(--fs-xl); font-weight: 700; margin-top: 8px;" id="pkg-qr-code">
-                  QP-2027-000001
-                </h1>
-                <p style="font-size: var(--fs-xs); color: var(--color-text-muted);" id="pkg-product-name">
-                  Q-Pack Cassava Mailer (Size M)
+              </div>
+
+              <!-- Package-Specific Reward Card (Distinction: Reward Kemasan vs Saldo Akun) -->
+              <div class="ui-card" id="package-reward-card" style="margin-top: 14px; border: 1.5px solid #c8e6c9; background: #ffffff;">
+                <div class="row-between" style="align-items: center;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 38px; height: 38px; border-radius: 50%; background: #eaf6e5; display: grid; place-items: center; flex-shrink: 0;">
+                      <img src="/assets/icons/reward-icon.svg" style="width: 22px; height: 22px;" alt="Reward" />
+                    </div>
+                    <div>
+                      <div style="font-size: 13px; font-weight: 700; color: var(--color-text);" id="package-reward-title">
+                        Reward Kemasan: <span style="color: var(--color-primary);">+50 Pts</span>
+                      </div>
+                      <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;" id="package-reward-desc">
+                        Poin asosiasi khusus kemasan ini (1x klaim unik)
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- CTA / Status Container -->
+                  <div id="package-reward-action" style="flex-shrink: 0;">
+                    <!-- Dynamically rendered: CTA button or 'Sudah diklaim' badge -->
+                  </div>
+                </div>
+
+                <!-- Status Indicator Text -->
+                <div id="package-claimed-status" class="hidden" style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--color-border); font-size: 11px; color: var(--color-primary-dark); display: flex; align-items: center; gap: 6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Status: <strong id="reward-status-text">Sudah diklaim</strong></span>
+                </div>
+              </div>
+
+              <!-- Reward & Gamification Notification Banner -->
+              <div id="reward-banner" style="margin-top: 12px;">
+                <!-- Rendered dynamically on scan/claim event -->
+              </div>
+
+              <!-- Global Consumer Wallet: Point Balance & Collection Progress -->
+              <div class="ui-card ui-card--soft" id="consumer-wallet-card" style="margin-top: 14px; background: #f8fafc; border: 1px solid var(--color-border);">
+                <div class="row-between" style="align-items: flex-start;">
+                  <div>
+                    <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Dompet Akun Konsumen</span>
+                    <div style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--color-primary); margin-top: 2px;" id="consumer-balance-display">
+                      Saldo Akun: <span id="consumer-points">0 Pts</span>
+                    </div>
+                  </div>
+                  <div style="text-align: right;">
+                    <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Kemasan Terkumpul</span>
+                    <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--color-black); margin-top: 2px;" id="collection-progress">
+                      0/10
+                    </div>
+                  </div>
+                </div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" id="collection-progress-bar" style="width: 0%;"></div>
+                </div>
+                <p style="font-size: 10px; color: var(--color-text-muted); margin-top: 6px;" id="collection-hint">
+                  Kumpulkan 10 kemasan unik untuk membuka opsi sirkular Bank Sampah atau Kompos mandiri.
                 </p>
               </div>
 
-              <img id="pkg-qr-img" src="/assets/qr/QP-2027-000001.png" alt="QR Code" class="qr-badge-preview" onerror="this.style.display='none'" />
-            </div>
-          </div>
-
-          <!-- Package-Specific Reward Card (Distinction: Reward Kemasan vs Saldo Akun) -->
-          <div class="ui-card" id="package-reward-card" style="margin-top: 14px; border: 1.5px solid #c8e6c9; background: #ffffff;">
-            <div class="row-between" style="align-items: center;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 38px; height: 38px; border-radius: 50%; background: #eaf6e5; display: grid; place-items: center; flex-shrink: 0;">
-                  <img src="/assets/icons/reward-icon.svg" style="width: 22px; height: 22px;" alt="Reward" />
+              <!-- Material & Sourcing Information (Two Natural Waste Sources of Q-Pack) -->
+              <div style="margin-top: 20px;">
+                <div class="row-between" style="margin-bottom: 8px;">
+                  <h3 class="section-title" style="margin: 0;">Bahan Baku Alami</h3>
+                  <span style="font-size: 10px; font-weight: 600; color: var(--color-primary-dark);">2 Sumber Limbah Sirkular</span>
                 </div>
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: var(--color-text);" id="package-reward-title">
-                    Reward Kemasan: <span style="color: var(--color-primary);">+50 Pts</span>
+                <div id="materials-container" class="materials-grid-responsive" style="display: flex; flex-direction: column; gap: 10px;">
+                  <!-- Card 1: Kulit Singkong -->
+                  <div class="material-card">
+                    <img src="/assets/images/bahan-baku-kulit-singkong.png" alt="Kulit Singkong" class="material-card__image" />
+                    <div class="material-card__body">
+                      <div class="row-between" style="align-items: flex-start;">
+                        <div class="material-card__title" style="color: var(--color-text); font-size: 13px;">Kulit Singkong</div>
+                        <span class="status-badge" style="background: #eaf6e5; color: var(--color-primary-dark); font-size: 9px; padding: 2px 6px;">Bahan #1</span>
+                      </div>
+                      <div style="font-size: 10px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
+                        Sumber selulosa/nanocellulose sebagai penguat material
+                      </div>
+                      <div class="material-card__desc" style="margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--color-text-muted);">
+                        Sumber selulosa/nanocellulose dari limbah kulit singkong.
+                      </div>
+                    </div>
                   </div>
-                  <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;" id="package-reward-desc">
-                    Poin asosiasi khusus kemasan ini (1x klaim unik)
-                  </div>
-                </div>
-              </div>
 
-              <!-- CTA / Status Container -->
-              <div id="package-reward-action" style="flex-shrink: 0;">
-                <!-- Dynamically rendered: CTA button or 'Sudah diklaim' badge -->
-              </div>
-            </div>
-
-            <!-- Status Indicator Text -->
-            <div id="package-claimed-status" class="hidden" style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--color-border); font-size: 11px; color: var(--color-primary-dark); display: flex; align-items: center; gap: 6px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Status: <strong id="reward-status-text">Sudah diklaim</strong></span>
-            </div>
-          </div>
-
-          <!-- Reward & Gamification Notification Banner -->
-          <div id="reward-banner" style="margin-top: 12px;">
-            <!-- Rendered dynamically on scan/claim event -->
-          </div>
-
-          <!-- Global Consumer Wallet: Point Balance & Collection Progress -->
-          <div class="ui-card ui-card--soft" id="consumer-wallet-card" style="margin-top: 14px; background: #f8fafc; border: 1px solid var(--color-border);">
-            <div class="row-between" style="align-items: flex-start;">
-              <div>
-                <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Dompet Akun Konsumen</span>
-                <div style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--color-primary); margin-top: 2px;" id="consumer-balance-display">
-                  Saldo Akun: <span id="consumer-points">0 Pts</span>
-                </div>
-              </div>
-              <div style="text-align: right;">
-                <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Kemasan Terkumpul</span>
-                <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--color-black); margin-top: 2px;" id="collection-progress">
-                  0/10
-                </div>
-              </div>
-            </div>
-            <div class="progress-bar-container">
-              <div class="progress-bar-fill" id="collection-progress-bar" style="width: 0%;"></div>
-            </div>
-            <p style="font-size: 10px; color: var(--color-text-muted); margin-top: 6px;" id="collection-hint">
-              Kumpulkan 10 kemasan unik untuk membuka opsi sirkular Bank Sampah atau Kompos mandiri.
-            </p>
-          </div>
-
-          <!-- Package Traceability & Identity Specs (NO GPS) -->
-          <div style="margin-top: 20px;">
-            <h3 class="section-title">Spesifikasi Identitas & Ketertelusuran</h3>
-            <div class="ui-card">
-              <div class="menu-item" style="padding: 8px 0;">
-                <img src="/assets/icons/merchant-role-icon.svg" class="menu-item__icon" alt="" />
-                <div class="menu-item__body">
-                  <div class="menu-item__desc">Mitra Merchant / Brand</div>
-                  <div class="menu-item__title" id="pkg-merchant-brand">-</div>
-                </div>
-              </div>
-
-              <div class="menu-item" style="padding: 8px 0;">
-                <img src="/assets/icons/traceability-icon.svg" class="menu-item__icon" alt="" />
-                <div class="menu-item__body">
-                  <div class="menu-item__desc">Nomor Batch Produksi</div>
-                  <div class="menu-item__title" id="pkg-batch-number">-</div>
-                </div>
-              </div>
-
-              <div class="menu-item" style="padding: 8px 0;">
-                <img src="/assets/icons/production-date-icon.svg" class="menu-item__icon" alt="" />
-                <div class="menu-item__body">
-                  <div class="menu-item__desc">Tanggal Produksi</div>
-                  <div class="menu-item__title" id="pkg-production-date">-</div>
-                </div>
-              </div>
-
-              <div class="menu-item" style="padding: 8px 0;">
-                <img src="/assets/icons/green-product-icon.svg" class="menu-item__icon" alt="" />
-                <div class="menu-item__body">
-                  <div class="menu-item__desc">Kategori & Ukuran Fisik</div>
-                  <div class="menu-item__title" id="pkg-category-size">-</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Material & Sourcing Information (Two Natural Waste Sources of Q-Pack) -->
-          <div style="margin-top: 20px;">
-            <div class="row-between" style="margin-bottom: 8px;">
-              <h3 class="section-title" style="margin: 0;">Bahan Baku Alami</h3>
-              <span style="font-size: 10px; font-weight: 600; color: var(--color-primary-dark);">2 Sumber Limbah Sirkular</span>
-            </div>
-            <div id="materials-container" style="display: flex; flex-direction: column; gap: 10px;">
-              <!-- Card 1: Kulit Singkong -->
-              <div class="material-card">
-                <img src="/assets/images/bahan-baku-kulit-singkong.png" alt="Kulit Singkong" class="material-card__image" />
-                <div class="material-card__body">
-                  <div class="row-between" style="align-items: flex-start;">
-                    <div class="material-card__title" style="color: var(--color-text); font-size: 13px;">Kulit Singkong</div>
-                    <span class="status-badge" style="background: #eaf6e5; color: var(--color-primary-dark); font-size: 9px; padding: 2px 6px;">Bahan #1</span>
-                  </div>
-                  <div style="font-size: 10px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
-                    Sumber selulosa/nanocellulose sebagai penguat material
-                  </div>
-                  <div class="material-card__desc" style="margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--color-text-muted);">
-                    Sumber selulosa/nanocellulose dari limbah kulit singkong.
+                  <!-- Card 2: Sisik Ikan -->
+                  <div class="material-card">
+                    <img src="/assets/images/sisik-ikan.png" alt="Sisik Ikan" class="material-card__image" />
+                    <div class="material-card__body">
+                      <div class="row-between" style="align-items: flex-start;">
+                        <div class="material-card__title" style="color: var(--color-text); font-size: 13px;">Sisik Ikan</div>
+                        <span class="status-badge" style="background: #eaf6e5; color: var(--color-primary-dark); font-size: 9px; padding: 2px 6px;">Bahan #2</span>
+                      </div>
+                      <div style="font-size: 10px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
+                        Sumber chitosan sebagai komponen pendukung matriks biopolimer
+                      </div>
+                      <div class="material-card__desc" style="margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--color-text-muted);">
+                        Sumber chitosan dari limbah sisik ikan.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Card 2: Sisik Ikan -->
-              <div class="material-card">
-                <img src="/assets/images/sisik-ikan.png" alt="Sisik Ikan" class="material-card__image" />
-                <div class="material-card__body">
-                  <div class="row-between" style="align-items: flex-start;">
-                    <div class="material-card__title" style="color: var(--color-text); font-size: 13px;">Sisik Ikan</div>
-                    <span class="status-badge" style="background: #eaf6e5; color: var(--color-primary-dark); font-size: 9px; padding: 2px 6px;">Bahan #2</span>
-                  </div>
-                  <div style="font-size: 10px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
-                    Sumber chitosan sebagai komponen pendukung matriks biopolimer
-                  </div>
-                  <div class="material-card__desc" style="margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--color-text-muted);">
-                    Sumber chitosan dari limbah sisik ikan.
-                  </div>
+              <!-- Circular Action Clarification -->
+              <div class="ui-card" style="margin-top: 18px; background: #fafafa; border: 1px dashed var(--color-border);">
+                <div style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase;">
+                  Status Sirkularitas Kemasan
+                </div>
+                <div style="font-size: 11px; color: var(--color-text); margin-top: 4px;">
+                  Status saat ini: <strong style="color: var(--color-primary-dark);">Terkumpul (Collected)</strong> oleh konsumen.<br />
+                  <span style="font-size: 10px; color: var(--color-text-muted);">
+                    *Pemindaian QR mencatat kepemilikan dan mengumpulkan progress, bukan menandakan kemasan telah dikembalikan (Returned).
+                  </span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Sustainability Impact Card -->
-          <div style="margin-top: 20px;">
-            <h3 class="section-title">Dampak Keberlanjutan</h3>
-            <div class="ui-card" style="border-left: 4px solid var(--color-primary);">
-              <div class="row-between">
-                <span class="status-badge status-badge--success" id="sustainability-co2">-65% Emisi CO2</span>
-                <span style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark);" id="sustainability-days">
-                  Terurai 180 Hari
-                </span>
+            <!-- Right Column: QR Showcase, Traceability, Sustainability, Actions -->
+            <div class="passport-side-col">
+              <!-- Large QR Showcase Card -->
+              <div class="qr-showcase-card">
+                <div style="font-size: 12px; font-weight: 700; color: var(--color-text); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="3"></rect><rect x="14" y="7" width="3" height="3"></rect><rect x="7" y="14" width="3" height="3"></rect></svg>
+                  Official Digital Passport QR
+                </div>
+                <div class="qr-showcase__quiet-zone">
+                  <img id="pkg-qr-large" src="/assets/qr/QP-2027-000001.png" alt="Official QR Code" class="qr-showcase__image" />
+                </div>
+                <div style="font-size: 10px; color: var(--color-text-muted);">Target URL Digital Passport:</div>
+                <a id="pkg-qr-destination" href="#" target="_blank" rel="noopener noreferrer" class="qr-showcase__destination" style="display: block; text-decoration: none;">
+                  https://qpackprototype.vercel.app/p/QP-2027-000001
+                </a>
+                <div class="qr-showcase__actions">
+                  <button type="button" id="btn-download-qr" class="btn btn--secondary btn--sm" style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 8px 14px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download PNG
+                  </button>
+                  <button type="button" id="btn-print-qr" class="btn btn--outline btn--sm" style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 8px 14px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    Cetak Stiker
+                  </button>
+                </div>
               </div>
-              <p style="font-size: 11px; line-height: 1.55; color: var(--color-text); margin-top: 8px;" id="sustainability-info">
-                -
-              </p>
-            </div>
-          </div>
 
-          <!-- Circular Action Clarification -->
-          <div class="ui-card" style="margin-top: 18px; background: #fafafa; border: 1px dashed var(--color-border);">
-            <div style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase;">
-              Status Sirkularitas Kemasan
-            </div>
-            <div style="font-size: 11px; color: var(--color-text); margin-top: 4px;">
-              Status saat ini: <strong style="color: var(--color-primary-dark);">Terkumpul (Collected)</strong> oleh konsumen.<br />
-              <span style="font-size: 10px; color: var(--color-text-muted);">
-                *Pemindaian QR mencatat kepemilikan dan mengumpulkan progress, bukan menandakan kemasan telah dikembalikan (Returned).
-              </span>
-            </div>
-          </div>
+              <!-- Package Traceability & Identity Specs (NO GPS) -->
+              <div style="margin-top: 18px;">
+                <h3 class="section-title">Spesifikasi Identitas & Ketertelusuran</h3>
+                <div class="ui-card">
+                  <div class="menu-item" style="padding: 8px 0;">
+                    <img src="/assets/icons/merchant-role-icon.svg" class="menu-item__icon" alt="" />
+                    <div class="menu-item__body">
+                      <div class="menu-item__desc">Mitra Merchant / Brand</div>
+                      <div class="menu-item__title" id="pkg-merchant-brand">-</div>
+                    </div>
+                  </div>
 
-          <!-- Action Buttons -->
-          <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 10px;">
-            <a href="/consumer/dashboard.html" class="btn btn--primary btn--full">
-              Buka Dashboard Konsumen
-            </a>
-            <a href="/consumer/scan.html" class="btn btn--secondary btn--full">
-              Pindai Kemasan Lain
-            </a>
+                  <div class="menu-item" style="padding: 8px 0;">
+                    <img src="/assets/icons/traceability-icon.svg" class="menu-item__icon" alt="" />
+                    <div class="menu-item__body">
+                      <div class="menu-item__desc">Nomor Batch Produksi</div>
+                      <div class="menu-item__title" id="pkg-batch-number">-</div>
+                    </div>
+                  </div>
+
+                  <div class="menu-item" style="padding: 8px 0;">
+                    <img src="/assets/icons/production-date-icon.svg" class="menu-item__icon" alt="" />
+                    <div class="menu-item__body">
+                      <div class="menu-item__desc">Tanggal Produksi</div>
+                      <div class="menu-item__title" id="pkg-production-date">-</div>
+                    </div>
+                  </div>
+
+                  <div class="menu-item" style="padding: 8px 0;">
+                    <img src="/assets/icons/green-product-icon.svg" class="menu-item__icon" alt="" />
+                    <div class="menu-item__body">
+                      <div class="menu-item__desc">Kategori & Ukuran Fisik</div>
+                      <div class="menu-item__title" id="pkg-category-size">-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sustainability Impact Card -->
+              <div style="margin-top: 18px;">
+                <h3 class="section-title">Dampak Keberlanjutan</h3>
+                <div class="ui-card" style="border-left: 4px solid var(--color-primary);">
+                  <div class="row-between">
+                    <span class="status-badge status-badge--success" id="sustainability-co2">-65% Emisi CO2</span>
+                    <span style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark);" id="sustainability-days">
+                      Terurai 180 Hari
+                    </span>
+                  </div>
+                  <p style="font-size: 11px; line-height: 1.55; color: var(--color-text); margin-top: 8px;" id="sustainability-info">
+                    -
+                  </p>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                <a href="/consumer/dashboard.html" class="btn btn--primary btn--full">
+                  Buka Dashboard Konsumen
+                </a>
+                <a href="/consumer/scan.html" class="btn btn--secondary btn--full">
+                  Pindai Kemasan Lain
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -577,9 +615,66 @@
         document.getElementById('sustainability-co2').textContent = pkg.co2_reduction || '-65% Emisi CO2';
         document.getElementById('sustainability-days').textContent = `Terurai ±${pkg.compostable_days} Hari`;
         document.getElementById('sustainability-info').textContent = pkg.sustainability_info;
+
+        // Large QR Showcase
+        const qrLarge = document.getElementById('pkg-qr-large');
+        if (qrLarge) {
+          qrLarge.src = `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
+          qrLarge.onerror = () => { qrLarge.src = '/assets/qr/QP-2027-000001.png'; };
+        }
+        const qrDest = document.getElementById('pkg-qr-destination');
+        if (qrDest) {
+          const destUrl = `${window.location.origin}/p/${encodeURIComponent(pkg.qr_code)}`;
+          qrDest.textContent = destUrl;
+          qrDest.href = destUrl;
+        }
+
+        // Action: Download PNG
+        const btnDownload = document.getElementById('btn-download-qr');
+        if (btnDownload) {
+          btnDownload.onclick = () => {
+            const a = document.createElement('a');
+            a.href = `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
+            a.download = `QPack-${pkg.qr_code}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          };
+        }
+
+        // Action: Print Sticker
+        const btnPrint = document.getElementById('btn-print-qr');
+        if (btnPrint) {
+          btnPrint.onclick = () => {
+            const printQr = document.getElementById('print-sticker-qr');
+            const printCode = document.getElementById('print-sticker-code');
+            const printProduct = document.getElementById('print-sticker-product');
+            const printMaterials = document.getElementById('print-sticker-materials');
+            if (printQr) printQr.src = `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
+            if (printCode) printCode.textContent = pkg.qr_code;
+            if (printProduct) printProduct.textContent = `${pkg.product_name} • ${pkg.batch_number}`;
+            if (printMaterials) printMaterials.textContent = 'Kulit Singkong & Sisik Ikan (Circular Bio-material)';
+            window.print();
+          };
+        }
       }
 
       window.addEventListener('DOMContentLoaded', initPage);
     </script>
+
+    <!-- Printable Sticker Sheet (@media print) -->
+    <div id="printable-sticker-sheet" class="printable-sticker-sheet">
+      <div class="sticker-label">
+        <div class="sticker-label__header">
+          <span class="sticker-label__brand">Q-PACK</span>
+          <span class="sticker-label__badge">DIGITAL PASSPORT</span>
+        </div>
+        <img id="print-sticker-qr" src="/assets/qr/QP-2027-000001.png" alt="QR Code" class="sticker-label__qr" />
+        <div class="sticker-label__code" id="print-sticker-code">QP-2027-000001</div>
+        <div class="sticker-label__product" id="print-sticker-product">Q-Pack Cassava Mailer (Size M) • BATCH-2026-03-A</div>
+        <div class="sticker-label__materials" id="print-sticker-materials">Kulit Singkong & Sisik Ikan (Circular Bio-material)</div>
+        <div class="sticker-label__footer">PINDAI UNTUK VERIFIKASI IDENTITAS & KLAIM REWARD</div>
+      </div>
+    </div>
   </body>
 </html>

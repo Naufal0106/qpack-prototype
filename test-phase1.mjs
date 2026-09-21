@@ -277,8 +277,41 @@ try {
 
   console.log('✅ CRITERION L PASSED: Points semantics, duplicate prevention, and reward claim status verified.\n');
 
+  // ----------------------------------------------------
+  // CRITERION M: QR Management API & Package Directory Verification
+  // ----------------------------------------------------
+  console.log('VERIFYING M: Merchant QR management API, metadata, and filter capability...');
+  const resPackages = await request('GET', '/api/merchant/packages');
+  assert(resPackages.status === 200, `Expected 200 for merchant packages, got ${resPackages.status}`);
+  assert(resPackages.body.success === true, 'Response must indicate success: true');
+  assert(Array.isArray(resPackages.body.packages), 'Packages must be an array');
+  assert(resPackages.body.packages.length >= 3, `Expected at least 3 packages, got ${resPackages.body.packages.length}`);
+
+  const samplePkg = resPackages.body.packages.find(p => p.qr_code === 'QP-2027-000001');
+  assert(samplePkg !== undefined, 'QP-2027-000001 must be present in merchant packages');
+  assert(samplePkg.qr_image_url.includes('/assets/qr/QP-2027-000001.png'), 'Must include correct qr_image_url');
+  assert(samplePkg.destination_url.includes('/p/QP-2027-000001'), 'Must include valid destination_url pointing to /p/QP-2027-000001');
+  assert(Array.isArray(samplePkg.materials), 'Must include circular materials array');
+  assert(samplePkg.materials.some(m => m.name === 'Kulit Singkong'), 'Must include Kulit Singkong');
+  assert(samplePkg.materials.some(m => m.name === 'Sisik Ikan'), 'Must include Sisik Ikan');
+
+  // Verify filtering by merchant_id
+  const resFilter = await request('GET', '/api/merchant/packages?merchant_id=m_ecofashion');
+  assert(resFilter.status === 200, 'Merchant filter request must return 200');
+  assert(Array.isArray(resFilter.body.packages), 'Filtered packages must be array');
+  assert(resFilter.body.packages.length >= 1, 'EcoFashion must have at least 1 package');
+  for (const p of resFilter.body.packages) {
+    assert(p.merchant_id === 'm_ecofashion', 'Every item in filtered response must match merchant_id');
+  }
+
+  // Verify HTML route /merchant/qr
+  const resHtml = await request('GET', '/merchant/qr');
+  assert(resHtml.status === 200, 'Route /merchant/qr must return 200');
+
+  console.log('✅ CRITERION M PASSED: Merchant QR Management API, schema, URLs, and filtering verified.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-L) PASSED!');
+  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-M) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {

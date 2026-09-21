@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Manajemen Kode QR & Digital Passport — Q-Pack" />
+    <title>Manajemen QR Kemasan — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .mgmt-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .badge-circular {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        background: #eaf6e5;
+        color: #1d5d18;
+        padding: 3px 8px;
+        border-radius: 999px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/index.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/merchant/dashboard.html" class="q-header__nav-link">Dashboard Analitik</a>
+            <a href="/merchant/qr" class="q-header__nav-link is-active">Manajemen QR</a>
+            <a href="/consumer/dashboard.html" class="q-header__nav-link">Tampilan Konsumen</a>
+          </nav>
+        </div>
+        <div class="q-header__right">
+          <div style="text-align: right;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
+            <div style="font-size: 9px; color: var(--color-text-muted);">Verified Green Partner</div>
+          </div>
+          <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Page Title & Greeting -->
+        <div class="dashboard-greeting">
+          <div class="row-between" style="align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h1 class="dashboard-greeting__title">Manajemen Kode QR Kemasan</h1>
+              <p class="dashboard-greeting__desc">
+                Kelola aset kode QR resmi, unduh resolusi cetak, cetak stiker kemasan fisik, dan pantau target Digital Passport.
+              </p>
+            </div>
+            <div class="mgmt-header-actions">
+              <a href="/p/QP-2027-000001" target="_blank" class="btn btn--secondary btn--sm" style="font-size: 11px; padding: 6px 12px;">
+                Coba Passport Demo
+              </a>
+              <a href="/merchant/dashboard.html" class="btn btn--outline btn--sm" style="font-size: 11px; padding: 6px 12px;">
+                Lihat Analitik Scan
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs" id="merchant-filter-tabs">
+          <button class="filter-tab is-active" data-merchant="">Semua Kemasan</button>
+          <button class="filter-tab" data-merchant="m_ecofashion">EcoFashion ID</button>
+          <button class="filter-tab" data-merchant="m_bumi">Bumi Organics</button>
+          <button class="filter-tab" data-merchant="m_nusantara">Nusantara Coffee</button>
+        </div>
+
+        <!-- Package Count Summary -->
+        <div class="row-between" style="margin-bottom: 14px; align-items: center;">
+          <div style="font-size: 12px; color: var(--color-text-muted);" id="packages-count-label">
+            Memuat daftar kemasan...
+          </div>
+          <span class="badge-circular">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Biomaterial Sirkular
+          </span>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-packages" style="text-align: center; padding: 40px 16px;">
+          <div style="width: 40px; height: 40px; margin: 0 auto 12px; border: 3px solid var(--color-primary-soft); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+          <p style="font-size: 12px; color: var(--color-text-muted);">Memuat kemasan dari database Q-Pack...</p>
+        </div>
+
+        <!-- QR Management Grid Container -->
+        <div id="packages-grid" class="qr-management-grid hidden">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-packages" class="hidden" style="text-align: center; padding: 40px 16px; background: #fafafa; border-radius: var(--radius-lg); border: 1px dashed var(--color-border);">
+          <p style="font-size: 13px; font-weight: 600; color: var(--color-text);">Tidak ada kemasan untuk filter ini.</p>
+          <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 4px;">Pilih kategori mitra merchant lainnya.</p>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation Merchant -->
+      <nav class="bottom-nav bottom-nav--merchant" aria-label="Navigasi Mitra">
+        <a href="/merchant/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/merchant/qr" class="bottom-nav__item is-active">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">QR Code</span>
+        </a>
+        <a href="/merchant/esg.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-ESG-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">ESG</span>
+        </a>
+        <a href="/merchant/laporan.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-report-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Laporan</span>
+        </a>
+        <a href="/merchant/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- QR Detail & Print Modal -->
+    <div id="qr-modal" class="q-modal hidden">
+      <div class="q-modal__content">
+        <button type="button" class="q-modal__close" id="modal-close-btn" aria-label="Tutup">&times;</button>
+        
+        <div style="text-align: center;">
+          <span class="badge-circular" id="modal-badge">Q-PACK VERIFIED</span>
+          <h2 style="font-size: var(--fs-lg); font-weight: 700; margin-top: 8px;" id="modal-qr-code">QP-2027-000001</h2>
+          <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;" id="modal-product-name">Q-Pack Cassava Mailer (Size M)</p>
+          
+          <div class="qr-showcase__quiet-zone" style="margin-top: 16px;">
+            <img id="modal-qr-img" src="/assets/qr/QP-2027-000001.png" alt="QR Preview" class="qr-showcase__image" style="width: 220px; height: 220px;" />
+          </div>
+
+          <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 8px;">Target Digital Passport:</div>
+          <a id="modal-destination-link" href="#" target="_blank" rel="noopener noreferrer" class="qr-showcase__destination" style="display: block; text-decoration: none;">
+            https://qpackprototype.vercel.app/p/QP-2027-000001
+          </a>
+
+          <div style="margin-top: 14px; padding: 10px; background: #f8fafc; border-radius: var(--radius-md); font-size: 11px; text-align: left; border: 1px solid var(--color-border-light);">
+            <div class="row-between">
+              <span class="text-muted">Mitra / Brand:</span>
+              <strong id="modal-merchant">-</strong>
+            </div>
+            <div class="row-between" style="margin-top: 4px;">
+              <span class="text-muted">Batch Produksi:</span>
+              <strong id="modal-batch">-</strong>
+            </div>
+            <div class="row-between" style="margin-top: 4px;">
+              <span class="text-muted">Bahan Baku Alami:</span>
+              <span style="color: var(--color-primary-dark); font-weight: 600;" id="modal-materials">Kulit Singkong & Sisik Ikan</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 16px;">
+            <button type="button" id="modal-btn-download" class="btn btn--primary btn--full" style="font-size: 12px; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download PNG
+            </button>
+            <button type="button" id="modal-btn-print" class="btn btn--outline btn--full" style="font-size: 12px; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              Cetak Stiker
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Printable Sticker Sheet (@media print) -->
+    <div id="printable-sticker-sheet" class="printable-sticker-sheet">
+      <div class="sticker-label">
+        <div class="sticker-label__header">
+          <span class="sticker-label__brand">Q-PACK</span>
+          <span class="sticker-label__badge">DIGITAL PASSPORT</span>
+        </div>
+        <img id="print-sticker-qr" src="/assets/qr/QP-2027-000001.png" alt="QR Code" class="sticker-label__qr" />
+        <div class="sticker-label__code" id="print-sticker-code">QP-2027-000001</div>
+        <div class="sticker-label__product" id="print-sticker-product">Q-Pack Cassava Mailer (Size M) • BATCH-2026-03-A</div>
+        <div class="sticker-label__materials" id="print-sticker-materials">Kulit Singkong & Sisik Ikan (Circular Bio-material)</div>
+        <div class="sticker-label__footer">PINDAI UNTUK VERIFIKASI IDENTITAS & KLAIM REWARD</div>
+      </div>
+    </div>
+
+    <!-- Client Script -->
+    <script type="module">
+      import { getMerchantPackages } from '/js/app.js';
+
+      let allPackages = [];
+      let currentFilter = '';
+
+      const loadingEl = document.getElementById('loading-packages');
+      const gridEl = document.getElementById('packages-grid');
+      const emptyEl = document.getElementById('empty-packages');
+      const countLabelEl = document.getElementById('packages-count-label');
+
+      // Modal Elements
+      const modalEl = document.getElementById('qr-modal');
+      const modalCloseBtn = document.getElementById('modal-close-btn');
+      const modalQrCode = document.getElementById('modal-qr-code');
+      const modalProductName = document.getElementById('modal-product-name');
+      const modalQrImg = document.getElementById('modal-qr-img');
+      const modalDestLink = document.getElementById('modal-destination-link');
+      const modalMerchant = document.getElementById('modal-merchant');
+      const modalBatch = document.getElementById('modal-batch');
+      const modalMaterials = document.getElementById('modal-materials');
+      const modalBtnDownload = document.getElementById('modal-btn-download');
+      const modalBtnPrint = document.getElementById('modal-btn-print');
+
+      let activeModalPackage = null;
+
+      async function loadPackages() {
+        try {
+          loadingEl.classList.remove('hidden');
+          gridEl.classList.add('hidden');
+          emptyEl.classList.add('hidden');
+
+          allPackages = await getMerchantPackages();
+          renderPackages();
+        } catch (err) {
+          loadingEl.innerHTML = `
+            <div style="color: var(--color-danger); font-size: 13px; font-weight: 600;">Gagal memuat data kemasan: ${err.message}</div>
+          `;
+        }
+      }
+
+      function renderPackages() {
+        loadingEl.classList.add('hidden');
+
+        const filtered = currentFilter
+          ? allPackages.filter(p => p.merchant_id === currentFilter)
+          : allPackages;
+
+        countLabelEl.textContent = `Menampilkan ${filtered.length} dari ${allPackages.length} kemasan terdaftar`;
+
+        if (filtered.length === 0) {
+          gridEl.classList.add('hidden');
+          emptyEl.classList.remove('hidden');
+          return;
+        }
+
+        emptyEl.classList.add('hidden');
+        gridEl.classList.remove('hidden');
+
+        gridEl.innerHTML = filtered.map(pkg => {
+          const qrImgUrl = pkg.qr_image_url || `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
+          const destUrl = pkg.destination_url || `/p/${encodeURIComponent(pkg.qr_code)}`;
+          return `
+            <div class="qr-mgmt-card" data-code="${pkg.qr_code}">
+              <div class="qr-mgmt-card__header">
+                <img src="${qrImgUrl}" alt="QR ${pkg.qr_code}" class="qr-mgmt-card__thumb" onerror="this.src='/assets/qr/QP-2027-000001.png'" />
+                <div class="qr-mgmt-card__info">
+                  <div class="row-between" style="align-items: flex-start;">
+                    <span class="qr-mgmt-card__code">${pkg.qr_code}</span>
+                    <span class="badge-circular" style="font-size: 9px; padding: 2px 6px;">Aktif</span>
+                  </div>
+                  <div class="qr-mgmt-card__product">${pkg.product_name}</div>
+                  <div class="qr-mgmt-card__meta">
+                    <span>${pkg.merchant_brand_name || pkg.merchant_name}</span>
+                    <span>•</span>
+                    <span>${pkg.batch_number}</span>
+                  </div>
+                  <div style="margin-top: 4px; font-size: 10px; color: var(--color-primary-dark); font-weight: 500;">
+                    ${pkg.material_name || 'Kulit Singkong & Sisik Ikan'}
+                  </div>
+                </div>
+              </div>
+
+              <div class="qr-mgmt-card__footer">
+                <button type="button" class="btn btn--primary btn--sm btn-open-modal" style="flex: 1; font-size: 11px; padding: 6px 10px;" data-code="${pkg.qr_code}">
+                  Preview QR
+                </button>
+                <a href="${destUrl}" target="_blank" class="btn btn--outline btn--sm" style="font-size: 11px; padding: 6px 10px;" title="Buka Digital Passport">
+                  Passport
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Attach listeners to "Preview QR" buttons
+        document.querySelectorAll('.btn-open-modal').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const code = e.currentTarget.getAttribute('data-code');
+            const pkg = allPackages.find(p => p.qr_code === code);
+            if (pkg) openModal(pkg);
+          });
+        });
+      }
+
+      function openModal(pkg) {
+        activeModalPackage = pkg;
+        modalQrCode.textContent = pkg.qr_code;
+        modalProductName.textContent = pkg.product_name;
+        
+        const qrUrl = pkg.qr_image_url || `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
+        modalQrImg.src = qrUrl;
+
+        const destUrl = pkg.destination_url || `${window.location.origin}/p/${encodeURIComponent(pkg.qr_code)}`;
+        modalDestLink.textContent = destUrl;
+        modalDestLink.href = destUrl;
+
+        modalMerchant.textContent = `${pkg.merchant_brand_name || pkg.merchant_name}`;
+        modalBatch.textContent = pkg.batch_number;
+        modalMaterials.textContent = pkg.material_name || 'Kulit Singkong & Sisik Ikan';
+
+        modalEl.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        modalEl.classList.add('hidden');
+        activeModalPackage = null;
+      }
+
+      modalCloseBtn.addEventListener('click', closeModal);
+      modalEl.addEventListener('click', (e) => {
+        if (e.target === modalEl) closeModal();
+      });
+
+      // Modal Download Action
+      modalBtnDownload.addEventListener('click', () => {
+        if (!activeModalPackage) return;
+        const a = document.createElement('a');
+        a.href = activeModalPackage.qr_image_url || `/assets/qr/${encodeURIComponent(activeModalPackage.qr_code)}.png`;
+        a.download = `QPack-${activeModalPackage.qr_code}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+
+      // Modal Print Action
+      modalBtnPrint.addEventListener('click', () => {
+        if (!activeModalPackage) return;
+        const pkg = activeModalPackage;
+        document.getElementById('print-sticker-qr').src = pkg.qr_image_url || `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
+        document.getElementById('print-sticker-code').textContent = pkg.qr_code;
+        document.getElementById('print-sticker-product').textContent = `${pkg.product_name} • ${pkg.batch_number}`;
+        document.getElementById('print-sticker-materials').textContent = pkg.material_name || 'Kulit Singkong & Sisik Ikan (Circular Bio-material)';
+        window.print();
+      });
+
+      // Filter tabs handling
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+          currentFilter = tab.getAttribute('data-merchant') || '';
+          renderPackages();
+        });
+      });
+
+      window.addEventListener('DOMContentLoaded', loadPackages);
+    </script>
+  </body>
+</html>

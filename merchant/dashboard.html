@@ -26,6 +26,11 @@
           <a href="/index.html">
             <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
           </a>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/merchant/dashboard.html" class="q-header__nav-link is-active">Dashboard Analitik</a>
+            <a href="/merchant/qr" class="q-header__nav-link">Manajemen QR</a>
+            <a href="/consumer/dashboard.html" class="q-header__nav-link">Tampilan Konsumen</a>
+          </nav>
         </div>
         <div class="q-header__right">
           <div style="text-align: right;">
@@ -96,7 +101,12 @@
 
         <!-- Canonical Packages Demo Links -->
         <div style="margin-top: 24px;">
-          <h3 class="section-title">Daftar Kemasan Digital Aktif</h3>
+          <div class="row-between" style="margin-bottom: 10px;">
+            <h3 class="section-title" style="margin-bottom: 0;">Daftar Kemasan Digital Aktif</h3>
+            <a href="/merchant/qr" style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark); text-decoration: underline;">
+              Kelola & Cetak QR &rarr;
+            </a>
+          </div>
           <div class="menu-list">
             <a href="/p/QP-2027-000001" class="menu-item">
               <img src="/assets/qr/QP-2027-000001.png" class="menu-item__icon" alt="" style="width: 32px; height: 32px; object-fit: contain;" />

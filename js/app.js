@@ -84,8 +84,22 @@ export async function getMerchantAnalytics(merchantId = null) {
   return data.analytics;
 }
 
-// 5. Reset demo data
+// 5. Ambil daftar kemasan & QR untuk manajemen merchant
+export async function getMerchantPackages(merchantId = null) {
+  const url = merchantId 
+    ? `${API_BASE}/api/merchant/packages?merchant_id=${encodeURIComponent(merchantId)}`
+    : `${API_BASE}/api/merchant/packages`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Gagal mengambil daftar kemasan.');
+  }
+  return data.packages;
+}
+
+// 6. Reset demo data
 export async function resetDemo() {
   const res = await fetch(`${API_BASE}/api/demo/reset`, { method: 'POST' });
   return await res.json();
 }
+

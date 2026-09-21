@@ -51,6 +51,8 @@
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
   --shadow-green: 0 4px 14px rgba(42, 135, 37, 0.22);
   --app-max-width: 480px;
+  --container-tablet: 768px;
+  --container-desktop: 1140px;
   --content-pad: 16px;
   --header-height: 64px;
   --bottom-nav-height: 72px;

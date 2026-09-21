@@ -222,6 +222,37 @@ app.get('/api/merchant/analytics', async (req, res) => {
   }
 });
 
+// 6b. GET /api/merchant/packages — List packages with QR metadata & destination URLs
+app.get('/api/merchant/packages', async (req, res) => {
+  try {
+    const merchant_id = req.query.merchant_id || null;
+    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 50;
+    const packages = await packageRepository.findAll({ merchantId: merchant_id, limit });
+
+    const host = req.get('host') || 'localhost:3000';
+    const protocol = req.protocol || 'http';
+    const baseUrl = process.env.APP_BASE_URL || `${protocol}://${host}`;
+
+    const formattedPackages = packages.map(pkg => ({
+      ...pkg,
+      qr_image_url: `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`,
+      destination_url: `${baseUrl}/p/${encodeURIComponent(pkg.qr_code)}`
+    }));
+
+    res.json({
+      success: true,
+      packages: formattedPackages,
+      total: formattedPackages.length,
+      meta: {
+        dataSource: DB_PROVIDER,
+        environment: ENVIRONMENT
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 7. POST /api/demo/reset — Reset demo data
 app.post('/api/demo/reset', async (req, res) => {
   try {
@@ -242,6 +273,11 @@ app.post('/api/demo/reset', async (req, res) => {
 // Route /p/:qr_code -> Canonical Package Digital Passport
 app.get('/p/:qr_code', (req, res) => {
   res.sendFile(path.join(__dirname, 'consumer', 'hasil-scan.html'));
+});
+
+// Route /merchant/qr & /merchant/packages -> QR Management Dashboard
+app.get(['/merchant/qr', '/merchant/packages'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'qr.html'));
 });
 
 // Route /404 -> Package Not Found
