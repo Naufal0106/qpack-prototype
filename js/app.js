@@ -28,9 +28,13 @@ export function setActiveConsumer(consumer) {
   localStorage.setItem('qpack_consumer', JSON.stringify(consumer));
 }
 
-// 1. Ambil detail kemasan berdasarkan QR Code
-export async function getPackageByQR(qrCode) {
-  const res = await fetch(`${API_BASE}/api/packages/${encodeURIComponent(qrCode)}`);
+// 1. Ambil detail kemasan berdasarkan QR Code (termasuk status klaim konsumen jika disediakan)
+export async function getPackageByQR(qrCode, consumerId = null) {
+  const activeId = consumerId || (getActiveConsumer() ? getActiveConsumer().id : null);
+  const url = activeId
+    ? `${API_BASE}/api/packages/${encodeURIComponent(qrCode)}?consumer_id=${encodeURIComponent(activeId)}`
+    : `${API_BASE}/api/packages/${encodeURIComponent(qrCode)}`;
+  const res = await fetch(url);
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data.message || 'Gagal mengambil data kemasan.');

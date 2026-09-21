@@ -121,23 +121,53 @@
             </div>
           </div>
 
-          <!-- Reward & Gamification Notification Banner -->
-          <div id="reward-banner" style="margin-top: 14px;">
-            <!-- Rendered dynamically: First unique claim (+50 Pts) or Duplicate scan warning (0 Pts) -->
+          <!-- Package-Specific Reward Card (Distinction: Reward Kemasan vs Saldo Akun) -->
+          <div class="ui-card" id="package-reward-card" style="margin-top: 14px; border: 1.5px solid #c8e6c9; background: #ffffff;">
+            <div class="row-between" style="align-items: center;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 38px; height: 38px; border-radius: 50%; background: #eaf6e5; display: grid; place-items: center; flex-shrink: 0;">
+                  <img src="/assets/icons/reward-icon.svg" style="width: 22px; height: 22px;" alt="Reward" />
+                </div>
+                <div>
+                  <div style="font-size: 13px; font-weight: 700; color: var(--color-text);" id="package-reward-title">
+                    Reward Kemasan: <span style="color: var(--color-primary);">+50 Pts</span>
+                  </div>
+                  <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;" id="package-reward-desc">
+                    Poin asosiasi khusus kemasan ini (1x klaim unik)
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTA / Status Container -->
+              <div id="package-reward-action" style="flex-shrink: 0;">
+                <!-- Dynamically rendered: CTA button or 'Sudah diklaim' badge -->
+              </div>
+            </div>
+
+            <!-- Status Indicator Text -->
+            <div id="package-claimed-status" class="hidden" style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--color-border); font-size: 11px; color: var(--color-primary-dark); display: flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Status: <strong id="reward-status-text">Sudah diklaim</strong></span>
+            </div>
           </div>
 
-          <!-- Consumer Stats: Point Balance & Collection Progress -->
-          <div class="ui-card ui-card--soft" style="margin-top: 14px;">
+          <!-- Reward & Gamification Notification Banner -->
+          <div id="reward-banner" style="margin-top: 12px;">
+            <!-- Rendered dynamically on scan/claim event -->
+          </div>
+
+          <!-- Global Consumer Wallet: Point Balance & Collection Progress -->
+          <div class="ui-card ui-card--soft" id="consumer-wallet-card" style="margin-top: 14px; background: #f8fafc; border: 1px solid var(--color-border);">
             <div class="row-between" style="align-items: flex-start;">
               <div>
-                <span style="font-size: 10px; font-weight: 600; color: var(--color-primary-dark); text-transform: uppercase;">Saldo Poin Anda</span>
-                <div style="font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--color-primary);" id="consumer-points">
-                  0 Pts
+                <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Dompet Akun Konsumen</span>
+                <div style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--color-primary); margin-top: 2px;" id="consumer-balance-display">
+                  Saldo Akun: <span id="consumer-points">0 Pts</span>
                 </div>
               </div>
               <div style="text-align: right;">
-                <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase;">Kemasan Terkumpul</span>
-                <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--color-black);" id="collection-progress">
+                <span style="font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Kemasan Terkumpul</span>
+                <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--color-black); margin-top: 2px;" id="collection-progress">
                   0/10
                 </div>
               </div>
@@ -295,7 +325,7 @@
 
     <!-- Script Execution -->
     <script type="module">
-      import { submitScan, getActiveConsumer } from '/js/app.js';
+      import { submitScan, getPackageByQR, getConsumerProfile, getActiveConsumer } from '/js/app.js';
 
       function getTargetQRCode() {
         const path = window.location.pathname;
@@ -319,8 +349,22 @@
 
         try {
           const activeConsumer = getActiveConsumer();
-          const result = await submitScan(qrCode, activeConsumer.id);
-          renderSuccess(result);
+          // Fetch package details with claim status for this consumer
+          const pkg = await getPackageByQR(qrCode, activeConsumer.id);
+          // Fetch consumer profile (global wallet)
+          const profileData = await getConsumerProfile(activeConsumer.id);
+
+          renderPassport({
+            pkg,
+            consumer: profileData.consumer,
+            isClaimed: !!pkg.is_claimed
+          });
+
+          // Check if auto-claim is requested via query param (e.g. ?claim=1 or ?scan=1)
+          const urlParams = new URLSearchParams(window.location.search);
+          if ((urlParams.get('claim') === 'true' || urlParams.get('scan') === 'true') && !pkg.is_claimed) {
+            handleClaim();
+          }
         } catch (err) {
           showError('Kemasan Tidak Ditemukan', err.message || 'Kode QR tidak valid atau belum terdaftar.');
         }
@@ -336,14 +380,36 @@
         document.getElementById('error-message').textContent = message;
       }
 
-      function renderSuccess(result) {
+      async function handleClaim() {
+        const qrCode = getTargetQRCode();
+        const activeConsumer = getActiveConsumer();
+        const btn = document.getElementById('btn-claim-points');
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Mengklaim...';
+        }
+
+        try {
+          const result = await submitScan(qrCode, activeConsumer.id);
+          renderPassport({
+            pkg: result.package,
+            consumer: result.consumer,
+            isClaimed: true,
+            scanResult: result.scan
+          });
+        } catch (err) {
+          alert(err.message || 'Gagal mengklaim poin.');
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Klaim Poin';
+          }
+        }
+      }
+
+      function renderPassport({ pkg, consumer, isClaimed, scanResult = null }) {
         document.getElementById('state-loading').classList.add('hidden');
         document.getElementById('state-error').classList.add('hidden');
         document.getElementById('state-success').classList.remove('hidden');
-
-        const pkg = result.package;
-        const scan = result.scan;
-        const consumer = result.consumer;
 
         // Digital Passport Identity
         document.getElementById('pkg-qr-code').textContent = pkg.qr_code;
@@ -357,6 +423,107 @@
         const qrImg = document.getElementById('pkg-qr-img');
         qrImg.src = `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
         qrImg.style.display = 'block';
+
+        // 1. Package-Specific Reward Section (Reward Kemasan: +50 Pts)
+        const actionContainer = document.getElementById('package-reward-action');
+        const claimedStatusBox = document.getElementById('package-claimed-status');
+        const rewardTitle = document.getElementById('package-reward-title');
+        const rewardDesc = document.getElementById('package-reward-desc');
+
+        rewardTitle.innerHTML = `Reward Kemasan: <span style="color: var(--color-primary);">+50 Pts</span>`;
+
+        if (!isClaimed) {
+          // If package has never been claimed:
+          // "Reward Kemasan: +50 Pts"
+          // CTA: "Klaim Poin"
+          actionContainer.innerHTML = `
+            <button id="btn-claim-points" class="btn btn--primary btn--sm" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; font-weight: 600; cursor: pointer;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Klaim Poin
+            </button>
+          `;
+          rewardDesc.textContent = 'Poin khusus kemasan ini belum diklaim ke akun Anda.';
+          if (claimedStatusBox) {
+            claimedStatusBox.classList.add('hidden');
+            claimedStatusBox.style.display = 'none';
+          }
+
+          const btn = document.getElementById('btn-claim-points');
+          if (btn) {
+            btn.addEventListener('click', handleClaim);
+          }
+        } else {
+          // If package has already been claimed:
+          // "Reward Kemasan: +50 Pts"
+          // Status: "Sudah diklaim"
+          actionContainer.innerHTML = `
+            <span class="status-badge status-badge--success" id="reward-status-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; font-size: 11px; font-weight: 600; background: #eaf6e5; color: var(--color-primary-dark); border-radius: 999px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Sudah diklaim
+            </span>
+          `;
+          rewardDesc.textContent = 'Poin khusus kemasan ini sudah berhasil diklaim ke dompet akun Anda.';
+          if (claimedStatusBox) {
+            claimedStatusBox.classList.remove('hidden');
+            claimedStatusBox.style.display = 'flex';
+          }
+        }
+
+        // 2. Global Consumer Wallet (Saldo Akun: 100 Pts & Collection Progress)
+        document.getElementById('consumer-points').textContent = `${consumer.points} Pts`;
+        document.getElementById('collection-progress').textContent = consumer.collection_progress;
+        document.getElementById('collection-progress-bar').style.width = `${consumer.collection_percentage}%`;
+
+        // 3. Notification Banner
+        const bannerContainer = document.getElementById('reward-banner');
+        if (scanResult) {
+          if (scanResult.is_first_scan) {
+            bannerContainer.innerHTML = `
+              <div class="ui-card ui-card--soft" style="border: 1.5px solid var(--color-primary); background: #eaf6e5;">
+                <div class="row" style="gap: 12px;">
+                  <img src="/assets/icons/reward-icon.svg" style="width: 32px; height: 32px; flex-shrink: 0;" alt="Reward" />
+                  <div>
+                    <div style="font-weight: 700; color: var(--color-primary); font-size: 14px;">
+                      +${scanResult.points_awarded} Poin Q-Pack Ditambahkan! 🎉
+                    </div>
+                    <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;">
+                      ${scanResult.message}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          } else if (scanResult.is_duplicate) {
+            bannerContainer.innerHTML = `
+              <div class="ui-card" style="border: 1.5px solid var(--color-accent); background: #fffbe6;">
+                <div class="row" style="gap: 12px;">
+                  <img src="/assets/icons/check-icon.svg" style="width: 28px; height: 28px; flex-shrink: 0;" alt="Checked" />
+                  <div>
+                    <div style="font-weight: 700; color: #8a5b00; font-size: 13px;">
+                      Kemasan Sudah Pernah Anda Klaim
+                    </div>
+                    <div style="font-size: 11px; color: #8a5b00; margin-top: 2px;">
+                      ${scanResult.message}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+        } else if (isClaimed) {
+          bannerContainer.innerHTML = `
+            <div class="ui-card" style="border: 1px solid #dcdcdc; background: #fafafa; padding: 10px 14px;">
+              <div class="row" style="gap: 10px; align-items: center;">
+                <img src="/assets/icons/check-icon.svg" style="width: 20px; height: 20px; flex-shrink: 0;" alt="Checked" />
+                <div style="font-size: 11px; color: var(--color-text-muted);">
+                  Kemasan ini sudah pernah diklaim (+50 Pts). Poin reward telah tersimpan di saldo akun Anda.
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          bannerContainer.innerHTML = '';
+        }
 
         // Material info: Two natural waste-based raw material sources
         const materialsContainer = document.getElementById('materials-container');
@@ -410,47 +577,6 @@
         document.getElementById('sustainability-co2').textContent = pkg.co2_reduction || '-65% Emisi CO2';
         document.getElementById('sustainability-days').textContent = `Terurai ±${pkg.compostable_days} Hari`;
         document.getElementById('sustainability-info').textContent = pkg.sustainability_info;
-
-        // Consumer Point & Collection Progress
-        document.getElementById('consumer-points').textContent = `${consumer.points} Pts`;
-        document.getElementById('collection-progress').textContent = consumer.collection_progress;
-        document.getElementById('collection-progress-bar').style.width = `${consumer.collection_percentage}%`;
-
-        // Render Reward Banner (Anti-duplicate verification)
-        const bannerContainer = document.getElementById('reward-banner');
-        if (scan.is_first_scan) {
-          bannerContainer.innerHTML = `
-            <div class="ui-card ui-card--soft" style="border: 1.5px solid var(--color-primary); background: #eaf6e5;">
-              <div class="row" style="gap: 12px;">
-                <img src="/assets/icons/reward-icon.svg" style="width: 32px; height: 32px; flex-shrink: 0;" alt="Reward" />
-                <div>
-                  <div style="font-weight: 700; color: var(--color-primary); font-size: 14px;">
-                    +${scan.points_awarded} Poin Q-Pack Ditambahkan! 🎉
-                  </div>
-                  <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;">
-                    ${scan.message}
-                  </div>
-                </div>
-              </div>
-            </div>
-          `;
-        } else {
-          bannerContainer.innerHTML = `
-            <div class="ui-card" style="border: 1.5px solid var(--color-accent); background: #fffbe6;">
-              <div class="row" style="gap: 12px;">
-                <img src="/assets/icons/check-icon.svg" style="width: 28px; height: 28px; flex-shrink: 0;" alt="Checked" />
-                <div>
-                  <div style="font-weight: 700; color: #8a5b00; font-size: 13px;">
-                    Kemasan Sudah Pernah Anda Pindai
-                  </div>
-                  <div style="font-size: 11px; color: #8a5b00; margin-top: 2px;">
-                    ${scan.message}
-                  </div>
-                </div>
-              </div>
-            </div>
-          `;
-        }
       }
 
       window.addEventListener('DOMContentLoaded', initPage);

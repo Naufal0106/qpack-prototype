@@ -224,11 +224,65 @@ try {
 
   console.log('✅ CRITERION K PASSED: All 3 packages verified with 2 circular materials, zero algae references.\n');
 
+  // ----------------------------------------------------
+  // CRITERION L: Digital Passport Points Display Semantics & Claim Status Regression Tests
+  // ----------------------------------------------------
+  console.log('VERIFYING L: Points display semantics, package reward claim status, and global wallet distinction...');
+
+  const regConsumerId = 'cons_regression_semantics';
+
+  // 1. Initial State: QP-001 has never been claimed by this consumer
+  const initialPkg001 = await request('GET', `/api/packages/QP-2027-000001?consumer_id=${regConsumerId}`);
+  assert(initialPkg001.status === 200, 'Initial lookup should be 200');
+  assert(initialPkg001.body.data.is_claimed === false, 'QP-001 should not be claimed yet');
+
+  const initialProfile = await request('GET', `/api/consumer/${regConsumerId}/profile`);
+  assert(initialProfile.body.consumer.points === 0, 'Initial points should be 0');
+  assert(initialProfile.body.consumer.collection_progress === '0/10', 'Initial collection should be 0/10');
+
+  // 2. QP-001 claimed once
+  const regScan1 = await request('POST', '/api/scan', { qr_code: 'QP-2027-000001', consumer_id: regConsumerId });
+  assert(regScan1.body.scan.is_first_scan === true, 'First claim of QP-001 must set is_first_scan = true');
+  assert(regScan1.body.scan.points_awarded === 50, 'First claim must award exactly +50 points');
+  assert(regScan1.body.consumer.points === 50, 'Consumer balance must be 50 Pts');
+  assert(regScan1.body.consumer.collection_progress === '1/10', 'Collection progress must be 1/10');
+
+  // Verify package lookup now shows claimed
+  const postClaimPkg001 = await request('GET', `/api/packages/QP-2027-000001?consumer_id=${regConsumerId}`);
+  assert(postClaimPkg001.body.data.is_claimed === true, 'QP-001 status must be claimed');
+
+  // 3. QP-001 repeated => no additional points (duplicate prevention)
+  const regScan1Dup = await request('POST', '/api/scan', { qr_code: 'QP-2027-000001', consumer_id: regConsumerId });
+  assert(regScan1Dup.body.scan.is_first_scan === false, 'Repeated scan must not be first scan');
+  assert(regScan1Dup.body.scan.is_duplicate === true, 'Repeated scan must be duplicate');
+  assert(regScan1Dup.body.scan.points_awarded === 0, 'Repeated scan must award 0 points');
+  assert(regScan1Dup.body.consumer.points === 50, 'Balance must remain 50 Pts after repeat');
+  assert(regScan1Dup.body.consumer.collection_progress === '1/10', 'Collection count must remain 1/10');
+
+  // 4. QP-002 claimed once => global balance 100
+  const regScan2 = await request('POST', '/api/scan', { qr_code: 'QP-2027-000002', consumer_id: regConsumerId });
+  assert(regScan2.body.scan.is_first_scan === true, 'Claiming QP-002 must be first scan for QP-002');
+  assert(regScan2.body.scan.points_awarded === 50, 'QP-002 must award +50 points');
+  assert(regScan2.body.consumer.points === 100, 'Global wallet balance must now be exactly 100 Pts');
+  assert(regScan2.body.consumer.collection_progress === '2/10', 'Collection progress must be 2/10');
+
+  // 5. Opening QP-001 after QP-002 still shows account balance 100 & QP-001 package reward status remains "Sudah diklaim"
+  const reopenPkg001 = await request('GET', `/api/packages/QP-2027-000001?consumer_id=${regConsumerId}`);
+  const reopenProfile = await request('GET', `/api/consumer/${regConsumerId}/profile`);
+
+  assert(reopenPkg001.status === 200, 'Reopening QP-001 must return 200');
+  assert(reopenPkg001.body.data.is_claimed === true, 'QP-001 package reward status must remain "Sudah diklaim"');
+  assert(reopenProfile.body.consumer.points === 100, 'Global account balance must still be 100 Pts (Saldo Akun: 100 Pts)');
+  assert(reopenProfile.body.consumer.collection_progress === '2/10', 'Global collection progress must remain 2/10');
+
+  console.log('✅ CRITERION L PASSED: Points semantics, duplicate prevention, and reward claim status verified.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-K) PASSED!');
+  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-L) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {
   console.error('\n❌ TEST FAILED:', err.message);
   process.exit(1);
 }
+

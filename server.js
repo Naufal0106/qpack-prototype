@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { packageRepository, DB_PROVIDER } from './src/repositories/index.js';
+import { packageRepository, consumerRepository, scanRepository, DB_PROVIDER } from './src/repositories/index.js';
 import { ScanService } from './src/services/scanService.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -109,6 +109,7 @@ app.get('/api/diagnostic', async (req, res) => {
 app.get('/api/packages/:qr_code', async (req, res) => {
   try {
     const { qr_code } = req.params;
+    const consumer_id = req.query.consumer_id || null;
     const packageData = await packageRepository.findByQRCode(qr_code);
 
     if (!packageData) {
@@ -120,9 +121,18 @@ app.get('/api/packages/:qr_code', async (req, res) => {
       });
     }
 
+    let is_claimed = false;
+    if (consumer_id) {
+      const consumer = await consumerRepository.findOrCreate(consumer_id);
+      is_claimed = await scanRepository.hasConsumerScannedPackage(packageData.package_id, consumer.id);
+    }
+
     res.json({
       success: true,
-      data: packageData,
+      data: {
+        ...packageData,
+        is_claimed
+      },
       meta: {
         dataSource: DB_PROVIDER,
         environment: ENVIRONMENT

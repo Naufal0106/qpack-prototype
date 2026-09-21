@@ -129,10 +129,20 @@ try {
   assert(analyticsRes.body.analytics.total_scans >= 3, 'Total scans must be >= 3');
   assert(analyticsRes.body.analytics.unique_packages_scanned >= 2, 'Unique packages scanned must be >= 2');
   assert(analyticsRes.body.analytics.data_source_disclaimer === 'Diperbarui dari rekaman interaksi QR', 'Disclaimer verified');
-  console.log('✅ TEST P7 PASSED: Merchant analytics reading accurately from production database.\n');
+  // 8. Reopening QP-001 after QP-002: Semantics & Claim Status Confirmation
+  console.log('TEST P8: Verifying Points Semantics & Claim Status on Reopening QP-001...');
+  const reopenPkgRes = await request(`/api/packages/QP-2027-000001?consumer_id=${testConsumerId}`);
+  assert(reopenPkgRes.status === 200, `Expected 200, got ${reopenPkgRes.status}`);
+  assert(reopenPkgRes.body.data.is_claimed === true, 'QP-001 status must remain "Sudah diklaim"');
+
+  const reopenProfileRes = await request(`/api/consumer/${testConsumerId}/profile`);
+  assert(reopenProfileRes.status === 200, `Expected 200, got ${reopenProfileRes.status}`);
+  assert(reopenProfileRes.body.consumer.points === 100, 'Global wallet balance must still be 100 Pts (Saldo Akun: 100 Pts)');
+  assert(reopenProfileRes.body.consumer.collection_progress === '2/10', 'Global collection progress must remain 2/10');
+  console.log('✅ TEST P8 PASSED: Reopened QP-001 confirmed Saldo Akun: 100 Pts and Reward Kemasan status: Sudah diklaim.\n');
 
   console.log('======================================================');
-  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS PASSED!');
+  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P8) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {
