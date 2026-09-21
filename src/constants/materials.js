@@ -19,3 +19,25 @@ export const QPACK_CANONICAL_MATERIALS = [
     image_url: "/assets/images/sisik-ikan.png"
   }
 ];
+
+export function sanitizeMaterialName(name) {
+  if (!name) return 'Pati Singkong Nabati & Kitosan Sisik Ikan';
+  return name
+    .replace(/Chitosan Sisik Ikan & Ekstrak Alga Cokelat/gi, 'Chitosan Sisik Ikan & Selulosa Kulit Singkong')
+    .replace(/Ekstrak Alga Cokelat/gi, 'Selulosa Kulit Singkong')
+    .replace(/algae/gi, 'selulosa')
+    .replace(/alga/gi, 'selulosa')
+    .replace(/seaweed/gi, 'selulosa')
+    .replace(/rumput laut/gi, 'limbah kulit singkong');
+}
+
+export function sanitizeMaterialDesc(desc) {
+  if (!desc) return '';
+  return desc
+    .replace(/algae/gi, 'selulosa')
+    .replace(/alga/gi, 'selulosa')
+    .replace(/seaweed/gi, 'selulosa')
+    .replace(/rumput laut/gi, 'limbah kulit singkong')
+    .replace(/Memanfaatkan sampingan sisik ikan dari industri perikanan pesisir Jawa\. Memiliki sifat antibakteri alami dan larut air panas 80°C\./gi, 'Memanfaatkan sampingan sisik ikan dari industri perikanan pesisir dan selulosa limbah kulit singkong. Memiliki sifat antibakteri alami dan terurai ramah lingkungan.');
+}
+

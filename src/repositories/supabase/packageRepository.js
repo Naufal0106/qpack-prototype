@@ -1,5 +1,5 @@
 import { getSupabaseClient } from '../../db/supabase.js';
-import { QPACK_CANONICAL_MATERIALS } from '../../constants/materials.js';
+import { QPACK_CANONICAL_MATERIALS, sanitizeMaterialName, sanitizeMaterialDesc } from '../../constants/materials.js';
 
 export class SupabasePackageRepository {
   getClient() {
@@ -68,8 +68,8 @@ export class SupabasePackageRepository {
       product_category: prod.category,
       product_size: prod.size,
       product_image_url: prod.image_url,
-      material_name: prod.material_name,
-      material_desc: prod.material_desc,
+      material_name: sanitizeMaterialName(prod.material_name),
+      material_desc: sanitizeMaterialDesc(prod.material_desc),
       material_image_url: prod.material_image_url,
       sustainability_info: prod.sustainability_info,
       co2_reduction: prod.co2_reduction,

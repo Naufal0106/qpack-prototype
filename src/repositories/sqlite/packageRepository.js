@@ -1,5 +1,5 @@
 import { queryOne, queryAll } from '../../db/database.js';
-import { QPACK_CANONICAL_MATERIALS } from '../../constants/materials.js';
+import { QPACK_CANONICAL_MATERIALS, sanitizeMaterialName, sanitizeMaterialDesc } from '../../constants/materials.js';
 
 export class SQLitePackageRepository {
   async findByQRCode(qrCode) {
@@ -41,6 +41,8 @@ export class SQLitePackageRepository {
 
     return {
       ...row,
+      material_name: sanitizeMaterialName(row.material_name),
+      material_desc: sanitizeMaterialDesc(row.material_desc),
       materials: QPACK_CANONICAL_MATERIALS
     };
   }
