@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Portal Kemitraan Bank Sampah — Q-Pack Ecosystem" />
+    <title>Mitra Bank Sampah — Q-Pack Circular Ecosystem</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/portal.css" />
+  </head>
+  <body class="portal-body">
+    <!-- Header -->
+    <header class="portal-nav-wrap">
+      <div class="portal-container">
+        <nav class="portal-nav" aria-label="Navigasi Mitra">
+          <a href="/" class="portal-nav__logo" aria-label="Q-Pack Beranda">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack Ecosystem" />
+          </a>
+
+          <ul class="portal-nav__links">
+            <li><a href="/" class="portal-nav__link">Beranda Portal</a></li>
+            <li><a href="/consumer/dashboard.html" class="portal-nav__link">Portal Konsumen</a></li>
+            <li><a href="/merchant/dashboard.html" class="portal-nav__link">Portal Merchant</a></li>
+          </ul>
+
+          <div class="portal-nav__actions">
+            <a href="/" class="portal-btn portal-btn--outline">
+              Kembali ke Beranda
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="portal-container" style="padding-block: 60px 80px; max-width: 860px;">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="portal-eyebrow portal-eyebrow--sand">Portal Kemitraan Sirkular</span>
+        <h1 class="portal-hero__title" style="font-size: clamp(2rem, 3.5vw, 2.75rem); margin-top: 10px;">
+          Mitra Bank Sampah &amp; Drop Point
+        </h1>
+        <p class="portal-hero__lead" style="margin-inline: auto;">
+          Verifikasi pengembalian kemasan dan ikut menghubungkan konsumen dengan ekonomi sirkular tertutup.
+        </p>
+      </div>
+
+      <!-- Notice Card (Upcoming Stage) -->
+      <div style="background: #ffffff; border: 1.5px solid #e2e7df; border-radius: var(--portal-radius-xl); padding: 40px 32px; box-shadow: var(--portal-shadow-card); text-align: center;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: #fef8eb; display: grid; place-items: center; margin: 0 auto 20px;">
+          <img src="/assets/icons/eco-icon.svg" alt="Eco" style="width: 32px; height: 32px;" />
+        </div>
+
+        <span style="display: inline-block; padding: 4px 12px; background: #fff3db; color: #8a5b00; font-size: 11px; font-weight: 700; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px;">
+          Tahap Pengembangan Ekosistem
+        </span>
+
+        <h2 style="font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--eco-forest); margin: 16px 0 10px;">
+          Fitur mitra sedang disiapkan untuk tahap berikutnya.
+        </h2>
+
+        <p style="font-size: 13.5px; color: var(--eco-text-muted); line-height: 1.65; max-width: 580px; margin: 0 auto 28px;">
+          Sistem validasi pengembalian kemasan fisik (Return Verification) melalui pemindai QR khusus mitra Bank Sampah sedang dalam proses integrasi. Nantinya, mitra resmi dapat memvalidasi kemasan yang dikembalikan oleh konsumen dan mencatat aliran material daur ulang ke database sirkular Q-Pack.
+        </p>
+
+        <!-- Feature Preview Highlights -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; text-align: left; margin-bottom: 32px;">
+          <div style="background: var(--eco-surface-soft); padding: 18px; border-radius: var(--portal-radius-md); border: 1px solid var(--eco-border-light);">
+            <div style="font-weight: 700; font-size: 13px; color: var(--eco-forest); margin-bottom: 4px;">1. Validasi QR Pengembalian</div>
+            <div style="font-size: 11.5px; color: var(--eco-text-muted); line-height: 1.5;">Memindai kemasan konsumen untuk mengubah status dari Terkumpul (Collected) menjadi Dikembalikan (Returned).</div>
+          </div>
+
+          <div style="background: var(--eco-surface-soft); padding: 18px; border-radius: var(--portal-radius-md); border: 1px solid var(--eco-border-light);">
+            <div style="font-weight: 700; font-size: 13px; color: var(--eco-forest); margin-bottom: 4px;">2. Pencatatan Massa &amp; Unit</div>
+            <div style="font-size: 11.5px; color: var(--eco-text-muted); line-height: 1.5;">Menghitung akumulasi volume biopolimer yang siap disalurkan ke fasilitas kompos industri atau daur ulang.</div>
+          </div>
+
+          <div style="background: var(--eco-surface-soft); padding: 18px; border-radius: var(--portal-radius-md); border: 1px solid var(--eco-border-light);">
+            <div style="font-weight: 700; font-size: 13px; color: var(--eco-forest); margin-bottom: 4px;">3. Insentif Sirkular</div>
+            <div style="font-size: 11.5px; color: var(--eco-text-muted); line-height: 1.5;">Sinkronisasi reward tambahan untuk konsumen yang mengembalikan 10 kemasan ke Bank Sampah terdekat.</div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <a href="/consumer/dashboard.html" class="portal-btn portal-btn--primary" style="font-size: 13px;">
+            Jelajahi Portal Konsumen
+          </a>
+          <a href="/merchant/dashboard.html" class="portal-btn portal-btn--secondary" style="font-size: 13px;">
+            Masuk Dashboard Merchant
+          </a>
+          <a href="/" class="portal-btn portal-btn--outline" style="font-size: 13px;">
+            Kembali ke Beranda
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="portal-footer" style="padding-block: 40px 30px;">
+      <div class="portal-container" style="text-align: center; font-size: 12px; color: var(--eco-text-light);">
+        <div>&copy; 2027 Q-Pack Circular Ecosystem. All rights reserved.</div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,950 @@
+/* ==========================================================================
+   Q-PACK PORTAL & ECOSYSTEM DESIGN SYSTEM
+   Editorial environmental / circular packaging aesthetic
+   ========================================================================== */
+
+:root {
+  --eco-bg: #fbfbf9;
+  --eco-surface: #ffffff;
+  --eco-surface-soft: #f4f6f1;
+  --eco-surface-sage: #eaf3e8;
+  --eco-surface-sand: #f5f0e6;
+  --eco-primary: #21721e;
+  --eco-primary-dark: #154c13;
+  --eco-forest: #0e350c;
+  --eco-accent: #2ea029;
+  --eco-sand: #ede5d5;
+  --eco-sand-dark: #826e4d;
+  --eco-border: #e2e7df;
+  --eco-border-light: #edf1eb;
+  --eco-text-main: #141f14;
+  --eco-text-muted: #536253;
+  --eco-text-light: #7a8a7a;
+
+  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --portal-max-width: 1240px;
+  --portal-pad-inline: 24px;
+  --portal-radius-sm: 10px;
+  --portal-radius-md: 16px;
+  --portal-radius-lg: 24px;
+  --portal-radius-xl: 32px;
+  --portal-radius-full: 9999px;
+
+  --portal-shadow-subtle: 0 4px 20px rgba(14, 53, 12, 0.04);
+  --portal-shadow-card: 0 10px 30px rgba(14, 53, 12, 0.06);
+  --portal-shadow-hover: 0 16px 40px rgba(14, 53, 12, 0.1);
+}
+
+/* Base resets & typography */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background: var(--eco-bg);
+  color: var(--eco-text-main);
+}
+
+body.portal-body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--eco-bg);
+  color: var(--eco-text-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.portal-container {
+  width: 100%;
+  max-width: var(--portal-max-width);
+  margin-inline: auto;
+  padding-inline: var(--portal-pad-inline);
+  box-sizing: border-box;
+}
+
+/* Eyebrows & Badges */
+.portal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--eco-primary);
+  background: var(--eco-surface-sage);
+  padding: 6px 14px;
+  border-radius: var(--portal-radius-full);
+  margin-bottom: 16px;
+}
+
+.portal-eyebrow--sand {
+  background: var(--eco-surface-sand);
+  color: var(--eco-sand-dark);
+}
+
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
+.portal-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(251, 251, 249, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--eco-border-light);
+  transition: all 0.3s ease;
+}
+
+.portal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+.portal-nav__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.portal-nav__logo img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.portal-nav__links {
+  display: none;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.portal-nav__link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--eco-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.portal-nav__link:hover {
+  color: var(--eco-forest);
+}
+
+.portal-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Buttons */
+.portal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: var(--portal-radius-full);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  box-sizing: border-box;
+}
+
+.portal-btn--primary {
+  background: var(--eco-forest);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(14, 53, 12, 0.2);
+}
+
+.portal-btn--primary:hover {
+  background: var(--eco-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14, 53, 12, 0.28);
+}
+
+.portal-btn--secondary {
+  background: var(--eco-surface-sage);
+  color: var(--eco-forest);
+}
+
+.portal-btn--secondary:hover {
+  background: #ddead9;
+  transform: translateY(-2px);
+}
+
+.portal-btn--outline {
+  background: transparent;
+  border-color: var(--eco-border);
+  color: var(--eco-text-main);
+}
+
+.portal-btn--outline:hover {
+  border-color: var(--eco-forest);
+  background: rgba(14, 53, 12, 0.04);
+}
+
+.portal-btn--full {
+  width: 100%;
+}
+
+@media (min-width: 860px) {
+  .portal-nav__links {
+    display: flex;
+  }
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.portal-hero {
+  padding-block: 60px 80px;
+  position: relative;
+}
+
+.portal-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.portal-hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.12;
+  color: var(--eco-forest);
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+}
+
+.portal-hero__lead {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: var(--eco-text-muted);
+  line-height: 1.65;
+  margin: 0 0 32px;
+  max-width: 540px;
+}
+
+.portal-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.portal-hero__stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--eco-border);
+}
+
+.portal-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.portal-stat__num {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--eco-forest);
+}
+
+.portal-stat__label {
+  font-size: 11px;
+  color: var(--eco-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Hero Visual Composition */
+.portal-hero__visual-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.portal-hero__organic-blob {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 460px;
+  max-height: 460px;
+  background: radial-gradient(circle at 60% 40%, #e3efe0 0%, #edf5eb 70%, transparent 100%);
+  border-radius: 46% 54% 63% 37% / 41% 44% 56% 59%;
+  filter: blur(8px);
+  z-index: 1;
+}
+
+.portal-hero__img-container {
+  position: relative;
+  z-index: 2;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+}
+
+.portal-hero__img {
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(14, 53, 12, 0.12));
+  transform: rotate(-3deg);
+  transition: transform 0.4s ease;
+}
+
+.portal-hero__img:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.portal-hero__badge-tag {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--eco-border);
+  padding: 10px 16px;
+  border-radius: var(--portal-radius-md);
+  box-shadow: var(--portal-shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 3;
+}
+
+.portal-hero__badge-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--eco-surface-sage);
+  display: grid;
+  place-items: center;
+  color: var(--eco-primary);
+}
+
+@media (min-width: 960px) {
+  .portal-hero {
+    padding-block: 80px 110px;
+  }
+  .portal-hero__grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 60px;
+  }
+}
+
+/* ==========================================================================
+   ROLE SELECTION SECTION ("Masuk sebagai siapa?")
+   ========================================================================== */
+.portal-section {
+  padding-block: 70px 90px;
+  border-top: 1px solid var(--eco-border-light);
+}
+
+.portal-section--soft {
+  background: var(--eco-surface-soft);
+}
+
+.portal-section-head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 50px;
+}
+
+.portal-section-head__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: var(--eco-forest);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+
+.portal-section-head__subtitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  color: var(--eco-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.role-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .role-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1080px) {
+  .role-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.role-card {
+  background: var(--eco-surface);
+  border: 1px solid var(--eco-border);
+  border-radius: var(--portal-radius-lg);
+  padding: 36px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--portal-shadow-subtle);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.role-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--portal-shadow-hover);
+  border-color: #c9d8c6;
+}
+
+.role-card--consumer {
+  border-top: 5px solid var(--eco-primary);
+}
+
+.role-card--merchant {
+  border-top: 5px solid var(--eco-forest);
+}
+
+.role-card--bank {
+  border-top: 5px solid #eaa41a;
+}
+
+.role-card__header {
+  margin-bottom: 24px;
+}
+
+.role-card__icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--portal-radius-md);
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+}
+
+.role-card--consumer .role-card__icon-wrap {
+  background: var(--eco-surface-sage);
+}
+
+.role-card--merchant .role-card__icon-wrap {
+  background: #e6efe5;
+}
+
+.role-card--bank .role-card__icon-wrap {
+  background: #fdf5e6;
+}
+
+.role-card__title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--eco-forest);
+  margin: 0 0 10px;
+}
+
+.role-card__copy {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--eco-text-muted);
+  margin: 0 0 20px;
+}
+
+.role-card__perks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.role-card__perk-item {
+  font-size: 12.5px;
+  color: var(--eco-text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-card__perk-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--eco-primary);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   "ONE Q-PACK, ONE DIGITAL IDENTITY" WORKFLOW
+   ========================================================================== */
+.identity-flow-wrapper {
+  background: #ffffff;
+  border: 1px solid var(--eco-border);
+  border-radius: var(--portal-radius-xl);
+  padding: 44px 36px;
+  box-shadow: var(--portal-shadow-subtle);
+}
+
+.identity-flow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+  position: relative;
+  align-items: center;
+}
+
+.flow-step-card {
+  background: var(--eco-surface-soft);
+  border: 1px solid var(--eco-border-light);
+  border-radius: var(--portal-radius-md);
+  padding: 22px 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+}
+
+.flow-step-card:hover {
+  background: var(--eco-surface-sage);
+  transform: translateY(-3px);
+  border-color: #c9dec5;
+}
+
+.flow-step-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.flow-step-title {
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--eco-forest);
+  margin: 0;
+}
+
+.flow-step-desc {
+  font-size: 11px;
+  color: var(--eco-text-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ==========================================================================
+   MATERIAL STORY SECTION (KULIT SINGKONG + SISIK IKAN)
+   ========================================================================== */
+.materials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+
+@media (min-width: 860px) {
+  .materials-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+
+.material-card-editorial {
+  background: #ffffff;
+  border: 1px solid var(--eco-border);
+  border-radius: var(--portal-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--portal-shadow-subtle);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.material-card-editorial:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--portal-shadow-hover);
+}
+
+.material-card-editorial__image-box {
+  width: 100%;
+  height: 280px;
+  background: #f0f4ee;
+  position: relative;
+  overflow: hidden;
+}
+
+.material-card-editorial__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.material-card-editorial:hover .material-card-editorial__img {
+  transform: scale(1.05);
+}
+
+.material-card-editorial__tag {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--eco-forest);
+  padding: 5px 12px;
+  border-radius: var(--portal-radius-full);
+}
+
+.material-card-editorial__body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.material-card-editorial__title {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--eco-forest);
+  margin: 0;
+}
+
+.material-card-editorial__role {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--eco-primary);
+  margin: 0;
+}
+
+.material-card-editorial__desc {
+  font-size: 13.5px;
+  color: var(--eco-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==========================================================================
+   HOW IT WORKS (JOURNEY 01 TO 06)
+   ========================================================================== */
+.journey-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+@media (min-width: 600px) {
+  .journey-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .journey-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.journey-step-card {
+  background: #ffffff;
+  border: 1px solid var(--eco-border);
+  border-radius: var(--portal-radius-lg);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--portal-shadow-subtle);
+  transition: all 0.25s ease;
+}
+
+.journey-step-card:hover {
+  transform: translateY(-3px);
+  border-color: #bad3b7;
+  box-shadow: var(--portal-shadow-card);
+}
+
+.journey-step-card__num {
+  font-family: var(--font-heading);
+  font-size: 38px;
+  font-weight: 800;
+  color: #cad8c7;
+  line-height: 1;
+  margin-bottom: 14px;
+  transition: color 0.25s ease;
+}
+
+.journey-step-card:hover .journey-step-card__num {
+  color: var(--eco-primary);
+}
+
+.journey-step-card__title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--eco-forest);
+  margin: 0 0 8px;
+}
+
+.journey-step-card__desc {
+  font-size: 13px;
+  color: var(--eco-text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ==========================================================================
+   IMPACT SECTION
+   ========================================================================== */
+.impact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 860px) {
+  .impact-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.impact-card {
+  background: var(--eco-forest);
+  color: #ffffff;
+  border-radius: var(--portal-radius-xl);
+  padding: 38px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.impact-card--light {
+  background: var(--eco-surface-sage);
+  color: var(--eco-forest);
+  border: 1px solid var(--eco-border);
+}
+
+.impact-card__metric {
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.05;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.impact-card__label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+
+.impact-card__desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* ==========================================================================
+   CIRCULARITY TEASER (COLLECT 10)
+   ========================================================================== */
+.circularity-banner {
+  background: linear-gradient(135deg, #134410 0%, #0e350c 100%);
+  color: #ffffff;
+  border-radius: var(--portal-radius-xl);
+  padding: 50px 36px;
+  box-shadow: var(--portal-shadow-hover);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.circularity-banner__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  margin: 0 0 14px;
+}
+
+.circularity-banner__desc {
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  max-width: 600px;
+  margin: 0 auto 36px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.circularity-slots-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 640px;
+  margin: 0 auto 32px;
+}
+
+.circularity-slot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.35);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.25s ease;
+}
+
+.circularity-slot--filled {
+  border-style: solid;
+  border-color: #64dd17;
+  background: rgba(100, 221, 23, 0.2);
+  color: #ffffff;
+}
+
+.circularity-unlocked-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: var(--portal-radius-full);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   FINAL CTA & FOOTER
+   ========================================================================== */
+.portal-cta-closing {
+  padding-block: 80px 100px;
+  text-align: center;
+}
+
+.portal-footer {
+  background: #ffffff;
+  border-top: 1px solid var(--eco-border);
+  padding-block: 60px 40px;
+}
+
+.portal-footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .portal-footer__grid {
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+  }
+}
+
+.portal-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.portal-footer__tagline {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--eco-primary);
+}
+
+.portal-footer__desc {
+  font-size: 13px;
+  color: var(--eco-text-muted);
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.portal-footer__col-title {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--eco-forest);
+  margin: 0 0 16px;
+}
+
+.portal-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.portal-footer__link {
+  font-size: 13px;
+  color: var(--eco-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.portal-footer__link:hover {
+  color: var(--eco-forest);
+}
+
+.portal-footer__bottom {
+  padding-top: 24px;
+  border-top: 1px solid var(--eco-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--eco-text-light);
+}
+
+@media (min-width: 600px) {
+  .portal-footer__bottom {
+    flex-direction: row;
+  }
+}

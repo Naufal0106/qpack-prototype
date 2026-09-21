@@ -16,6 +16,18 @@
     {
       "source": "/merchant/packages",
       "destination": "/merchant/qr.html"
+    },
+    {
+      "source": "/bank-sampah",
+      "destination": "/bank-sampah.html"
+    },
+    {
+      "source": "/consumer",
+      "destination": "/consumer/dashboard.html"
+    },
+    {
+      "source": "/merchant",
+      "destination": "/merchant/dashboard.html"
     }
   ]
 }

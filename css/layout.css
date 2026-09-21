@@ -283,33 +283,34 @@ body {
 /* Desktop Breakpoint (>= 1024px) */
 @media (min-width: 1024px) {
   body {
-    background: #e8ede8;
-    padding-block: 20px;
+    background: #fbfbf9;
+    padding-block: 24px;
   }
   .app-shell {
-    max-width: var(--container-desktop, 1140px);
+    max-width: var(--container-portal, 1240px);
     margin-inline: auto;
     border-radius: var(--radius-xl);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 10px 40px rgba(14, 53, 12, 0.07);
+    border: 1px solid #e4e8e0;
     overflow: hidden;
   }
   .app-content {
-    padding: 24px 32px 48px;
-    padding-bottom: 48px !important;
+    padding: 32px 40px 60px;
+    padding-bottom: 60px !important;
   }
   .bottom-nav {
     display: none !important;
   }
   .passport-desktop-grid {
     display: grid;
-    grid-template-columns: 7fr 5fr;
-    gap: 24px;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 32px;
     align-items: start;
   }
   .qr-management-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 24px;
   }
 }
 

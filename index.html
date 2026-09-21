@@ -2,85 +2,610 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="QPack — kemasan biodegradable berbasis bahan alami untuk masa depan yang lebih baik."
+      content="Q-Pack — Ekosistem Kemasan Sirkular Berbasis Limbah Alami & Identitas Digital"
     />
-    <meta name="theme-color" content="#FFFFFF" />
-    <title>QPack — Kemasan Cerdas, Bumi Terjaga.</title>
+    <meta name="theme-color" content="#21721E" />
+    <title>Q-Pack — Digital Circular Packaging Ecosystem</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
-    <!-- QPack Design System -->
-    <link rel="stylesheet" href="css/variables.css" />
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/components.css" />
-
-    <!-- Page-specific styling: does not modify the foundation files. -->
-    <link rel="stylesheet" href="css/welcome.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/portal.css" />
   </head>
+  <body class="portal-body">
+    <!-- Header Navigation -->
+    <header class="portal-nav-wrap">
+      <div class="portal-container">
+        <nav class="portal-nav" aria-label="Navigasi Utama Portal">
+          <a href="/" class="portal-nav__logo" aria-label="Q-Pack Beranda">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack Ecosystem" />
+          </a>
 
-  <body>
-    <main class="welcome-page">
-      <div class="welcome-page__content">
-        <a
-          class="welcome-page__logo-link"
-          href="index.html"
-          aria-label="QPack Beranda"
-        >
-          <img
-            class="welcome-page__logo"
-            src="assets/logo/Qpack Logo FINAL.png"
-            alt="QPack"
-          />
-        </a>
+          <ul class="portal-nav__links">
+            <li><a href="#about" class="portal-nav__link">About</a></li>
+            <li><a href="#roles" class="portal-nav__link">Portal Peran</a></li>
+            <li><a href="#materials" class="portal-nav__link">Materials</a></li>
+            <li><a href="#how-it-works" class="portal-nav__link">How It Works</a></li>
+            <li><a href="#impact" class="portal-nav__link">Impact</a></li>
+          </ul>
 
-        <section class="welcome-page__intro" aria-labelledby="welcome-title">
-          <h1 id="welcome-title" class="welcome-page__title">
-            Kemasan Cerdas,<br />
-            Bumi Terjaga.
-          </h1>
+          <div class="portal-nav__actions">
+            <a href="#roles" class="portal-btn portal-btn--primary">
+              Masuk ke Portal
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-          <p class="welcome-page__description">
-            Kemasan ramah lingkungan berbasis bahan alami untuk masa depan yang
-            lebih baik.
-          </p>
-        </section>
+    <main>
+      <!-- Hero Section -->
+      <section class="portal-hero">
+        <div class="portal-container">
+          <div class="portal-hero__grid">
+            <div class="portal-hero__content">
+              <span class="portal-eyebrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                Digital Circular Packaging Ecosystem
+              </span>
 
-        <div class="welcome-page__product" aria-hidden="true">
-          <img
-            src="assets/images/Prototype Polymailer.png"
-            alt=""
-            class="welcome-page__product-image"
-          />
+              <h1 class="portal-hero__title">
+                Packaging that carries<br />more than your product.
+              </h1>
+
+              <p class="portal-hero__lead">
+                Q-Pack menghubungkan material berbasis limbah, identitas digital, dan aksi sirkular dalam satu ekosistem.
+              </p>
+
+              <div class="portal-hero__actions">
+                <a href="#roles" class="portal-btn portal-btn--primary">
+                  Mulai di Q-Pack
+                </a>
+                <a href="#how-it-works" class="portal-btn portal-btn--secondary">
+                  Pelajari Cara Kerja
+                </a>
+              </div>
+
+              <div class="portal-hero__stats">
+                <div class="portal-stat">
+                  <span class="portal-stat__num">-65%</span>
+                  <span class="portal-stat__label">Emisi CO2</span>
+                </div>
+                <div class="portal-stat">
+                  <span class="portal-stat__num">±180 Hari</span>
+                  <span class="portal-stat__label">Dapat Terurai</span>
+                </div>
+                <div class="portal-stat">
+                  <span class="portal-stat__num">100%</span>
+                  <span class="portal-stat__label">Limbah Alami</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="portal-hero__visual-wrap">
+              <div class="portal-hero__organic-blob"></div>
+              <div class="portal-hero__img-container">
+                <img
+                  src="/assets/images/Prototype Polymailer.png"
+                  alt="Q-Pack Bio-Circular Polymailer Prototype"
+                  class="portal-hero__img"
+                />
+                <div class="portal-hero__badge-tag">
+                  <div class="portal-hero__badge-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  </div>
+                  <div>
+                    <div style="font-size: 12px; font-weight: 700; color: var(--eco-forest);">100% Circular Polymailer</div>
+                    <div style="font-size: 10px; color: var(--eco-text-muted);">Verified QR Digital Passport</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="welcome-page__bottom">
-          <div class="welcome-page__dots" aria-label="Slide 1 dari 3">
-            <span class="welcome-page__dot welcome-page__dot--active"></span>
-            <span class="welcome-page__dot"></span>
-            <span class="welcome-page__dot"></span>
+      <!-- Role Selection Section -->
+      <section class="portal-section portal-section--soft" id="roles">
+        <div class="portal-container">
+          <div class="portal-section-head">
+            <span class="portal-eyebrow">Akses Ekosistem</span>
+            <h2 class="portal-section-head__title">Masuk sebagai siapa?</h2>
+            <p class="portal-section-head__subtitle">
+              Pilih pengalaman Q-Pack sesuai peranmu. Setiap peran saling terhubung membentuk siklus kemasan berkelanjutan.
+            </p>
           </div>
 
-          <a class="welcome-page__primary-action" href="login.html">
-            Mulai
-          </a>
+          <div class="role-cards-grid">
+            <!-- Role A: Consumer -->
+            <div class="role-card role-card--consumer">
+              <div>
+                <div class="role-card__header">
+                  <div class="role-card__icon-wrap">
+                    <img src="/assets/icons/cust-role-icon.svg" alt="Consumer" style="width: 28px; height: 28px;" />
+                  </div>
+                  <span class="portal-eyebrow" style="margin-bottom: 8px;">Konsumen & Pembeli</span>
+                  <h3 class="role-card__title">Consumer</h3>
+                  <p class="role-card__copy">
+                    Scan Q-Pack, kenali materialnya, kumpulkan kemasan, dan ikut dalam aksi sirkular.
+                  </p>
+                </div>
 
-          <a class="welcome-page__secondary-action" href="login.html">
-            Pelajari lebih lanjut <span aria-hidden="true">&gt;</span>
-          </a>
+                <ul class="role-card__perks">
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot"></span>
+                    <span>Pindai kode QR Digital Passport</span>
+                  </li>
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot"></span>
+                    <span>Reward +50 poin setiap kemasan unik</span>
+                  </li>
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot"></span>
+                    <span>Kumpulkan 10 kemasan untuk aksi sirkular</span>
+                  </li>
+                </ul>
+              </div>
+
+              <a href="/consumer/dashboard.html" class="portal-btn portal-btn--primary portal-btn--full">
+                Masuk sebagai Konsumen
+              </a>
+            </div>
+
+            <!-- Role B: Merchant / Brand -->
+            <div class="role-card role-card--merchant">
+              <div>
+                <div class="role-card__header">
+                  <div class="role-card__icon-wrap">
+                    <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" style="width: 28px; height: 28px;" />
+                  </div>
+                  <span class="portal-eyebrow" style="margin-bottom: 8px;">Mitra Bisnis & Brand</span>
+                  <h3 class="role-card__title">Merchant</h3>
+                  <p class="role-card__copy">
+                    Kelola identitas Q-Pack, pantau engagement, dan lihat data keberlanjutan bisnis.
+                  </p>
+                </div>
+
+                <ul class="role-card__perks">
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot"></span>
+                    <span>Manajemen kode QR & cetak stiker fisik</span>
+                  </li>
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot"></span>
+                    <span>Analitik interaksi konsumen real-time</span>
+                  </li>
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot"></span>
+                    <span>Laporan metrik ESG & ketertelusuran batch</span>
+                  </li>
+                </ul>
+              </div>
+
+              <a href="/merchant/dashboard.html" class="portal-btn portal-btn--primary portal-btn--full">
+                Masuk sebagai Merchant
+              </a>
+            </div>
+
+            <!-- Role C: Bank Sampah -->
+            <div class="role-card role-card--bank">
+              <div>
+                <div class="role-card__header">
+                  <div class="role-card__icon-wrap">
+                    <img src="/assets/icons/eco-icon.svg" alt="Bank Sampah" style="width: 28px; height: 28px;" />
+                  </div>
+                  <span class="portal-eyebrow portal-eyebrow--sand" style="margin-bottom: 8px;">Drop Point & Daur Ulang</span>
+                  <h3 class="role-card__title">Mitra Bank Sampah</h3>
+                  <p class="role-card__copy">
+                    Verifikasi pengembalian kemasan dan ikut menghubungkan kemasan dengan ekonomi sirkular.
+                  </p>
+                </div>
+
+                <ul class="role-card__perks">
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot" style="background: #eaa41a;"></span>
+                    <span>Verifikasi fisik kemasan yang dikembalikan</span>
+                  </li>
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot" style="background: #eaa41a;"></span>
+                    <span>Pencatatan alur sirkular terpadu</span>
+                  </li>
+                  <li class="role-card__perk-item">
+                    <span class="role-card__perk-dot" style="background: #eaa41a;"></span>
+                    <span>Fasilitas kompos mandiri & daur ulang</span>
+                  </li>
+                </ul>
+              </div>
+
+              <a href="/bank-sampah" class="portal-btn portal-btn--secondary portal-btn--full">
+                Masuk sebagai Mitra
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- "One Q-Pack, One Digital Identity" Workflow -->
+      <section class="portal-section" id="about">
+        <div class="portal-container">
+          <div class="portal-section-head">
+            <span class="portal-eyebrow">Ketertelusuran & Identitas</span>
+            <h2 class="portal-section-head__title">
+              One Q-Pack,<br />One Digital Identity.
+            </h2>
+            <p class="portal-section-head__subtitle">
+              Setiap kemasan fisik terhubung langsung dengan catatan digital transparan, memvalidasi bahan baku, nomor batch produksi, hingga aksi pasca-pakai.
+            </p>
+          </div>
+
+          <div class="identity-flow-wrapper">
+            <div class="identity-flow-grid">
+              <!-- Step 1 -->
+              <div class="flow-step-card">
+                <div class="flow-step-icon">
+                  <img src="/assets/icons/green-product-icon.svg" style="width: 22px;" alt="" />
+                </div>
+                <h4 class="flow-step-title">Physical Q-Pack</h4>
+                <p class="flow-step-desc">Kemasan alami dari limbah singkong & sisik ikan</p>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="flow-step-card">
+                <div class="flow-step-icon">
+                  <img src="/assets/icons/scan-icon.svg" style="width: 22px;" alt="" />
+                </div>
+                <h4 class="flow-step-title">QR Identity</h4>
+                <p class="flow-step-desc">Kode unik pada setiap kemasan fisik</p>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="flow-step-card">
+                <div class="flow-step-icon">
+                  <img src="/assets/icons/security-icon.svg" style="width: 22px;" alt="" />
+                </div>
+                <h4 class="flow-step-title">Digital Passport</h4>
+                <p class="flow-step-desc">Akses laman terverifikasi tanpa login wajib</p>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="flow-step-card">
+                <div class="flow-step-icon">
+                  <img src="/assets/icons/traceability-icon.svg" style="width: 22px;" alt="" />
+                </div>
+                <h4 class="flow-step-title">Traceability</h4>
+                <p class="flow-step-desc">Nomor batch, tanggal, dan mitra brand</p>
+              </div>
+
+              <!-- Step 5 -->
+              <div class="flow-step-card">
+                <div class="flow-step-icon">
+                  <img src="/assets/icons/impact-tracker.svg" style="width: 22px;" alt="" />
+                </div>
+                <h4 class="flow-step-title">Impact</h4>
+                <p class="flow-step-desc">Kalkulasi emisi karbon yang terhindar</p>
+              </div>
+
+              <!-- Step 6 -->
+              <div class="flow-step-card">
+                <div class="flow-step-icon">
+                  <img src="/assets/icons/reward-icon.svg" style="width: 22px;" alt="" />
+                </div>
+                <h4 class="flow-step-title">Circular Action</h4>
+                <p class="flow-step-desc">Koleksi poin dan pengembalian sirkular</p>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 32px;">
+              <a href="/p/QP-2027-000001" target="_blank" class="portal-btn portal-btn--secondary" style="font-size: 13px;">
+                Lihat Contoh Nyata Digital Passport (QP-2027-000001) &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Material Story Section -->
+      <section class="portal-section portal-section--soft" id="materials">
+        <div class="portal-container">
+          <div class="portal-section-head">
+            <span class="portal-eyebrow">Bahan Baku Alami</span>
+            <h2 class="portal-section-head__title">
+              Made from what would<br />otherwise go to waste.
+            </h2>
+            <p class="portal-section-head__subtitle">
+              Q-Pack memanfaatkan dua limbah alami lokal dari sektor agrikultur dan perikanan, menghentikan ketergantungan pada polimer berbasis fosil.
+            </p>
+          </div>
+
+          <div class="materials-grid">
+            <!-- Material 1: Kulit Singkong -->
+            <div class="material-card-editorial">
+              <div class="material-card-editorial__image-box">
+                <img
+                  src="/assets/images/bahan-baku-kulit-singkong.png"
+                  alt="Bahan Baku Kulit Singkong"
+                  class="material-card-editorial__img"
+                />
+                <span class="material-card-editorial__tag">Residu Agrikultur Lokal</span>
+              </div>
+              <div class="material-card-editorial__body">
+                <h3 class="material-card-editorial__title">Kulit Singkong</h3>
+                <div class="material-card-editorial__role">
+                  Sumber selulosa / nanocellulose sebagai penguat material
+                </div>
+                <p class="material-card-editorial__desc">
+                  Diekstrak dari residu industri pengolahan tapioka dan pangan lokal. Serat selulosanya memberikan kekuatan mekanik, fleksibilitas, dan ketahanan sobek tinggi pada polymailer.
+                </p>
+              </div>
+            </div>
+
+            <!-- Material 2: Sisik Ikan -->
+            <div class="material-card-editorial">
+              <div class="material-card-editorial__image-box">
+                <img
+                  src="/assets/images/sisik-ikan.png"
+                  alt="Bahan Baku Sisik Ikan"
+                  class="material-card-editorial__img"
+                />
+                <span class="material-card-editorial__tag">Limbah Perikanan Pesisir</span>
+              </div>
+              <div class="material-card-editorial__body">
+                <h3 class="material-card-editorial__title">Sisik Ikan</h3>
+                <div class="material-card-editorial__role">
+                  Sumber chitosan sebagai komponen pendukung matriks biopolimer
+                </div>
+                <p class="material-card-editorial__desc">
+                  Diolah dari limbah perikanan pesisir untuk menghasilkan kitosan alami. Komponen ini memperkuat matriks polimer, memberikan ketahanan air alami, serta membantu kemasan terurai alami di tanah.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works Section -->
+      <section class="portal-section" id="how-it-works">
+        <div class="portal-container">
+          <div class="portal-section-head">
+            <span class="portal-eyebrow">Alur Sirkular</span>
+            <h2 class="portal-section-head__title">From Package to Circular Action</h2>
+            <p class="portal-section-head__subtitle">
+              Bagaimana setiap kemasan bergerak melalui ekosistem tertutup dari tangan konsumen hingga kembali menjadi nutrisi tanah.
+            </p>
+          </div>
+
+          <div class="journey-grid">
+            <!-- 01 -->
+            <div class="journey-step-card">
+              <div class="journey-step-card__num">01</div>
+              <div>
+                <h3 class="journey-step-card__title">SCAN</h3>
+                <p class="journey-step-card__desc">
+                  Kenali identitas digital Q-Pack langsung dari kamera smartphone Anda.
+                </p>
+              </div>
+            </div>
+
+            <!-- 02 -->
+            <div class="journey-step-card">
+              <div class="journey-step-card__num">02</div>
+              <div>
+                <h3 class="journey-step-card__title">COLLECT</h3>
+                <p class="journey-step-card__desc">
+                  Kumpulkan kemasan unik dan dapatkan poin reward ke dompet akun konsumen.
+                </p>
+              </div>
+            </div>
+
+            <!-- 03 -->
+            <div class="journey-step-card">
+              <div class="journey-step-card__num">03</div>
+              <div>
+                <h3 class="journey-step-card__title">LEARN</h3>
+                <p class="journey-step-card__desc">
+                  Pelajari komposisi bahan baku alami dan dampak positif karbon yang terhindar.
+                </p>
+              </div>
+            </div>
+
+            <!-- 04 -->
+            <div class="journey-step-card">
+              <div class="journey-step-card__num">04</div>
+              <div>
+                <h3 class="journey-step-card__title">RETURN</h3>
+                <p class="journey-step-card__desc">
+                  Kembalikan kemasan melalui jalur sirkular atau fasilitas mitra Bank Sampah.
+                </p>
+              </div>
+            </div>
+
+            <!-- 05 -->
+            <div class="journey-step-card">
+              <div class="journey-step-card__num">05</div>
+              <div>
+                <h3 class="journey-step-card__title">VERIFY</h3>
+                <p class="journey-step-card__desc">
+                  Pengembalian diverifikasi oleh mitra drop-point secara tercatat di sistem.
+                </p>
+              </div>
+            </div>
+
+            <!-- 06 -->
+            <div class="journey-step-card">
+              <div class="journey-step-card__num">06</div>
+              <div>
+                <h3 class="journey-step-card__title">IMPACT</h3>
+                <p class="journey-step-card__desc">
+                  Aksi tercatat sebagai bagian dari ekosistem hijau yang terukur dan berdampak nyata.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Impact Section -->
+      <section class="portal-section portal-section--soft" id="impact">
+        <div class="portal-container">
+          <div class="portal-section-head">
+            <span class="portal-eyebrow">Metrik Lingkungan</span>
+            <h2 class="portal-section-head__title">Impact you can see.</h2>
+            <p class="portal-section-head__subtitle">
+              Transparansi data keberlanjutan yang dapat dipertanggungjawabkan dari hulu hingga hilir.
+            </p>
+          </div>
+
+          <div class="impact-grid">
+            <div class="impact-card">
+              <div>
+                <div class="impact-card__label">MATERIAL</div>
+                <div class="impact-card__metric">100%</div>
+                <p class="impact-card__desc">
+                  Bahan baku alami dari limbah kulit singkong dan sisik ikan, tanpa plastik sintetis konvensional.
+                </p>
+              </div>
+            </div>
+
+            <div class="impact-card impact-card--light">
+              <div>
+                <div class="impact-card__label" style="color: var(--eco-primary);">TRACEABILITY</div>
+                <div class="impact-card__metric" style="color: var(--eco-forest);">Batch ID</div>
+                <p class="impact-card__desc">
+                  Ketertelusuran identitas kode kemasan, produsen, dan tanggal produksi tanpa GPS invasif.
+                </p>
+              </div>
+            </div>
+
+            <div class="impact-card">
+              <div>
+                <div class="impact-card__label">CIRCULARITY</div>
+                <div class="impact-card__metric">-65%</div>
+                <p class="impact-card__desc">
+                  Pengurangan emisi karbon terhitung dan mampu terurai sempurna dalam ±180 hari di tanah alami.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Circularity Teaser Section -->
+      <section class="portal-section">
+        <div class="portal-container">
+          <div class="circularity-banner">
+            <h2 class="circularity-banner__title">Collect 10. Complete the Circle.</h2>
+            <p class="circularity-banner__desc">
+              Sistem pengumpulan kemasan berbasis gamifikasi. Kumpulkan 10 kemasan unik untuk membuka opsi aksi sirkular mandiri.
+            </p>
+
+            <div class="circularity-slots-row">
+              <div class="circularity-slot circularity-slot--filled">01</div>
+              <div class="circularity-slot circularity-slot--filled">02</div>
+              <div class="circularity-slot">03</div>
+              <div class="circularity-slot">04</div>
+              <div class="circularity-slot">05</div>
+              <div class="circularity-slot">06</div>
+              <div class="circularity-slot">07</div>
+              <div class="circularity-slot">08</div>
+              <div class="circularity-slot">09</div>
+              <div class="circularity-slot">10</div>
+            </div>
+
+            <div class="circularity-unlocked-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              Target Sirkular Terbuka: [ Kompos Mandiri ] & [ Bank Sampah Mitra ]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA Section -->
+      <section class="portal-cta-closing">
+        <div class="portal-container">
+          <div style="max-width: 680px; margin: 0 auto;">
+            <span class="portal-eyebrow">Bergabung Bersama Kami</span>
+            <h2 class="portal-section-head__title" style="margin-top: 8px;">
+              Your package has a second life.
+            </h2>
+            <p class="portal-section-head__subtitle" style="margin-bottom: 32px;">
+              Mulai dari satu kemasan. Hubungkan material, manusia, dan aksi sirkular dalam ekosistem Q-Pack.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+              <a href="/consumer/dashboard.html" class="portal-btn portal-btn--primary">
+                Masuk sebagai Konsumen
+              </a>
+              <a href="/merchant/dashboard.html" class="portal-btn portal-btn--secondary">
+                Untuk Merchant & Brand
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Minimalist Footer -->
+    <footer class="portal-footer">
+      <div class="portal-container">
+        <div class="portal-footer__grid">
+          <div class="portal-footer__brand">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" style="height: 38px; width: auto;" />
+            <div class="portal-footer__tagline">Material × Digital × Impact</div>
+            <p class="portal-footer__desc">
+              Pelopor ekosistem kemasan biodegradable berbahan dasar limbah singkong dan sisik ikan dengan passport digital sirkular.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="portal-footer__col-title">Ekosistem</h4>
+            <ul class="portal-footer__links">
+              <li><a href="#about" class="portal-footer__link">Tentang Q-Pack</a></li>
+              <li><a href="#materials" class="portal-footer__link">Bahan Baku Alami</a></li>
+              <li><a href="#how-it-works" class="portal-footer__link">Cara Kerja</a></li>
+              <li><a href="#impact" class="portal-footer__link">Dampak Lingkungan</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="portal-footer__col-title">Portal Peran</h4>
+            <ul class="portal-footer__links">
+              <li><a href="/consumer/dashboard.html" class="portal-footer__link">Portal Konsumen</a></li>
+              <li><a href="/consumer/scan.html" class="portal-footer__link">Pindai QR Kemasan</a></li>
+              <li><a href="/merchant/dashboard.html" class="portal-footer__link">Dashboard Merchant</a></li>
+              <li><a href="/merchant/qr" class="portal-footer__link">Manajemen QR</a></li>
+              <li><a href="/bank-sampah" class="portal-footer__link">Mitra Bank Sampah</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="portal-footer__col-title">Tautan Resmi</h4>
+            <ul class="portal-footer__links">
+              <li><a href="/p/QP-2027-000001" target="_blank" class="portal-footer__link">Passport Demo QP-001</a></li>
+              <li><a href="/p/QP-2027-000002" target="_blank" class="portal-footer__link">Passport Demo QP-002</a></li>
+              <li><a href="/api/health" target="_blank" class="portal-footer__link">Status Sistem (Health)</a></li>
+              <li><a href="/api/diagnostic" target="_blank" class="portal-footer__link">Diagnostik Database</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="portal-footer__bottom">
+          <div>&copy; 2027 Q-Pack Circular Ecosystem. All rights reserved.</div>
+          <div style="display: flex; gap: 18px;">
+            <span>Kulit Singkong & Sisik Ikan</span>
+            <span>•</span>
+            <span>Digital Passport</span>
+            <span>•</span>
+            <span>Ekonomi Sirkular</span>
+          </div>
         </div>
       </div>
-    </main>
+    </footer>
   </body>
 </html>

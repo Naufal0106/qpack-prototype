@@ -53,6 +53,7 @@
   --app-max-width: 480px;
   --container-tablet: 768px;
   --container-desktop: 1140px;
+  --container-portal: 1240px;
   --content-pad: 16px;
   --header-height: 64px;
   --bottom-nav-height: 72px;

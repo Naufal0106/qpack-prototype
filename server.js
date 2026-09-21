@@ -280,6 +280,21 @@ app.get(['/merchant/qr', '/merchant/packages'], (req, res) => {
   res.sendFile(path.join(__dirname, 'merchant', 'qr.html'));
 });
 
+// Route /bank-sampah -> Mitra Bank Sampah Portal
+app.get('/bank-sampah', (req, res) => {
+  res.sendFile(path.join(__dirname, 'bank-sampah.html'));
+});
+
+// Route /consumer -> Consumer Dashboard
+app.get('/consumer', (req, res) => {
+  res.redirect('/consumer/dashboard.html');
+});
+
+// Route /merchant -> Merchant Dashboard
+app.get('/merchant', (req, res) => {
+  res.redirect('/merchant/dashboard.html');
+});
+
 // Route /404 -> Package Not Found
 app.get('/404', (req, res) => {
   res.sendFile(path.join(__dirname, '404.html'));
