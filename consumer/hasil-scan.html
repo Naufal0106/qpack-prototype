@@ -188,14 +188,45 @@
             </div>
           </div>
 
-          <!-- Material & Sourcing Information -->
+          <!-- Material & Sourcing Information (Two Natural Waste Sources of Q-Pack) -->
           <div style="margin-top: 20px;">
-            <h3 class="section-title">Bahan Baku Alami</h3>
-            <div class="material-card">
-              <img id="material-image" src="/assets/images/bahan-baku-kulit-singkong.png" alt="Material" class="material-card__image" />
-              <div class="material-card__body">
-                <div class="material-card__title" id="material-name">-</div>
-                <div class="material-card__desc" id="material-desc">-</div>
+            <div class="row-between" style="margin-bottom: 8px;">
+              <h3 class="section-title" style="margin: 0;">Bahan Baku Alami</h3>
+              <span style="font-size: 10px; font-weight: 600; color: var(--color-primary-dark);">2 Sumber Limbah Sirkular</span>
+            </div>
+            <div id="materials-container" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Card 1: Kulit Singkong -->
+              <div class="material-card">
+                <img src="/assets/images/bahan-baku-kulit-singkong.png" alt="Kulit Singkong" class="material-card__image" />
+                <div class="material-card__body">
+                  <div class="row-between" style="align-items: flex-start;">
+                    <div class="material-card__title" style="color: var(--color-text); font-size: 13px;">Kulit Singkong</div>
+                    <span class="status-badge" style="background: #eaf6e5; color: var(--color-primary-dark); font-size: 9px; padding: 2px 6px;">Bahan #1</span>
+                  </div>
+                  <div style="font-size: 10px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
+                    Sumber selulosa/nanocellulose sebagai penguat material
+                  </div>
+                  <div class="material-card__desc" style="margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--color-text-muted);">
+                    Sumber selulosa/nanocellulose dari limbah kulit singkong.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2: Sisik Ikan -->
+              <div class="material-card">
+                <img src="/assets/images/sisik-ikan.png" alt="Sisik Ikan" class="material-card__image" />
+                <div class="material-card__body">
+                  <div class="row-between" style="align-items: flex-start;">
+                    <div class="material-card__title" style="color: var(--color-text); font-size: 13px;">Sisik Ikan</div>
+                    <span class="status-badge" style="background: #eaf6e5; color: var(--color-primary-dark); font-size: 9px; padding: 2px 6px;">Bahan #2</span>
+                  </div>
+                  <div style="font-size: 10px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
+                    Sumber chitosan sebagai komponen pendukung matriks biopolimer
+                  </div>
+                  <div class="material-card__desc" style="margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--color-text-muted);">
+                    Sumber chitosan dari limbah sisik ikan.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -327,10 +358,51 @@
         qrImg.src = `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`;
         qrImg.style.display = 'block';
 
-        // Material info
-        document.getElementById('material-name').textContent = pkg.material_name;
-        document.getElementById('material-desc').textContent = pkg.material_desc;
-        if (pkg.material_image_url) {
+        // Material info: Two natural waste-based raw material sources
+        const materialsContainer = document.getElementById('materials-container');
+        if (materialsContainer) {
+          const materialsList = (pkg.materials && Array.isArray(pkg.materials) && pkg.materials.length > 0)
+            ? pkg.materials
+            : [
+                {
+                  name: "Kulit Singkong",
+                  role: "Sumber selulosa/nanocellulose sebagai penguat material",
+                  description: "Sumber selulosa/nanocellulose dari limbah kulit singkong.",
+                  image_url: "/assets/images/bahan-baku-kulit-singkong.png"
+                },
+                {
+                  name: "Sisik Ikan",
+                  role: "Sumber chitosan sebagai komponen pendukung matriks biopolimer",
+                  description: "Sumber chitosan dari limbah sisik ikan.",
+                  image_url: "/assets/images/sisik-ikan.png"
+                }
+              ];
+
+          materialsContainer.innerHTML = materialsList.map((mat, idx) => `
+            <div class="material-card" style="margin-bottom: 0;">
+              <img src="${mat.image_url || '/assets/images/bahan-baku-kulit-singkong.png'}" alt="${mat.name}" class="material-card__image" />
+              <div class="material-card__body">
+                <div class="row-between" style="align-items: flex-start;">
+                  <div class="material-card__title" style="color: var(--color-text); font-size: 13px;">${mat.name}</div>
+                  <span class="status-badge" style="background: #eaf6e5; color: var(--color-primary-dark); font-size: 9px; padding: 2px 6px;">Bahan #${idx + 1}</span>
+                </div>
+                ${mat.role ? `<div style="font-size: 10px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">${mat.role}</div>` : ''}
+                <div class="material-card__desc" style="margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--color-text-muted);">
+                  ${mat.description}
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // Backward compatibility for legacy elements if present in DOM
+        if (document.getElementById('material-name')) {
+          document.getElementById('material-name').textContent = pkg.material_name;
+        }
+        if (document.getElementById('material-desc')) {
+          document.getElementById('material-desc').textContent = pkg.material_desc;
+        }
+        if (document.getElementById('material-image') && pkg.material_image_url) {
           document.getElementById('material-image').src = pkg.material_image_url;
         }
 

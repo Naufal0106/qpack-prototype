@@ -1,4 +1,5 @@
 import { queryOne, queryAll } from '../../db/database.js';
+import { QPACK_CANONICAL_MATERIALS } from '../../constants/materials.js';
 
 export class SQLitePackageRepository {
   async findByQRCode(qrCode) {
@@ -35,7 +36,13 @@ export class SQLitePackageRepository {
       JOIN batches b ON p.batch_id = b.id
       WHERE UPPER(p.qr_code) = UPPER(?)
     `;
-    return queryOne(sql, qrCode.trim()) || null;
+    const row = queryOne(sql, qrCode.trim());
+    if (!row) return null;
+
+    return {
+      ...row,
+      materials: QPACK_CANONICAL_MATERIALS
+    };
   }
 
   async count(merchantId = null) {

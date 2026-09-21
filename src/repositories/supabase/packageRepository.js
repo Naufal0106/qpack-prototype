@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '../../db/supabase.js';
+import { QPACK_CANONICAL_MATERIALS } from '../../constants/materials.js';
 
 export class SupabasePackageRepository {
   getClient() {
@@ -81,7 +82,8 @@ export class SupabasePackageRepository {
       merchant_name: merchant.name,
       merchant_brand_name: merchant.brand_name,
       merchant_email: merchant.email,
-      merchant_logo_url: merchant.logo_url
+      merchant_logo_url: merchant.logo_url,
+      materials: QPACK_CANONICAL_MATERIALS
     };
   }
 

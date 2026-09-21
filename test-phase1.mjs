@@ -183,8 +183,49 @@ try {
   assert(typeof repositories.consumers.findById === 'function', 'consumerRepository contract verified');
   console.log('✅ CRITERIA I & J PASSED: Business logic isolated from direct SQLite dependency.\n');
 
+  // ----------------------------------------------------
+  // CRITERION K: Normalized Q-Pack Material Specification & Global Negative Test
+  // ----------------------------------------------------
+  console.log('VERIFYING K: Q-Pack normalized materials (Kulit Singkong + Sisik Ikan) & negative alga test...');
+  const testPackages = ['QP-2027-000001', 'QP-2027-000002', 'QP-2027-000003'];
+  const forbiddenTerms = ['algae', 'alga', 'seaweed', 'rumput laut'];
+
+  for (const code of testPackages) {
+    const pkgRes = await request('GET', `/api/packages/${code}`);
+    assert(pkgRes.status === 200, `Expected 200 for ${code}`);
+    const data = pkgRes.body.data;
+
+    // A, B, C: Must return materials array with length >= 2
+    assert(Array.isArray(data.materials), `${code} must have materials array`);
+    assert(data.materials.length >= 2, `${code} materials length must be >= 2`);
+
+    // Check material names
+    const matNames = data.materials.map(m => m.name);
+    assert(matNames.includes('Kulit Singkong'), `${code} must include Kulit Singkong`);
+    assert(matNames.includes('Sisik Ikan'), `${code} must include Sisik Ikan`);
+
+    // Backward compatibility: legacy material fields still exist
+    assert(typeof data.material_name === 'string' && data.material_name.length > 0, `${code} missing material_name`);
+    assert(typeof data.material_desc === 'string' && data.material_desc.length > 0, `${code} missing material_desc`);
+
+    // D: Global negative test - no forbidden algae/seaweed terms in the response
+    const jsonStr = JSON.stringify(pkgRes.body).toLowerCase();
+    for (const term of forbiddenTerms) {
+      assert(!jsonStr.includes(term), `${code} response must NOT contain forbidden term: "${term}"`);
+    }
+  }
+
+  // Also check scan response for negative algae test
+  const scanCheck = await request('POST', '/api/scan', { qr_code: 'QP-2027-000002', consumer_id: 'cons_demo_001' });
+  const scanJsonStr = JSON.stringify(scanCheck.body).toLowerCase();
+  for (const term of forbiddenTerms) {
+    assert(!scanJsonStr.includes(term), `Scan response must NOT contain forbidden term: "${term}"`);
+  }
+
+  console.log('✅ CRITERION K PASSED: All 3 packages verified with 2 circular materials, zero algae references.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-J) PASSED!');
+  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-K) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {

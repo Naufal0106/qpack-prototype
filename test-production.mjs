@@ -53,7 +53,17 @@ try {
   assert(pkgRes1.status === 200, `Expected 200, got ${pkgRes1.status}`);
   assert(pkgRes1.body.data.qr_code === 'QP-2027-000001', 'QR Code mismatch');
   assert(pkgRes1.body.data.product_name.includes('Cassava'), 'Product mismatch');
-  console.log('✅ TEST P3 PASSED: QP-2027-000001 retrieved from production Supabase.\n');
+  assert(Array.isArray(pkgRes1.body.data.materials), 'Must have materials array');
+  assert(pkgRes1.body.data.materials.length >= 2, 'Must have at least 2 materials');
+  const matNames = pkgRes1.body.data.materials.map(m => m.name);
+  assert(matNames.includes('Kulit Singkong'), 'Must include Kulit Singkong');
+  assert(matNames.includes('Sisik Ikan'), 'Must include Sisik Ikan');
+  const forbiddenTerms = ['algae', 'alga', 'seaweed', 'rumput laut'];
+  const jsonStr = JSON.stringify(pkgRes1.body).toLowerCase();
+  for (const term of forbiddenTerms) {
+    assert(!jsonStr.includes(term), `Response must not include forbidden term: ${term}`);
+  }
+  console.log('✅ TEST P3 PASSED: QP-2027-000001 retrieved with 2 waste materials, zero algae.\n');
 
   // Generate a unique test consumer ID for production verification to guarantee clean isolated test state
   const testConsumerId = `prod_tester_${Date.now()}`;
@@ -94,11 +104,17 @@ try {
   });
   assert(scanRes2.status === 200, `Expected 200, got ${scanRes2.status}`);
   assert(scanRes2.body.package.product_name.includes('Marine Chitosan'), 'Product must be Marine Chitosan');
+  assert(Array.isArray(scanRes2.body.package.materials), 'Must have materials array');
+  assert(scanRes2.body.package.materials.length >= 2, 'Must have at least 2 materials');
+  const scan2JsonStr = JSON.stringify(scanRes2.body).toLowerCase();
+  for (const term of forbiddenTerms) {
+    assert(!scan2JsonStr.includes(term), `Scan 2 response must not include forbidden term: ${term}`);
+  }
   assert(scanRes2.body.scan.points_awarded === 50, 'Points awarded must be 50');
   assert(scanRes2.body.consumer.points === 100, 'Points balance must be 100');
   assert(scanRes2.body.consumer.unique_packages_collected === 2, 'Collection must be 2');
   assert(scanRes2.body.consumer.collection_progress === '2/10', 'Progress must be 2/10');
-  console.log('✅ TEST P6 PASSED: QR-002 produced distinct package data, +50 points, collection progress is 2/10.\n');
+  console.log('✅ TEST P6 PASSED: QR-002 produced distinct package data, 2 circular materials, zero algae, +50 points.\n');
 
   // 7. Merchant Analytics from Production Database (Task 9)
   console.log('TEST P7: Verifying Merchant Analytics from Production Database...');
