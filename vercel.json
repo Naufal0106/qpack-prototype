@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -8,6 +9,14 @@
     {
       "source": "/p/(.*)",
       "destination": "/consumer/hasil-scan.html"
+    },
+    {
+      "source": "/merchant/qr",
+      "destination": "/merchant/qr.html"
+    },
+    {
+      "source": "/merchant/packages",
+      "destination": "/merchant/qr.html"
     }
   ]
 }
