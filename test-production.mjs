@@ -129,6 +129,8 @@ try {
   assert(analyticsRes.body.analytics.total_scans >= 3, 'Total scans must be >= 3');
   assert(analyticsRes.body.analytics.unique_packages_scanned >= 2, 'Unique packages scanned must be >= 2');
   assert(analyticsRes.body.analytics.data_source_disclaimer === 'Diperbarui dari rekaman interaksi QR', 'Disclaimer verified');
+  console.log('✅ TEST P7 PASSED: Merchant analytics reading accurately from production database.\n');
+
   // 8. Reopening QP-001 after QP-002: Semantics & Claim Status Confirmation
   console.log('TEST P8: Verifying Points Semantics & Claim Status on Reopening QP-001...');
   const reopenPkgRes = await request(`/api/packages/QP-2027-000001?consumer_id=${testConsumerId}`);
