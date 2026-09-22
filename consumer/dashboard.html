@@ -58,7 +58,7 @@
       <main class="app-content">
         <!-- User Greeting -->
         <div class="dashboard-greeting">
-          <h1 class="dashboard-greeting__title" id="consumer-name">Halo, Budi Santoso 👋</h1>
+          <h1 class="dashboard-greeting__title" id="consumer-name">Halo, Budi Santoso</h1>
           <p class="dashboard-greeting__desc">Kumpulkan kemasan ramah lingkungan dan klaim Q-Pack Coin sirkularitas Anda.</p>
         </div>
 
@@ -106,8 +106,9 @@
                 Klaim Coin
               </button>
             </div>
-            <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 8px; line-height: 1.4;">
-              ℹ️ <em>Kode unik tertera di bawah QR atau stiker segel kemasan Q-Pack Anda.</em>
+            <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 8px; line-height: 1.4; display: flex; align-items: center; gap: 6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <em>Kode unik tertera di bawah QR atau stiker segel kemasan Q-Pack Anda.</em>
             </p>
             <div id="claim-feedback" style="display: none; margin-top: 10px; padding: 10px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; line-height: 1.4;"></div>
           </form>
@@ -139,11 +140,13 @@
 
         <!-- Info Biomaterial & Tukar Quick Access -->
         <div style="margin-top: 16px; display: flex; gap: 8px;">
-          <a href="/scan" class="btn btn--outline" style="flex: 1; padding: 10px; font-size: 12px; justify-content: center;">
-            🌱 Info Material &amp; Nilai Sirkular
+          <a href="/scan" class="btn btn--outline" style="flex: 1; padding: 10px; font-size: 12px; justify-content: center; display: inline-flex; align-items: center; gap: 6px;">
+            <img src="/assets/icons/green-leaf-icon.svg" style="width: 14px; height: 14px;" alt="" />
+            Info Material &amp; Nilai Sirkular
           </a>
-          <a href="/consumer/scan.html" class="btn btn--primary" style="flex: 1; padding: 10px; font-size: 12px; justify-content: center;">
-            🎟️ Tukar Kode Kemasan
+          <a href="/consumer/scan.html" class="btn btn--primary" style="flex: 1; padding: 10px; font-size: 12px; justify-content: center; display: inline-flex; align-items: center; gap: 6px;">
+            <img src="/assets/icons/tukar-icon.svg" style="width: 15px; height: 15px; filter: brightness(0) invert(1);" alt="" />
+            Tukar Kode Kemasan
           </a>
         </div>
 
@@ -211,7 +214,7 @@
           const cons = profileData.consumer;
           const scans = profileData.recent_scans || [];
 
-          document.getElementById('consumer-name').textContent = `Halo, ${cons.name} 👋`;
+          document.getElementById('consumer-name').textContent = `Halo, ${cons.name}`;
           document.getElementById('consumer-points-val').innerHTML = `${cons.points} <span style="font-size: 16px; font-weight: 500;">Coin</span>`;
           document.getElementById('collection-badge').textContent = `${cons.unique_packages_collected} / ${cons.collection_target} Terkumpul`;
           document.getElementById('collection-count-text').textContent = `${cons.unique_packages_collected} / ${cons.collection_target} Q-Pack Unik`;
@@ -292,20 +295,20 @@
           if (claim.is_first_scan) {
             showFeedback(
               'success',
-              `🎉 <strong>Selamat!</strong> Klaim berhasil. Anda mendapatkan <strong>+${claim.points_awarded} Q-Pack Coin</strong> untuk kemasan <code>${claim.unique_code}</code>.`
+              `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: -2px; margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg><strong>Selamat!</strong> Klaim berhasil. Anda mendapatkan <strong>+${claim.points_awarded} Q-Pack Coin</strong> untuk kemasan <code>${claim.unique_code}</code>.`
             );
             inputCode.value = '';
           } else {
             showFeedback(
               'warning',
-              `ℹ️ Kemasan <code>${claim.unique_code}</code> sudah pernah diklaim sebelumnya. Riwayat tercatat (+0 Coin) sesuai aturan anti-duplikasi.`
+              `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Kemasan <code>${claim.unique_code}</code> sudah pernah diklaim sebelumnya. Riwayat tercatat (+0 Coin) sesuai aturan anti-duplikasi.`
             );
           }
 
           // Reload dashboard to update points and progress bar
           await loadDashboard();
         } catch (err) {
-          showFeedback('error', `❌ ${err.message || 'Gagal mengklaim kode kemasan.'}`);
+          showFeedback('error', `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>${err.message || 'Gagal mengklaim kode kemasan.'}`);
         } finally {
           btnClaim.disabled = false;
           btnClaim.textContent = 'Klaim Coin';

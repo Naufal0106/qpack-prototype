@@ -144,12 +144,12 @@
 
           <!-- Explanation Notes -->
           <div style="margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--color-border); font-size: 11.5px; color: var(--color-text-muted); line-height: 1.55;">
-            <div style="display: flex; gap: 8px; margin-bottom: 6px;">
-              <span>ℹ️</span>
+            <div style="display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
               <span><strong>Setiap kode unik hanya dapat diklaim satu kali</strong> untuk mencegah duplikasi.</span>
             </div>
-            <div style="display: flex; gap: 8px;">
-              <span>📍</span>
+            <div style="display: flex; gap: 8px; align-items: flex-start;">
+              <img src="/assets/icons/location-icon.svg" style="width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px;" alt="" />
               <span>Kode unik dapat ditemukan pada kemasan Q-Pack, <strong>di bawah QR atau pada stiker segel</strong> (contoh: <code>QP-2027-000001</code>).</span>
             </div>
           </div>
@@ -158,7 +158,7 @@
         <!-- Quick Demo Codes for Testing -->
         <div class="ui-card" style="margin-top: 16px;">
           <div style="font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--color-text-dark);">
-            💡 Kode Demo untuk Pengujian Cepat
+            Kode Demo untuk Pengujian Cepat
           </div>
           <p style="font-size: 11px; color: var(--color-text-muted); margin-bottom: 10px;">
             Klik salah satu kode unik di bawah untuk mengisi kolom input secara otomatis:
@@ -179,7 +179,7 @@
         <!-- Clarification: QR vs Unique Code -->
         <div class="ui-card" style="margin-top: 16px; background: #fafbfc; border-color: #e2e8f0;">
           <div style="font-size: 11.5px; font-weight: 700; color: var(--color-forest, #0e350c); margin-bottom: 4px;">
-            🔍 Informasi QR Kemasan
+            Informasi QR Kemasan
           </div>
           <p style="font-size: 11px; color: var(--color-text-muted); line-height: 1.5; margin: 0;">
             QR pada kemasan fisik digunakan untuk melihat transparansi bahan baku alami &amp; informasi sustainability Q-Pack melalui kamera smartphone Anda. Sedangkan <strong>Kode Unik</strong> digunakan di sini untuk klaim Q-Pack Coin.
@@ -279,19 +279,19 @@
           if (claim.is_first_scan) {
             showFeedback(
               'success',
-              `🎉 <strong>Berhasil!</strong> Kamu mendapatkan <strong>+${claim.points_awarded} Q-Pack Coin</strong> untuk kemasan <code>${claim.unique_code}</code>.`
+              `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: -2px; margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg><strong>Berhasil!</strong> Kamu mendapatkan <strong>+${claim.points_awarded} Q-Pack Coin</strong> untuk kemasan <code>${claim.unique_code}</code>.`
             );
             input.value = '';
           } else {
             showFeedback(
               'warning',
-              `ℹ️ Kemasan <code>${claim.unique_code}</code> sudah pernah diklaim sebelumnya. Sesuai aturan, poin hanya diberikan 1 kali per kemasan fisik.`
+              `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Kemasan <code>${claim.unique_code}</code> sudah pernah diklaim sebelumnya. Sesuai aturan, poin hanya diberikan 1 kali per kemasan fisik.`
             );
           }
 
           await refreshUserStats();
         } catch (err) {
-          showFeedback('error', `❌ ${err.message || 'Gagal mengklaim kode kemasan.'}`);
+          showFeedback('error', `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>${err.message || 'Gagal mengklaim kode kemasan.'}`);
         } finally {
           btn.disabled = false;
           btn.textContent = 'Tukar +50 Coin';
