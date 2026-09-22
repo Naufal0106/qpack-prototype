@@ -1,5 +1,5 @@
 import { getSupabaseClient } from '../../db/supabase.js';
-import { QPACK_CANONICAL_MATERIALS, sanitizeMaterialName, sanitizeMaterialDesc } from '../../constants/materials.js';
+import { QPACK_CANONICAL_MATERIALS, sanitizeMaterialName, sanitizeMaterialDesc, sanitizeSustainabilityInfo } from '../../constants/materials.js';
 
 export class SupabasePackageRepository {
   getClient() {
@@ -71,8 +71,8 @@ export class SupabasePackageRepository {
       material_name: sanitizeMaterialName(prod.material_name),
       material_desc: sanitizeMaterialDesc(prod.material_desc),
       material_image_url: prod.material_image_url,
-      sustainability_info: prod.sustainability_info,
-      co2_reduction: prod.co2_reduction,
+      sustainability_info: sanitizeSustainabilityInfo(prod.sustainability_info),
+      co2_reduction: null,
       compostable_days: prod.compostable_days,
       batch_id: batch.id,
       batch_number: batch.batch_number,
@@ -157,8 +157,8 @@ export class SupabasePackageRepository {
         material_name: sanitizeMaterialName(prod.material_name),
         material_desc: sanitizeMaterialDesc(prod.material_desc),
         material_image_url: prod.material_image_url,
-        sustainability_info: prod.sustainability_info,
-        co2_reduction: prod.co2_reduction,
+        sustainability_info: sanitizeSustainabilityInfo(prod.sustainability_info),
+        co2_reduction: null,
         compostable_days: prod.compostable_days,
         batch_id: batch.id,
         batch_number: batch.batch_number,

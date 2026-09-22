@@ -64,8 +64,8 @@ export function seedDatabase() {
     'Pati Singkong Nabati (Cassava Starch & Bio-resin)',
     'Diproduksi dari limbah kulit singkong dan pati tapioka lokal. Fleksibel, tahan air hujan, dan memiliki ketahanan sobek tinggi.',
     '/assets/images/bahan-baku-kulit-singkong.png',
-    '100% Biodegradable dalam 180 hari di tanah alami. Mengurangi jejak emisi karbon hingga 65% dibandingkan kantong plastik PE.',
-    '-65% Emisi CO2',
+    '100% Biodegradable dalam 180 hari di tanah alami. Diproduksi dari pemanfaatan limbah kulit singkong dan sisik ikan secara sirkular.',
+    null,
     180
   );
 
@@ -80,7 +80,7 @@ export function seedDatabase() {
     'Memanfaatkan sampingan sisik ikan dari industri perikanan pesisir dan selulosa limbah kulit singkong. Memiliki sifat antibakteri alami dan terurai ramah lingkungan.',
     '/assets/images/sisik-ikan.png',
     'Terurai sempurna dalam 90 hari di tanah tanpa meninggalkan mikroplastik atau racun. Aman bagi organisme tanah dan laut.',
-    '-72% Emisi CO2',
+    null,
     90
   );
 
@@ -95,7 +95,7 @@ export function seedDatabase() {
     'Kombinasi limbah kulit singkong dan sisik ikan lokal. Struktur kuat dan fleksibel untuk menahan beban hingga 4 kg.',
     '/assets/images/bahan-baku-kulit-singkong.png',
     'Sertifikasi TUV Home Compostable. Menjadi kompos nutrisi bagi tanaman dalam 120 hari saat ditanam di pekarangan rumah.',
-    '-58% Emisi CO2',
+    null,
     120
   );
 

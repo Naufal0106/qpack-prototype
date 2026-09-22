@@ -1,5 +1,5 @@
 import { queryOne, queryAll } from '../../db/database.js';
-import { QPACK_CANONICAL_MATERIALS, sanitizeMaterialName, sanitizeMaterialDesc } from '../../constants/materials.js';
+import { QPACK_CANONICAL_MATERIALS, sanitizeMaterialName, sanitizeMaterialDesc, sanitizeSustainabilityInfo } from '../../constants/materials.js';
 
 export class SQLitePackageRepository {
   async findByQRCode(qrCode) {
@@ -43,6 +43,8 @@ export class SQLitePackageRepository {
       ...row,
       material_name: sanitizeMaterialName(row.material_name),
       material_desc: sanitizeMaterialDesc(row.material_desc),
+      sustainability_info: sanitizeSustainabilityInfo(row.sustainability_info),
+      co2_reduction: null,
       materials: QPACK_CANONICAL_MATERIALS
     };
   }
@@ -92,6 +94,8 @@ export class SQLitePackageRepository {
       ...row,
       material_name: sanitizeMaterialName(row.material_name),
       material_desc: sanitizeMaterialDesc(row.material_desc),
+      sustainability_info: sanitizeSustainabilityInfo(row.sustainability_info),
+      co2_reduction: null,
       materials: QPACK_CANONICAL_MATERIALS
     }));
   }

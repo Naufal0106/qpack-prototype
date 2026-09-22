@@ -41,3 +41,12 @@ export function sanitizeMaterialDesc(desc) {
     .replace(/Memanfaatkan sampingan sisik ikan dari industri perikanan pesisir Jawa\. Memiliki sifat antibakteri alami dan larut air panas 80°C\./gi, 'Memanfaatkan sampingan sisik ikan dari industri perikanan pesisir dan selulosa limbah kulit singkong. Memiliki sifat antibakteri alami dan terurai ramah lingkungan.');
 }
 
+export function sanitizeSustainabilityInfo(info) {
+  if (!info) return '100% Biodegradable dalam 180 hari di tanah alami. Diproduksi dari limbah kulit singkong dan sisik ikan lokal secara sirkular.';
+  return info
+    .replace(/Mengurangi jejak emisi karbon hingga 65% dibandingkan kantong plastik PE\./gi, 'Diproduksi dari limbah kulit singkong dan sisik ikan lokal secara sirkular.')
+    .replace(/Mengurangi jejak emisi karbon.*?dibandingkan kantong plastik PE\./gi, 'Diproduksi dari limbah kulit singkong dan sisik ikan lokal secara sirkular.')
+    .replace(/-?65%?\s*(emisi\s*)?co2?/gi, '')
+    .trim();
+}
+

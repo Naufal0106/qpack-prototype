@@ -177,5 +177,5 @@ Script `test-production.mjs` akan melakukan uji otomatis terhadap server produks
 4. Ketuk tautan tersebut di ponsel Anda:
    - Halaman **Q-Pack Digital Passport** akan terbuka di browser HP.
    - Poin **+50 Poin Q-Pack** akan bertambah secara real-time.
-   - Spesifikasi bahan baku singkong dan dampak CO2 tampil rapi.
+   - Spesifikasi bahan baku singkong dan nilai sirkularitas tampil rapi.
    - Pindai ulang barcode yang sama dengan HP Anda untuk melihat konfirmasi anti-duplikasi poin.

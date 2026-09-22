@@ -27,13 +27,14 @@ async function request(path, options = {}) {
     signal: AbortSignal.timeout(20000),
     ...options
   });
+  const text = await res.text();
   let body;
   try {
-    body = await res.json();
+    body = JSON.parse(text);
   } catch {
-    body = null;
+    body = text;
   }
-  return { status: res.status, body };
+  return { status: res.status, body, text };
 }
 
 try {
@@ -159,8 +160,24 @@ try {
   assert(prodPkg1.materials.some(m => m.name === 'Sisik Ikan'), 'Must include Sisik Ikan');
   console.log('✅ TEST P9 PASSED: Production QR Management API verified with full metadata and URLs.\n');
 
+  // 10. Verify /impact and / are completely free of -65% and CO2 claims
+  console.log('TEST P10: Verifying Complete Absence of -65% and CO2 claims on Production...');
+  const impactRes = await request('/impact');
+  assert(impactRes.status === 200, `Expected 200 for /impact, got ${impactRes.status}`);
+  assert(!impactRes.text.includes('-65%'), '/impact must NOT contain -65%');
+  assert(!impactRes.text.includes('65%'), '/impact must NOT contain 65%');
+  assert(!impactRes.text.toLowerCase().includes('co2') && !impactRes.text.toLowerCase().includes('co₂'), '/impact must NOT contain CO2 or CO₂');
+
+  const homeRes = await request('/');
+  assert(homeRes.status === 200, `Expected 200 for /, got ${homeRes.status}`);
+  assert(!homeRes.text.includes('-65%'), 'Home page must NOT contain -65%');
+  assert(!homeRes.text.includes('65%'), 'Home page must NOT contain 65%');
+  assert(!homeRes.text.toLowerCase().includes('co2') && !homeRes.text.toLowerCase().includes('co₂'), 'Home page must NOT contain CO2 or CO₂');
+
+  console.log('✅ TEST P10 PASSED: Verified production /impact and home have ZERO -65% or CO2 claims.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P9) PASSED!');
+  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P10) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {

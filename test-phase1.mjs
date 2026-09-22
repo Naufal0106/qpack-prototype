@@ -313,7 +313,7 @@ try {
   // ----------------------------------------------------
   // CRITERION N: Impact Awareness Gateway (/impact & QR Asset)
   // ----------------------------------------------------
-  console.log('VERIFYING N: Impact Awareness Gateway route & General QR asset...');
+  console.log('VERIFYING N: Impact Awareness Gateway route, General QR asset & complete absence of CO2 claims...');
   const resImpact = await request('GET', '/impact');
   assert(resImpact.status === 200, `Expected 200 for /impact, got ${resImpact.status}`);
   assert(resImpact.body.includes('Impact Gateway') || resImpact.body.includes('Q-Pack'), 'Impact page must contain Q-Pack branding');
@@ -321,11 +321,23 @@ try {
   assert(resImpact.body.includes('Sisik Ikan'), 'Impact page must feature Sisik Ikan');
   assert(!resImpact.body.toLowerCase().includes('algae') && !resImpact.body.toLowerCase().includes('rumput laut'), 'Zero algae/seaweed in /impact');
 
+  // Verify complete absence of 65% and CO2 claims in /impact
+  assert(!resImpact.body.includes('-65%'), '/impact must NOT contain "-65%"');
+  assert(!resImpact.body.includes('65%'), '/impact must NOT contain "65%"');
+  assert(!resImpact.body.toLowerCase().includes('co2') && !resImpact.body.toLowerCase().includes('co₂'), '/impact must NOT contain CO2 or CO₂');
+
+  // Verify complete absence of 65% and CO2 claims in index.html
+  const resHome = await request('GET', '/');
+  assert(resHome.status === 200, 'Home page must return 200');
+  assert(!resHome.body.includes('-65%'), 'index.html must NOT contain "-65%"');
+  assert(!resHome.body.includes('65%'), 'index.html must NOT contain "65%"');
+  assert(!resHome.body.toLowerCase().includes('co2') && !resHome.body.toLowerCase().includes('co₂'), 'index.html must NOT contain CO2 or CO₂');
+
   const impactQrPng = path.join(__dirname, 'assets', 'qr', 'qpack-impact-qr.png');
   const impactQrSvg = path.join(__dirname, 'assets', 'qr', 'qpack-impact-qr.svg');
   assert(fs.existsSync(impactQrPng), 'assets/qr/qpack-impact-qr.png must exist');
   assert(fs.existsSync(impactQrSvg), 'assets/qr/qpack-impact-qr.svg must exist');
-  console.log('✅ CRITERION N PASSED: Impact Gateway route, biomaterial story, and general QR assets verified.\n');
+  console.log('✅ CRITERION N PASSED: Impact Gateway verified with ZERO CO2 or -65% claims, and general QR assets verified.\n');
 
   // ----------------------------------------------------
   // CRITERION O: Authentication Flow (Consumer & Merchant Register + Login)
