@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Daftar Akun Konsumen — Q-Pack Ekosistem Kemasan Sirkular" />
+    <title>Daftar Konsumen — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .auth-card {
+        background: #ffffff;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-xl, 20px);
+        padding: clamp(24px, 4vw, 36px);
+        box-shadow: var(--shadow-sm);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell" style="max-width: 540px;">
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/index.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+        </div>
+        <div class="q-header__right">
+          <a href="/login.html" style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark); text-decoration: none;">
+            Sudah Punya Akun? Masuk
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content" style="padding-top: 24px; padding-bottom: 40px;">
+        <div class="auth-card">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span class="status-badge status-badge--success" style="margin-bottom: 8px;">Akun Konsumen Baru</span>
+            <h1 style="font-size: var(--fs-xl); font-weight: 700; margin-top: 4px;">Daftar Akun Q-Pack</h1>
+            <p class="text-muted" style="font-size: var(--fs-xs); margin-top: 4px;">
+              Daftar untuk mengumpulkan Q-Pack Coin dari kemasan fisik dan ikuti aksi sirkular.
+            </p>
+          </div>
+
+          <!-- Alert Box -->
+          <div id="auth-alert" class="hidden" style="padding: 10px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 16px; font-weight: 500;"></div>
+
+          <!-- Registration Form -->
+          <form id="register-consumer-form">
+            <div style="margin-bottom: 14px;">
+              <label for="input-name" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Nama Lengkap</label>
+              <input
+                type="text"
+                id="input-name"
+                class="form-control"
+                placeholder="Contoh: Budi Santoso"
+                required
+                style="width: 100%;"
+              />
+            </div>
+
+            <div style="margin-bottom: 14px;">
+              <label for="input-email" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Email</label>
+              <input
+                type="email"
+                id="input-email"
+                class="form-control"
+                placeholder="nama@email.com"
+                required
+                style="width: 100%;"
+              />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label for="input-password" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Password (min. 6 karakter)</label>
+              <input
+                type="password"
+                id="input-password"
+                class="form-control"
+                placeholder="Minimal 6 karakter"
+                required
+                minlength="6"
+                style="width: 100%;"
+              />
+            </div>
+
+            <button type="submit" id="btn-submit-reg" class="btn btn--primary btn--full" style="padding: 12px; font-size: 14px; font-weight: 600;">
+              Daftar sebagai Konsumen
+            </button>
+          </form>
+
+          <div style="margin-top: 20px; text-align: center; font-size: 12px; color: var(--color-text-muted);">
+            Sudah memiliki akun? <a href="/login.html" style="color: var(--color-primary-dark); font-weight: 600; text-decoration: underline;">Masuk di sini</a>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="/index.html" class="btn btn--outline btn--sm" style="font-size: 11px; padding: 6px 14px;">
+            &larr; Kembali ke Beranda Portal
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <script type="module">
+      import { setActiveConsumer } from '/js/app.js';
+
+      const form = document.getElementById('register-consumer-form');
+      const nameInput = document.getElementById('input-name');
+      const emailInput = document.getElementById('input-email');
+      const passwordInput = document.getElementById('input-password');
+      const alertBox = document.getElementById('auth-alert');
+      const btnSubmit = document.getElementById('btn-submit-reg');
+
+      function showAlert(msg, isError = true) {
+        alertBox.textContent = msg;
+        alertBox.className = isError ? 'status-badge--danger' : 'status-badge--success';
+        alertBox.style.background = isError ? '#fdecec' : '#eaf6e5';
+        alertBox.style.color = isError ? 'var(--color-danger)' : 'var(--color-primary-dark)';
+        alertBox.style.display = 'block';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertBox.style.display = 'none';
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (password.length < 6) {
+          showAlert('Password minimal 6 karakter.', true);
+          return;
+        }
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Mendaftarkan...';
+
+        try {
+          const res = await fetch('/api/auth/register-consumer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok || !data.success) {
+            throw new Error(data.message || 'Registrasi gagal.');
+          }
+
+          localStorage.setItem('qpack_auth_user', JSON.stringify(data.user));
+          setActiveConsumer({
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email
+          });
+
+          showAlert('Pendaftaran berhasil! Mengalihkan ke Dashboard...', false);
+          setTimeout(() => {
+            window.location.href = '/consumer/dashboard.html';
+          }, 600);
+        } catch (err) {
+          showAlert(err.message, true);
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Daftar sebagai Konsumen';
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -83,6 +83,44 @@
           </div>
         </div>
 
+        <!-- Showcase Card: QR Umum Impact Awareness (Aset Utama Global) -->
+        <div class="ui-card" style="margin-bottom: 24px; border: 2px solid #bfe3bb; background: linear-gradient(135deg, #f7fbf6 0%, #ffffff 100%); padding: 22px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center;">
+            <div style="width: 140px; height: 140px; background: #ffffff; border: 1.5px solid #d1e7cf; border-radius: 12px; padding: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.06); flex-shrink: 0; margin: 0 auto;">
+              <img src="/assets/qr/qpack-impact-qr.png" alt="QR Umum Impact Awareness Q-Pack" style="width: 100%; height: 100%; object-fit: contain;" />
+            </div>
+            
+            <div style="flex: 1; min-width: 260px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+                <span class="badge-circular" style="background: var(--color-primary); color: #fff; font-weight: 700;">ASET UTAMA GLOBAL</span>
+                <span style="font-size: 11px; color: var(--color-text-muted); font-family: monospace;">Target: /impact</span>
+              </div>
+              <h2 style="font-size: 18px; font-weight: 700; color: var(--color-primary-dark); margin: 0 0 6px 0;">
+                QR Umum Impact Awareness Q-Pack
+              </h2>
+              <p style="font-size: 12px; color: var(--color-text-muted); line-height: 1.55; margin: 0 0 14px 0;">
+                <strong>Satu QR resmi untuk seluruh kemasan polymailer Anda.</strong> Konsumen yang memindai QR ini langsung diarahkan ke halaman transparansi dampak lingkungan &amp; biopolimer Q-Pack (Kulit Singkong &amp; Sisik Ikan). Anda <em>tidak perlu membuat QR baru setiap kali memesan custom design kemasan</em>. Klaim reward konsumen menggunakan kode unik fisik yang tercetak terpisah.
+              </p>
+              
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <a href="/assets/qr/qpack-impact-qr.png" download="qpack-impact-qr.png" class="btn btn--primary btn--sm" style="font-size: 12px; padding: 8px 14px; gap: 6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Unduh QR (PNG)
+                </a>
+                <a href="/assets/qr/qpack-impact-qr.svg" download="qpack-impact-qr.svg" class="btn btn--outline btn--sm" style="font-size: 12px; padding: 8px 14px; gap: 6px;">
+                  Unduh Vektor (SVG)
+                </a>
+                <a href="/impact" target="_blank" class="btn btn--secondary btn--sm" style="font-size: 12px; padding: 8px 14px; gap: 6px;">
+                  Buka /impact ↗
+                </a>
+                <button type="button" id="btn-copy-impact-url" class="btn btn--ghost btn--sm" style="font-size: 12px; padding: 8px 12px; color: var(--color-text-muted);">
+                  Salin URL Target
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Filter Tabs -->
         <div class="filter-tabs" id="merchant-filter-tabs">
           <button class="filter-tab is-active" data-merchant="">Semua Kemasan</button>
@@ -375,6 +413,21 @@
           renderPackages();
         });
       });
+
+      // Copy Impact URL handler
+      const copyImpactBtn = document.getElementById('btn-copy-impact-url');
+      if (copyImpactBtn) {
+        copyImpactBtn.addEventListener('click', () => {
+          const impactUrl = `${window.location.origin}/impact`;
+          navigator.clipboard.writeText(impactUrl).then(() => {
+            const originalText = copyImpactBtn.textContent;
+            copyImpactBtn.textContent = '✓ Tersalin!';
+            setTimeout(() => { copyImpactBtn.textContent = originalText; }, 2000);
+          }).catch(() => {
+            prompt('Salin URL berikut:', impactUrl);
+          });
+        });
+      }
 
       window.addEventListener('DOMContentLoaded', loadPackages);
     </script>

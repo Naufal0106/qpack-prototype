@@ -6,6 +6,19 @@ export class SQLiteConsumerRepository {
     return queryOne('SELECT * FROM consumers WHERE id = ?', id) || null;
   }
 
+  async findByEmail(email) {
+    if (!email) return null;
+    return queryOne('SELECT * FROM consumers WHERE LOWER(email) = LOWER(?)', email.trim()) || null;
+  }
+
+  async createConsumer({ id, name, email, passwordHash = null, points = 0 }) {
+    execute(
+      'INSERT INTO consumers (id, name, email, points, password_hash) VALUES (?, ?, ?, ?, ?)',
+      id, name, email.trim(), points, passwordHash
+    );
+    return await this.findById(id);
+  }
+
   async findOrCreate(id, defaultData = {}) {
     let consumer = await this.findById(id);
     if (!consumer) {

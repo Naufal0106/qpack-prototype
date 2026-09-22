@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { packageRepository, consumerRepository, scanRepository, DB_PROVIDER } from './src/repositories/index.js';
+import { packageRepository, consumerRepository, scanRepository, merchantRepository, DB_PROVIDER } from './src/repositories/index.js';
 import { ScanService } from './src/services/scanService.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,6 +12,19 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 const ENVIRONMENT = process.env.NODE_ENV || (DB_PROVIDER === 'supabase' ? 'production' : 'development');
+
+function hashPassword(password) {
+  const salt = 'qpack_salt_2027';
+  return crypto.createHash('sha256').update(password + salt).digest('hex');
+}
+
+function verifyPassword(password, storedHash) {
+  if (!storedHash) {
+    // For seeded demo accounts without pre-hashed passwords, allow 'qpack123'
+    return password === 'qpack123';
+  }
+  return hashPassword(password) === storedHash;
+}
 
 app.use(cors());
 app.use(express.json());
@@ -188,6 +202,224 @@ app.post('/api/scan', async (req, res) => {
   }
 });
 
+// 4b. POST /api/claim — Claim reward points using unique code printed on physical package
+app.post('/api/claim', async (req, res) => {
+  try {
+    const unique_code = req.body.unique_code || req.body.qr_code;
+    const consumer_id = req.body.consumer_id || 'cons_demo_001';
+
+    if (!unique_code) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing Unique Code',
+        message: 'Kode unik kemasan fisik wajib disertakan.'
+      });
+    }
+
+    const ipAddress = req.ip || req.headers['x-forwarded-for'] || '127.0.0.1';
+    const userAgent = req.headers['user-agent'] || 'Client';
+
+    const result = await ScanService.processClaim({
+      uniqueCode: unique_code,
+      consumerId: consumer_id,
+      ipAddress,
+      userAgent
+    });
+
+    res.json({
+      success: true,
+      data: result,
+      ...result,
+      meta: {
+        dataSource: DB_PROVIDER,
+        environment: ENVIRONMENT
+      }
+    });
+  } catch (err) {
+    if (err.code === 'PACKAGE_NOT_FOUND' || err.status === 404) {
+      return res.status(404).json({
+        success: false,
+        error: 'Package Not Found',
+        message: err.message,
+        dataSource: DB_PROVIDER
+      });
+    }
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ==========================================
+// AUTHENTICATION ENDPOINTS
+// ==========================================
+
+// POST /api/auth/register-consumer
+app.post('/api/auth/register-consumer', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Nama, email, dan password wajib diisi.' });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password minimal 6 karakter.' });
+    }
+
+    const existing = await consumerRepository.findByEmail(email);
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'Email sudah terdaftar. Silakan login.' });
+    }
+
+    const id = `cons_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
+    const passwordHash = hashPassword(password);
+    const consumer = await consumerRepository.createConsumer({
+      id,
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      passwordHash,
+      points: 0
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Registrasi konsumen berhasil!',
+      user: {
+        id: consumer.id,
+        name: consumer.name,
+        email: consumer.email,
+        role: 'consumer',
+        points: consumer.points || 0
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// POST /api/auth/register-merchant
+app.post('/api/auth/register-merchant', async (req, res) => {
+  try {
+    const name = req.body.name || req.body.contact_name;
+    const { brand_name, email, password } = req.body;
+    if (!name || !brand_name || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Nama, nama brand, email, dan password wajib diisi.' });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password minimal 6 karakter.' });
+    }
+
+    const existing = await merchantRepository.findByEmail(email);
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'Email merchant sudah terdaftar. Silakan login.' });
+    }
+
+    const id = `m_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
+    const passwordHash = hashPassword(password);
+    const merchant = await merchantRepository.createMerchant({
+      id,
+      name: name.trim(),
+      brand_name: brand_name.trim(),
+      email: email.trim().toLowerCase(),
+      passwordHash
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Registrasi merchant berhasil!',
+      user: {
+        id: merchant.id,
+        name: merchant.name,
+        brand_name: merchant.brand_name,
+        email: merchant.email,
+        role: 'merchant'
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// POST /api/auth/login
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password, role = 'consumer' } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email dan password wajib diisi.' });
+    }
+
+    if (role === 'merchant') {
+      const merchant = await merchantRepository.findByEmail(email);
+      if (!merchant) {
+        return res.status(401).json({ success: false, message: 'Akun merchant dengan email tersebut tidak ditemukan.' });
+      }
+      if (!verifyPassword(password, merchant.password_hash)) {
+        return res.status(401).json({ success: false, message: 'Password merchant salah.' });
+      }
+      return res.json({
+        success: true,
+        message: 'Login merchant berhasil!',
+        user: {
+          id: merchant.id,
+          name: merchant.name,
+          brand_name: merchant.brand_name,
+          email: merchant.email,
+          role: 'merchant'
+        }
+      });
+    }
+
+    // Default: consumer
+    const consumer = await consumerRepository.findByEmail(email);
+    if (!consumer) {
+      return res.status(401).json({ success: false, message: 'Akun konsumen dengan email tersebut tidak ditemukan.' });
+    }
+    if (!verifyPassword(password, consumer.password_hash)) {
+      return res.status(401).json({ success: false, message: 'Password konsumen salah.' });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Login konsumen berhasil!',
+      user: {
+        id: consumer.id,
+        name: consumer.name,
+        email: consumer.email,
+        role: 'consumer',
+        points: consumer.points || 0
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// GET /api/auth/me
+app.get('/api/auth/me', async (req, res) => {
+  try {
+    const user_id = req.query.id;
+    const role = req.query.role || 'consumer';
+    if (!user_id) {
+      return res.status(400).json({ success: false, message: 'User ID diperlukan.' });
+    }
+
+    if (role === 'merchant') {
+      const merchant = await merchantRepository.findById(user_id);
+      if (!merchant) return res.status(404).json({ success: false, message: 'Merchant tidak ditemukan.' });
+      return res.json({
+        success: true,
+        user: { id: merchant.id, name: merchant.name, brand_name: merchant.brand_name, email: merchant.email, role: 'merchant' }
+      });
+    }
+
+    const consumer = await consumerRepository.findById(user_id);
+    if (!consumer) return res.status(404).json({ success: false, message: 'Konsumen tidak ditemukan.' });
+    return res.json({
+      success: true,
+      user: { id: consumer.id, name: consumer.name, email: consumer.email, role: 'consumer', points: consumer.points || 0 }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 // 5. GET /api/consumer/:consumer_id/profile — Point balance and collection progress
 app.get('/api/consumer/:consumer_id/profile', async (req, res) => {
   try {
@@ -269,6 +501,26 @@ app.post('/api/demo/reset', async (req, res) => {
 // ==========================================
 // FRONTEND ROUTING
 // ==========================================
+
+// Route /impact -> Impact Awareness Gateway (One QR Destination)
+app.get('/impact', (req, res) => {
+  res.sendFile(path.join(__dirname, 'impact.html'));
+});
+
+// Route /login -> Login Page
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+// Route /register-consumer -> Consumer Registration
+app.get('/register-consumer', (req, res) => {
+  res.sendFile(path.join(__dirname, 'register-consumer.html'));
+});
+
+// Route /register-merchant -> Merchant Registration
+app.get('/register-merchant', (req, res) => {
+  res.sendFile(path.join(__dirname, 'register-merchant.html'));
+});
 
 // Route /p/:qr_code -> Canonical Package Digital Passport
 app.get('/p/:qr_code', (req, res) => {

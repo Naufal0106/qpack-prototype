@@ -66,10 +66,13 @@
           </div>
         </div>
 
-        <div style="margin-top: 24px;">
+        <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
           <a href="/index.html" class="btn btn--outline btn--full">
             Kembali ke Halaman Awal
           </a>
+          <button id="btn-logout" class="btn btn--danger btn--full" style="font-size: 13px;">
+            Keluar Akun (Logout)
+          </button>
         </div>
       </main>
 
@@ -94,14 +97,20 @@
     </div>
 
     <script type="module">
-      import { getConsumerProfile, getActiveConsumer } from '/js/app.js';
+      import { getConsumerProfile, getActiveConsumer, getActiveUser, logout } from '/js/app.js';
       async function init() {
+        const authUser = getActiveUser();
         const active = getActiveConsumer();
-        const data = await getConsumerProfile(active.id);
+        const targetId = (authUser && authUser.role === 'consumer') ? authUser.id : active.id;
+        const data = await getConsumerProfile(targetId);
         document.getElementById('profile-name').textContent = data.consumer.name;
         document.getElementById('profile-email').textContent = data.consumer.email;
-        document.getElementById('profile-points').textContent = `${data.consumer.points} Points`;
-        document.getElementById('profile-collection').textContent = `${data.consumer.unique_packages_scanned} / ${data.consumer.collection_target} Kemasan`;
+        document.getElementById('profile-points').textContent = `${data.consumer.points} Q-Pack Coin`;
+        document.getElementById('profile-collection').textContent = `${data.consumer.unique_packages_collected ?? data.consumer.unique_packages_scanned} / ${data.consumer.collection_target} Kemasan`;
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+          logout();
+        });
       }
       window.addEventListener('DOMContentLoaded', init);
     </script>

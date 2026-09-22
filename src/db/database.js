@@ -36,6 +36,9 @@ export function getDb() {
       dbInstance.exec(schemaSql);
     }
 
+    try { dbInstance.exec('ALTER TABLE consumers ADD COLUMN password_hash TEXT;'); } catch (_) {}
+    try { dbInstance.exec('ALTER TABLE merchants ADD COLUMN password_hash TEXT;'); } catch (_) {}
+
     return dbInstance;
   } catch (err) {
     throw new Error(

@@ -44,13 +44,15 @@
           </a>
           <nav class="q-header__nav" aria-label="Navigasi Desktop">
             <a href="/consumer/dashboard.html" class="q-header__nav-link is-active">Dashboard Konsumen</a>
+            <a href="/impact" class="q-header__nav-link">Impact Gateway</a>
             <a href="/consumer/scan.html" class="q-header__nav-link">Pindai QR</a>
             <a href="/merchant/qr" class="q-header__nav-link">Manajemen QR Merchant</a>
           </nav>
         </div>
         <div class="q-header__right">
-          <img src="/assets/icons/bell-icon.svg" alt="Notifikasi" class="q-header__icon" />
-          <img src="/assets/icons/cust-role-icon.svg" alt="Profil" class="q-header__icon" />
+          <a href="/consumer/akun.html" title="Akun Saya" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="/assets/icons/cust-role-icon.svg" alt="Profil" class="q-header__icon" />
+          </a>
         </div>
       </header>
 
@@ -58,19 +60,58 @@
         <!-- User Greeting -->
         <div class="dashboard-greeting">
           <h1 class="dashboard-greeting__title" id="consumer-name">Halo, Budi Santoso 👋</h1>
-          <p class="dashboard-greeting__desc">Kumpulkan kemasan ramah lingkungan dan dapatkan poin sirkularitas.</p>
+          <p class="dashboard-greeting__desc">Kumpulkan kemasan ramah lingkungan dan klaim Q-Pack Coin sirkularitas Anda.</p>
         </div>
 
         <!-- Point Card -->
         <div class="reward-card">
           <div class="row-between">
-            <div class="reward-card__label">Saldo Poin Q-Pack</div>
+            <div class="reward-card__label">Saldo Q-Pack Coin</div>
             <span class="status-badge status-badge--success">Aktif</span>
           </div>
-          <div class="reward-card__points" id="consumer-points-val">0 <span style="font-size: 16px; font-weight: 500;">Points</span></div>
+          <div class="reward-card__points" id="consumer-points-val">0 <span style="font-size: 16px; font-weight: 500;">Coin</span></div>
           <p style="font-size: 10px; color: var(--color-primary-dark); margin-top: 6px;">
-            Dapatkan +50 poin setiap kali Anda memindai kemasan fisik unik Q-Pack.
+            Dapatkan +50 Q-Pack Coin untuk setiap kode unik kemasan fisik Q-Pack yang pertama kali Anda klaim.
           </p>
+        </div>
+
+        <!-- Unique Code Claim Section (Klaim Kode Unik Kemasan Fisik) -->
+        <div class="ui-card" style="margin-top: 16px; border: 1.5px solid #c2e0be; background: #fafdfa;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--color-primary-soft, #eaf3e8); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 style="font-size: 14px; font-weight: 700; margin: 0; color: var(--color-text-dark);">Klaim Q-Pack Coin dengan Kode Unik</h3>
+              <div style="font-size: 11px; color: var(--color-text-muted);">Masukkan kode yang tertera pada kemasan fisik Anda</div>
+            </div>
+          </div>
+
+          <form id="form-claim-code" style="margin-top: 12px;">
+            <label for="input-unique-code" style="display: block; font-size: 11px; font-weight: 600; margin-bottom: 6px; color: var(--color-text-dark);">
+              Masukkan Kode Unik Kemasan
+            </label>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <input
+                type="text"
+                id="input-unique-code"
+                placeholder="Contoh: QP-2027-000001"
+                style="flex: 1; min-width: 180px; padding: 11px 13px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: monospace; font-size: 14px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; background: #fff;"
+                autocomplete="off"
+                required
+              />
+              <button type="submit" id="btn-claim-code" class="btn btn--primary" style="padding: 10px 18px; font-weight: 600; white-space: nowrap;">
+                Klaim Coin
+              </button>
+            </div>
+            <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 8px; line-height: 1.4;">
+              ℹ️ <em>Kode unik tertera di bawah QR atau stiker segel kemasan Q-Pack Anda.</em>
+            </p>
+            <div id="claim-feedback" style="display: none; margin-top: 10px; padding: 10px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; line-height: 1.4;"></div>
+          </form>
         </div>
 
         <!-- Collection Progress Card (1/10 Unique Packages Collected) -->
@@ -97,19 +138,21 @@
           </p>
         </div>
 
-        <!-- Primary Action: Scan QR -->
-        <div style="margin-top: 18px;">
-          <a href="/consumer/scan.html" class="btn btn--primary btn--full" style="padding: 14px; font-size: var(--fs-base);">
-            <img src="/assets/icons/cam-icon.svg" style="width: 22px; filter: brightness(0) invert(1);" alt="" />
-            Pindai QR Kemasan Baru
+        <!-- Impact Awareness Quick Access -->
+        <div style="margin-top: 16px; display: flex; gap: 8px;">
+          <a href="/impact" class="btn btn--outline" style="flex: 1; padding: 10px; font-size: 12px; justify-content: center;">
+            🌱 Info Material & Dampak CO₂
+          </a>
+          <a href="/consumer/scan.html" class="btn btn--primary" style="flex: 1; padding: 10px; font-size: 12px; justify-content: center;">
+            📷 Buka Scanner QR
           </a>
         </div>
 
         <!-- Recent Scans / History -->
         <div style="margin-top: 24px;">
           <div class="row-between" style="margin-bottom: 10px;">
-            <h3 class="section-title" style="margin-bottom: 0;">Riwayat Pemindaian</h3>
-            <span style="font-size: 10px; color: var(--color-text-muted);" id="total-scans-label">0 Scan</span>
+            <h3 class="section-title" style="margin-bottom: 0;">Riwayat Klaim Kemasan</h3>
+            <span style="font-size: 10px; color: var(--color-text-muted);" id="total-scans-label">0 Klaim</span>
           </div>
 
           <div id="recent-scans-container" class="menu-list">
@@ -156,31 +199,35 @@
 
     <!-- Script Execution -->
     <script type="module">
-      import { getConsumerProfile, resetDemo, getActiveConsumer } from '/js/app.js';
+      import { getConsumerProfile, resetDemo, getActiveConsumer, claimUniqueCode, getActiveUser } from '/js/app.js';
 
       async function loadDashboard() {
         try {
+          // Check if there is an authenticated consumer user
+          const authUser = getActiveUser();
           const activeConsumer = getActiveConsumer();
-          const profileData = await getConsumerProfile(activeConsumer.id);
+          const targetId = (authUser && authUser.role === 'consumer') ? authUser.id : activeConsumer.id;
+
+          const profileData = await getConsumerProfile(targetId);
           const cons = profileData.consumer;
           const scans = profileData.recent_scans || [];
 
           document.getElementById('consumer-name').textContent = `Halo, ${cons.name} 👋`;
-          document.getElementById('consumer-points-val').innerHTML = `${cons.points} <span style="font-size: 16px; font-weight: 500;">Points</span>`;
+          document.getElementById('consumer-points-val').innerHTML = `${cons.points} <span style="font-size: 16px; font-weight: 500;">Coin</span>`;
           document.getElementById('collection-badge').textContent = `${cons.unique_packages_collected} / ${cons.collection_target} Terkumpul`;
           document.getElementById('collection-count-text').textContent = `${cons.unique_packages_collected} / ${cons.collection_target} Q-Pack Unik`;
           document.getElementById('collection-percentage-text').textContent = `${cons.collection_percentage}%`;
           document.getElementById('dashboard-progress-fill').style.width = `${cons.collection_percentage}%`;
-          document.getElementById('total-scans-label').textContent = `${cons.total_scans} Total Scan`;
+          document.getElementById('total-scans-label').textContent = `${cons.total_scans} Total Klaim`;
 
           const container = document.getElementById('recent-scans-container');
           if (scans.length === 0) {
             container.innerHTML = `
               <div style="padding: 24px; text-align: center; font-size: 12px; color: var(--color-text-muted);">
-                Belum ada kemasan yang dipindai.<br />
-                <a href="/consumer/scan.html" style="color: var(--color-primary); font-weight: 600; text-decoration: underline; margin-top: 4px; display: inline-block;">
-                  Pindai kemasan pertama Anda sekarang
-                </a>
+                Belum ada kemasan yang diklaim.<br />
+                <span style="font-size: 11px; color: var(--color-text-muted); display: inline-block; margin-top: 4px;">
+                  Masukkan kode unik kemasan di atas (misal: <code>QP-2027-000001</code>) untuk klaim +50 Coin.
+                </span>
               </div>
             `;
           } else {
@@ -188,23 +235,88 @@
               <a href="/p/${encodeURIComponent(item.qr_code)}" class="menu-item">
                 <img src="/assets/icons/traceability-icon.svg" class="menu-item__icon" alt="" />
                 <div class="menu-item__body">
-                  <div class="menu-item__title">${item.qr_code} — ${item.product_name}</div>
-                  <div class="menu-item__desc">${item.merchant_brand_name} • ${new Date(item.scanned_at).toLocaleString('id-ID')}</div>
+                  <div class="menu-item__title">Kode: <strong>${item.qr_code}</strong> — ${item.product_name || 'Polymailer Sirkular'}</div>
+                  <div class="menu-item__desc">${item.merchant_brand_name || 'Merchant Q-Pack'} • ${new Date(item.scanned_at).toLocaleString('id-ID')}</div>
                 </div>
-                <div style="font-size: 11px; font-weight: 700; color: ${item.points_awarded > 0 ? 'var(--color-primary)' : 'var(--color-text-muted)'};">
-                  ${item.points_awarded > 0 ? `+${item.points_awarded} Pts` : 'Tercatat'}
+                <div style="font-size: 12px; font-weight: 700; color: ${item.points_awarded > 0 ? 'var(--color-primary)' : 'var(--color-text-muted)'};">
+                  ${item.points_awarded > 0 ? `+${item.points_awarded} Coin` : 'Tercatat (0)'}
                 </div>
               </a>
             `).join('');
           }
         } catch (err) {
-          console.error(err);
+          console.error('Gagal memuat dashboard:', err);
         }
       }
+
+      // Handle Unique Code Claim
+      const claimForm = document.getElementById('form-claim-code');
+      const inputCode = document.getElementById('input-unique-code');
+      const btnClaim = document.getElementById('btn-claim-code');
+      const feedbackDiv = document.getElementById('claim-feedback');
+
+      function showFeedback(type, message) {
+        feedbackDiv.style.display = 'block';
+        if (type === 'success') {
+          feedbackDiv.style.background = '#d4edda';
+          feedbackDiv.style.color = '#155724';
+          feedbackDiv.style.border = '1px solid #c3e6cb';
+        } else if (type === 'warning') {
+          feedbackDiv.style.background = '#fff3cd';
+          feedbackDiv.style.color = '#856404';
+          feedbackDiv.style.border = '1px solid #ffeeba';
+        } else {
+          feedbackDiv.style.background = '#f8d7da';
+          feedbackDiv.style.color = '#721c24';
+          feedbackDiv.style.border = '1px solid #f5c6cb';
+        }
+        feedbackDiv.innerHTML = message;
+      }
+
+      claimForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const rawCode = inputCode.value.trim().toUpperCase();
+        if (!rawCode) return;
+
+        btnClaim.disabled = true;
+        btnClaim.textContent = 'Memproses...';
+        feedbackDiv.style.display = 'none';
+
+        try {
+          const authUser = getActiveUser();
+          const activeConsumer = getActiveConsumer();
+          const consumerId = (authUser && authUser.role === 'consumer') ? authUser.id : activeConsumer.id;
+
+          const res = await claimUniqueCode(rawCode, consumerId);
+          const claim = res.data.claim;
+
+          if (claim.is_first_scan) {
+            showFeedback(
+              'success',
+              `🎉 <strong>Selamat!</strong> Klaim berhasil. Anda mendapatkan <strong>+${claim.points_awarded} Q-Pack Coin</strong> untuk kemasan <code>${claim.unique_code}</code>.`
+            );
+            inputCode.value = '';
+          } else {
+            showFeedback(
+              'warning',
+              `ℹ️ Kemasan <code>${claim.unique_code}</code> sudah pernah diklaim sebelumnya. Riwayat tercatat (+0 Coin) sesuai aturan anti-duplikasi.`
+            );
+          }
+
+          // Reload dashboard to update points and progress bar
+          await loadDashboard();
+        } catch (err) {
+          showFeedback('error', `❌ ${err.message || 'Gagal mengklaim kode kemasan.'}`);
+        } finally {
+          btnClaim.disabled = false;
+          btnClaim.textContent = 'Klaim Coin';
+        }
+      });
 
       document.getElementById('btn-reset-demo').addEventListener('click', async () => {
         if (confirm('Yakin ingin mereset data demo pemindaian dan poin ke 0?')) {
           await resetDemo();
+          feedbackDiv.style.display = 'none';
           loadDashboard();
         }
       });

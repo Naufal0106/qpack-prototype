@@ -6,22 +6,24 @@ const COLLECTION_TARGET = parseInt(process.env.COLLECTION_TARGET || '10', 10);
 
 export class ScanService {
   /**
-   * Process a package scan:
-   * 1. Validates package existence in database
-   * 2. Checks if consumer already claimed reward for this package
-   * 3. Awards +50 points only on first unique scan
-   * 4. Updates "Collected" count (NOT "Returned")
-   * 5. Logs audit scan event
+   * Process a package reward claim via unique code:
+   * 1. Validates unique code existence in database
+   * 2. Checks if consumer already claimed reward for this unique code
+   * 3. Awards +50 points (Q-Pack Coin) only on first unique claim
+   * 4. Updates "Collected" count
+   * 5. Logs audit claim event
    */
-  static async processScan({ qrCode, consumerId = 'cons_demo_001', ipAddress = '127.0.0.1', userAgent = 'Demo' }) {
-    if (!qrCode) {
-      throw new Error('Kode QR wajib disertakan.');
+  static async processClaim({ uniqueCode, consumerId = 'cons_demo_001', ipAddress = '127.0.0.1', userAgent = 'Client' }) {
+    if (!uniqueCode) {
+      throw new Error('Kode unik kemasan wajib disertakan.');
     }
 
+    const cleanCode = uniqueCode.trim().toUpperCase();
+
     // 1. Database lookup
-    const packageData = await packageRepository.findByQRCode(qrCode);
+    const packageData = await packageRepository.findByQRCode(cleanCode);
     if (!packageData) {
-      const err = new Error(`Kemasan dengan kode '${qrCode}' tidak terdaftar di sistem Q-Pack.`);
+      const err = new Error(`Kemasan dengan kode '${cleanCode}' tidak terdaftar di sistem Q-Pack.`);
       err.status = 404;
       err.code = 'PACKAGE_NOT_FOUND';
       throw err;
@@ -40,13 +42,13 @@ export class ScanService {
     let pointsAwarded = 0;
     let message = '';
 
-    const scanId = `scan_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
+    const claimId = `claim_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
 
     if (!isDuplicate) {
-      // First unique scan for this package by this consumer
+      // First unique claim for this package by this consumer
       pointsAwarded = POINTS_PER_FIRST_SCAN;
       await scanRepository.createScanEvent({
-        id: scanId,
+        id: claimId,
         packageId: packageData.package_id,
         consumerId: consumer.id,
         pointsAwarded,
@@ -56,18 +58,18 @@ export class ScanService {
 
       // Increment consumer point balance
       await consumerRepository.addPoints(consumer.id, pointsAwarded);
-      message = `Selamat! Anda mendapatkan +${pointsAwarded} Poin Q-Pack. Kemasan berhasil ditambahkan ke koleksi Anda.`;
+      message = `Selamat! Anda berhasil mengklaim +${pointsAwarded} Q-Pack Coin. Kemasan berhasil ditambahkan ke progres koleksi Anda.`;
     } else {
-      // Duplicate scan: log audit event with 0 points
+      // Duplicate claim: log audit event with 0 points
       await scanRepository.createScanEvent({
-        id: scanId,
+        id: claimId,
         packageId: packageData.package_id,
         consumerId: consumer.id,
         pointsAwarded: 0,
         ipAddress,
         userAgent
       });
-      message = 'Kemasan ini sudah pernah Anda klaim sebelumnya. Poin dan koleksi unik tidak digandakan.';
+      message = 'Kemasan dengan kode unik ini sudah pernah Anda klaim sebelumnya. Poin dan koleksi unik tidak digandakan.';
     }
 
     // 4. Retrieve refreshed consumer metrics
@@ -75,8 +77,19 @@ export class ScanService {
 
     return {
       package: packageData,
+      claim: {
+        id: claimId,
+        unique_code: cleanCode,
+        is_first_claim: !isDuplicate,
+        is_first_scan: !isDuplicate,
+        is_duplicate: isDuplicate,
+        points_awarded: pointsAwarded,
+        message,
+        claimed_at: new Date().toISOString()
+      },
+      // Backward compatibility for legacy scan assertions
       scan: {
-        id: scanId,
+        id: claimId,
         is_first_scan: !isDuplicate,
         is_duplicate: isDuplicate,
         points_awarded: pointsAwarded,
@@ -85,6 +98,18 @@ export class ScanService {
       },
       consumer: consumerStats.consumer
     };
+  }
+
+  /**
+   * Backward-compatible alias for processClaim
+   */
+  static async processScan({ qrCode, consumerId = 'cons_demo_001', ipAddress = '127.0.0.1', userAgent = 'Demo' }) {
+    return this.processClaim({
+      uniqueCode: qrCode,
+      consumerId,
+      ipAddress,
+      userAgent
+    });
   }
 
   /**

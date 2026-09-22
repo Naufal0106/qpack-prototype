@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Q-Pack Impact Awareness — Selamat! Kamu telah berkontribusi terhadap keberlanjutan lingkungan."
+    />
+    <meta name="theme-color" content="#21721E" />
+    <title>Impact Q-Pack — Ekosistem Kemasan Sirkular</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/portal.css" />
+    <style>
+      .impact-hero-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e7df;
+        border-radius: var(--portal-radius-xl, 24px);
+        padding: clamp(28px, 5vw, 48px);
+        box-shadow: var(--portal-shadow-card, 0 10px 30px rgba(14, 53, 12, 0.04));
+      }
+      .impact-badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        background: var(--eco-surface-soft, #eaf3e8);
+        color: var(--eco-primary-dark, #1d5d18);
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .unique-code-callout {
+        background: #fdfbf7;
+        border: 1.5px dashed #eaa41a;
+        border-radius: var(--portal-radius-lg, 16px);
+        padding: 24px;
+        margin-top: 32px;
+      }
+      .code-badge-sample {
+        display: inline-block;
+        background: #ffffff;
+        border: 1.5px solid #dcdfe3;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--eco-forest, #0e350c);
+        letter-spacing: 1px;
+      }
+    </style>
+  </head>
+  <body class="portal-body">
+    <!-- Header Navigation -->
+    <header class="portal-nav-wrap">
+      <div class="portal-container">
+        <nav class="portal-nav" aria-label="Navigasi Utama">
+          <a href="/" class="portal-nav__logo" aria-label="Q-Pack Beranda">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack Ecosystem" />
+          </a>
+
+          <ul class="portal-nav__links">
+            <li><a href="/" class="portal-nav__link">Beranda Portal</a></li>
+            <li><a href="/impact" class="portal-nav__link is-active">Dampak Lingkungan</a></li>
+            <li><a href="/consumer/dashboard.html" class="portal-nav__link">Dashboard Konsumen</a></li>
+            <li><a href="/merchant/dashboard.html" class="portal-nav__link">Merchant</a></li>
+          </ul>
+
+          <div class="portal-nav__actions">
+            <a href="/login.html" class="portal-btn portal-btn--primary">
+              Masuk / Daftar
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="portal-container" style="padding-block: 40px 80px; max-width: 960px;">
+      <!-- Hero Section -->
+      <div class="impact-hero-card">
+        <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+          <span class="impact-badge-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+            Impact Awareness Gateway
+          </span>
+
+          <h1 class="portal-hero__title" style="font-size: clamp(2rem, 4vw, 3rem); margin-top: 14px; line-height: 1.25;">
+            Selamat! Kamu telah berkontribusi terhadap keberlanjutan lingkungan.
+          </h1>
+
+          <p class="portal-hero__lead" style="margin-top: 14px; font-size: 15px; color: var(--eco-text-muted);">
+            Dengan menerima kemasan <strong>Q-Pack</strong>, kamu telah menjadi bagian dari gerakan pengurangan plastik konvensional sekali pakai dan transisi nyata menuju ekonomi sirkular ramah bumi.
+          </p>
+        </div>
+
+        <!-- Material Highlight Section -->
+        <div style="margin-top: 40px;">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span class="portal-eyebrow">Bahan Baku Sirkular</span>
+            <h2 style="font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--eco-forest); margin-top: 4px;">
+              Dibuat dari Limbah Alami Lokal
+            </h2>
+            <p style="font-size: 13px; color: var(--eco-text-muted); max-width: 580px; margin: 6px auto 0;">
+              Q-Pack memadukan dua sumber limbah organik untuk menggantikan resin sintetis berbahan bakar fosil:
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <!-- Material 1: Kulit Singkong -->
+            <div style="background: var(--eco-surface-soft, #f7f9f6); border: 1px solid var(--eco-border-light, #e2e7df); border-radius: var(--portal-radius-md, 16px); padding: 20px; display: flex; gap: 16px; align-items: flex-start;">
+              <img src="/assets/images/bahan-baku-kulit-singkong.png" alt="Kulit Singkong" style="width: 72px; height: 72px; border-radius: 12px; object-fit: cover; flex-shrink: 0;" />
+              <div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--eco-primary); text-transform: uppercase;">Residu Agrikultur</div>
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--eco-forest); margin-top: 2px;">Kulit Singkong</h3>
+                <p style="font-size: 12px; color: var(--eco-text-muted); line-height: 1.5; margin-top: 4px;">
+                  Sumber serat selulosa dan nanocellulose alami dari pengolahan tapioka lokal untuk kekuatan struktur dan fleksibilitas polymailer.
+                </p>
+              </div>
+            </div>
+
+            <!-- Material 2: Sisik Ikan -->
+            <div style="background: var(--eco-surface-soft, #f7f9f6); border: 1px solid var(--eco-border-light, #e2e7df); border-radius: var(--portal-radius-md, 16px); padding: 20px; display: flex; gap: 16px; align-items: flex-start;">
+              <img src="/assets/images/sisik-ikan.png" alt="Sisik Ikan" style="width: 72px; height: 72px; border-radius: 12px; object-fit: cover; flex-shrink: 0;" />
+              <div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--eco-primary); text-transform: uppercase;">Limbah Perikanan Pesisir</div>
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--eco-forest); margin-top: 2px;">Sisik Ikan</h3>
+                <p style="font-size: 12px; color: var(--eco-text-muted); line-height: 1.5; margin-top: 4px;">
+                  Sumber kitosan alami dari industri perikanan untuk memberikan ketahanan air alami dan mempercepat proses dekomposisi tanah.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sustainability Impact Metrics -->
+        <div style="margin-top: 40px; padding: 24px; background: #fdfdfc; border: 1px solid #ebeee8; border-radius: var(--portal-radius-lg, 16px);">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <span class="portal-eyebrow">Estimasi Dampak Lingkungan Q-Pack</span>
+            <p style="font-size: 12px; color: var(--eco-text-muted); margin-top: 4px;">
+              Data estimasi berdasarkan spesifikasi formula biomaterial sirkular:
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: center;">
+            <div style="padding: 16px; background: #ffffff; border-radius: 12px; border: 1px solid #e5eae3;">
+              <div style="font-size: 26px; font-weight: 800; color: var(--eco-primary);">Up to -65%*</div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--eco-forest); margin-top: 4px;">Estimasi Pengurangan CO₂</div>
+              <div style="font-size: 10px; color: var(--eco-text-light); margin-top: 2px;">*Dibandingkan plastik kantong fosil standar</div>
+            </div>
+
+            <div style="padding: 16px; background: #ffffff; border-radius: 12px; border: 1px solid #e5eae3;">
+              <div style="font-size: 26px; font-weight: 800; color: var(--eco-primary);">±180 Hari</div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--eco-forest); margin-top: 4px;">Dapat Terurai Alami</div>
+              <div style="font-size: 10px; color: var(--eco-text-light); margin-top: 2px;">Terurai di tanah tanpa mikroplastik berbahaya</div>
+            </div>
+
+            <div style="padding: 16px; background: #ffffff; border-radius: 12px; border: 1px solid #e5eae3;">
+              <div style="font-size: 26px; font-weight: 800; color: var(--eco-primary);">100%</div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--eco-forest); margin-top: 4px;">Limbah Organik Lokal</div>
+              <div style="font-size: 10px; color: var(--eco-text-light); margin-top: 2px;">Kulit singkong &amp; sisik ikan tanpa polimer fosil</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bridge to Action: Unique Code Claim -->
+        <div class="unique-code-callout">
+          <div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: #fff3db; display: grid; place-items: center; flex-shrink: 0;">
+              <img src="/assets/icons/reward-icon.svg" style="width: 24px; height: 24px;" alt="Reward" />
+            </div>
+            <div style="flex: 1; min-width: 260px;">
+              <h3 style="font-size: 17px; font-weight: 700; color: var(--eco-forest);">
+                Kontribusimu tidak berhenti di sini.
+              </h3>
+              <p style="font-size: 13px; color: var(--eco-text-muted); line-height: 1.55; margin-top: 6px;">
+                Setiap kemasan fisik Q-Pack memiliki <strong>Kode Unik</strong> tersendiri yang tercetak langsung pada label fisik (contoh: <span class="code-badge-sample">QP-2027-000001</span>).
+              </p>
+              <p style="font-size: 13px; color: var(--eco-text-muted); line-height: 1.55; margin-top: 6px;">
+                Dapatkan <strong>+50 Q-Pack Coin</strong> untuk setiap kemasan fisik unik yang kamu miliki, pantau progres koleksi kemasan sirkularmu, dan tukarkan dengan insentif ramah lingkungan.
+              </p>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e2d7c0; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="/login.html" class="portal-btn portal-btn--primary" style="font-size: 14px; padding: 12px 28px;">
+              Login untuk Klaim Q-Pack Coin
+            </a>
+            <a href="/register-consumer.html" class="portal-btn portal-btn--secondary" style="font-size: 14px; padding: 12px 28px;">
+              Daftar Akun Baru
+            </a>
+          </div>
+        </div>
+
+        <!-- Back to Portal Link -->
+        <div style="text-align: center; margin-top: 32px;">
+          <a href="/" style="font-size: 13px; color: var(--eco-primary-dark); font-weight: 600; text-decoration: underline;">
+            &larr; Kembali ke Beranda Portal Q-Pack
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="portal-footer" style="padding-block: 40px 30px;">
+      <div class="portal-container" style="text-align: center; font-size: 12px; color: var(--eco-text-light);">
+        <div>&copy; 2027 Q-Pack Circular Ecosystem. All rights reserved.</div>
+        <div style="margin-top: 8px; display: flex; justify-content: center; gap: 16px;">
+          <span>Kulit Singkong &amp; Sisik Ikan</span>
+          <span>•</span>
+          <span>Impact Awareness Gateway</span>
+          <span>•</span>
+          <span>Ekonomi Sirkular</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

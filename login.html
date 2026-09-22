@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Pilih Peran — Q-Pack" />
+    <meta name="description" content="Masuk ke Akun Q-Pack — Ekosistem Kemasan Sirkular" />
     <title>Masuk ke Q-Pack — Ekosistem Kemasan Sirkular</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,70 +17,268 @@
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/layout.css" />
     <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .auth-card {
+        background: #ffffff;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-xl, 20px);
+        padding: clamp(24px, 4vw, 36px);
+        box-shadow: var(--shadow-sm);
+      }
+      .role-tabs {
+        display: flex;
+        background: #f1f5f0;
+        border-radius: var(--radius-md, 12px);
+        padding: 4px;
+        margin-bottom: 20px;
+        gap: 4px;
+      }
+      .role-tab-btn {
+        flex: 1;
+        padding: 9px 14px;
+        border: none;
+        background: transparent;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .role-tab-btn.is-active {
+        background: #ffffff;
+        color: var(--color-primary-dark);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+      }
+      .demo-fill-btn {
+        font-size: 11px;
+        background: #eaf6e5;
+        color: var(--color-primary-dark);
+        border: 1px solid #c8e6c9;
+        padding: 4px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .demo-fill-btn:hover {
+        background: #d4edd0;
+      }
+    </style>
   </head>
   <body>
-    <div class="app-shell">
+    <div class="app-shell" style="max-width: 540px;">
       <header class="q-header">
         <div class="q-header__left">
           <a href="/index.html">
             <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
           </a>
         </div>
+        <div class="q-header__right">
+          <a href="/impact" style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark); text-decoration: none;">
+            Impact Page &rarr;
+          </a>
+        </div>
       </header>
 
-      <main class="app-content" style="display: flex; flex-direction: column; justify-content: center; min-height: 80vh; gap: 24px;">
-        <div>
-          <span class="status-badge status-badge--success" style="margin-bottom: 8px;">Grand Final Demo</span>
-          <h1 style="font-size: var(--fs-2xl); font-weight: 700; margin-top: 4px;">Selamat Datang</h1>
-          <p class="text-muted" style="font-size: var(--fs-xs); margin-top: 4px;">
-            Pilih portal untuk mencoba alur ekosistem digital kemasan Q-Pack.
-          </p>
+      <main class="app-content" style="padding-top: 24px; padding-bottom: 40px;">
+        <div class="auth-card">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <span class="status-badge status-badge--success" style="margin-bottom: 8px;">Portal Akun Q-Pack</span>
+            <h1 style="font-size: var(--fs-xl); font-weight: 700; margin-top: 4px;">Selamat Datang</h1>
+            <p class="text-muted" style="font-size: var(--fs-xs); margin-top: 4px;">
+              Masuk untuk mengklaim Q-Pack Coin atau mengelola kemasan sirkular.
+            </p>
+          </div>
+
+          <!-- Role Selector Tabs -->
+          <div class="role-tabs" id="auth-role-tabs">
+            <button type="button" class="role-tab-btn is-active" data-role="consumer">
+              👤 Konsumen
+            </button>
+            <button type="button" class="role-tab-btn" data-role="merchant">
+              🏢 Merchant / Brand
+            </button>
+          </div>
+
+          <!-- Alert Box -->
+          <div id="auth-alert" class="hidden" style="padding: 10px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 16px; font-weight: 500;"></div>
+
+          <!-- Login Form -->
+          <form id="login-form">
+            <div style="margin-bottom: 14px;">
+              <label for="input-email" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Email Akun</label>
+              <input
+                type="email"
+                id="input-email"
+                class="form-control"
+                placeholder="nama@email.com"
+                required
+                style="width: 100%;"
+              />
+            </div>
+
+            <div style="margin-bottom: 18px;">
+              <div class="row-between" style="margin-bottom: 4px;">
+                <label for="input-password" class="form-label" style="font-size: 12px; font-weight: 600;">Password</label>
+              </div>
+              <input
+                type="password"
+                id="input-password"
+                class="form-control"
+                placeholder="••••••••"
+                required
+                style="width: 100%;"
+              />
+            </div>
+
+            <button type="submit" id="btn-submit-login" class="btn btn--primary btn--full" style="padding: 12px; font-size: 14px; font-weight: 600;">
+              Masuk ke Portal
+            </button>
+          </form>
+
+          <!-- Quick Fill Demo Credentials -->
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--color-border); text-align: center;">
+            <div style="font-size: 11px; color: var(--color-text-muted); margin-bottom: 8px;">
+              Uji Coba Cepat (Akun Demo Bawaan):
+            </div>
+            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+              <button type="button" class="demo-fill-btn" id="btn-fill-consumer">
+                Isi Demo Konsumen
+              </button>
+              <button type="button" class="demo-fill-btn" id="btn-fill-merchant">
+                Isi Demo Merchant
+              </button>
+            </div>
+          </div>
+
+          <!-- Register Links -->
+          <div style="margin-top: 20px; text-align: center; font-size: 12px; color: var(--color-text-muted);">
+            <div id="register-link-consumer">
+              Belum punya akun? <a href="/register-consumer.html" style="color: var(--color-primary-dark); font-weight: 600; text-decoration: underline;">Daftar sebagai Konsumen</a>
+            </div>
+            <div id="register-link-merchant" class="hidden" style="margin-top: 4px;">
+              Mitra baru? <a href="/register-merchant.html" style="color: var(--color-primary-dark); font-weight: 600; text-decoration: underline;">Daftar Akun Merchant</a>
+            </div>
+          </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <!-- Consumer Portal -->
-          <a href="/consumer/dashboard.html" class="ui-card" style="display: flex; align-items: center; gap: 14px; text-decoration: none; border: 1.5px solid var(--color-border); transition: border-color 0.2s;">
-            <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: var(--color-primary-soft); display: grid; place-items: center;">
-              <img src="/assets/icons/cust-role-icon.svg" style="width: 26px;" alt="" />
-            </div>
-            <div style="flex: 1;">
-              <div style="font-size: var(--fs-sm); font-weight: 700; color: var(--color-black);">Portal Konsumen</div>
-              <div style="font-size: 11px; color: var(--color-text-muted);">Pindai kemasan, kumpulkan poin reward & pantau koleksi sirkular.</div>
-            </div>
-            <span style="color: var(--color-primary); font-weight: bold;">&gt;</span>
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="/index.html" class="btn btn--outline btn--sm" style="font-size: 11px; padding: 6px 14px;">
+            &larr; Kembali ke Beranda Portal
           </a>
-
-          <!-- Merchant Portal -->
-          <a href="/merchant/dashboard.html" class="ui-card" style="display: flex; align-items: center; gap: 14px; text-decoration: none; border: 1.5px solid var(--color-border); transition: border-color 0.2s;">
-            <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: #fff5dc; display: grid; place-items: center;">
-              <img src="/assets/icons/merchant-role-icon.svg" style="width: 26px;" alt="" />
-            </div>
-            <div style="flex: 1;">
-              <div style="font-size: var(--fs-sm); font-weight: 700; color: var(--color-black);">Portal Merchant / Brand</div>
-              <div style="font-size: 11px; color: var(--color-text-muted);">Dashboard analitik scan QR, paket unik, dan laporan sirkularitas ESG.</div>
-            </div>
-            <span style="color: var(--color-primary); font-weight: bold;">&gt;</span>
-          </a>
-        </div>
-
-        <!-- Direct QR Test Shortcut -->
-        <div class="ui-card ui-card--soft" style="border: 1px dashed var(--color-primary); text-align: center;">
-          <div style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark); text-transform: uppercase;">
-            Langsung Uji Alur QR Kemasan
-          </div>
-          <p style="font-size: 11px; color: var(--color-text-muted); margin: 6px 0 14px;">
-            Buka langsung URL identitas kemasan demo untuk melihat verifikasi database real-time:
-          </p>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <a href="/p/QR-DEMO-001" class="btn btn--primary btn--full btn--sm">
-              Buka /p/QR-DEMO-001 (Cassava Mailer)
-            </a>
-            <a href="/consumer/scan.html" class="btn btn--secondary btn--full btn--sm">
-              Buka Simulator Scanner QR
-            </a>
-          </div>
         </div>
       </main>
     </div>
+
+    <script type="module">
+      import { login, setActiveConsumer } from '/js/app.js';
+
+      let currentRole = 'consumer';
+
+      const tabs = document.querySelectorAll('.role-tab-btn');
+      const form = document.getElementById('login-form');
+      const emailInput = document.getElementById('input-email');
+      const passwordInput = document.getElementById('input-password');
+      const alertBox = document.getElementById('auth-alert');
+      const btnSubmit = document.getElementById('btn-submit-login');
+      const regConsLink = document.getElementById('register-link-consumer');
+      const regMerchLink = document.getElementById('register-link-merchant');
+
+      // Switch Role Tabs
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabs.forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          currentRole = btn.dataset.role;
+
+          if (currentRole === 'merchant') {
+            emailInput.placeholder = 'sustainability@brand.id';
+            regConsLink.classList.add('hidden');
+            regMerchLink.classList.remove('hidden');
+          } else {
+            emailInput.placeholder = 'budi.santoso@qpack.id';
+            regConsLink.classList.remove('hidden');
+            regMerchLink.classList.add('hidden');
+          }
+          hideAlert();
+        });
+      });
+
+      // Quick Demo Fills
+      document.getElementById('btn-fill-consumer').addEventListener('click', () => {
+        tabs[0].click();
+        emailInput.value = 'budi.santoso@qpack.id';
+        passwordInput.value = 'qpack123';
+      });
+
+      document.getElementById('btn-fill-merchant').addEventListener('click', () => {
+        tabs[1].click();
+        emailInput.value = 'sustainability@ecofashion.id';
+        passwordInput.value = 'qpack123';
+      });
+
+      function showAlert(msg, isError = true) {
+        alertBox.textContent = msg;
+        alertBox.className = isError ? 'status-badge--danger' : 'status-badge--success';
+        alertBox.style.background = isError ? '#fdecec' : '#eaf6e5';
+        alertBox.style.color = isError ? 'var(--color-danger)' : 'var(--color-primary-dark)';
+        alertBox.style.display = 'block';
+      }
+
+      function hideAlert() {
+        alertBox.style.display = 'none';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Memverifikasi...';
+
+        try {
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, role: currentRole })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok || !data.success) {
+            throw new Error(data.message || 'Login gagal.');
+          }
+
+          // Save auth user
+          localStorage.setItem('qpack_auth_user', JSON.stringify(data.user));
+
+          if (data.user.role === 'consumer') {
+            setActiveConsumer({
+              id: data.user.id,
+              name: data.user.name,
+              email: data.user.email
+            });
+            showAlert('Login berhasil! Mengalihkan ke Dashboard Konsumen...', false);
+            setTimeout(() => {
+              window.location.href = '/consumer/dashboard.html';
+            }, 600);
+          } else {
+            showAlert('Login berhasil! Mengalihkan ke Dashboard Merchant...', false);
+            setTimeout(() => {
+              window.location.href = '/merchant/dashboard.html';
+            }, 600);
+          }
+        } catch (err) {
+          showAlert(err.message, true);
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Masuk ke Portal';
+        }
+      });
+    </script>
   </body>
 </html>

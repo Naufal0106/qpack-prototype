@@ -310,8 +310,126 @@ try {
 
   console.log('✅ CRITERION M PASSED: Merchant QR Management API, schema, URLs, and filtering verified.\n');
 
+  // ----------------------------------------------------
+  // CRITERION N: Impact Awareness Gateway (/impact & QR Asset)
+  // ----------------------------------------------------
+  console.log('VERIFYING N: Impact Awareness Gateway route & General QR asset...');
+  const resImpact = await request('GET', '/impact');
+  assert(resImpact.status === 200, `Expected 200 for /impact, got ${resImpact.status}`);
+  assert(resImpact.body.includes('Impact Gateway') || resImpact.body.includes('Q-Pack'), 'Impact page must contain Q-Pack branding');
+  assert(resImpact.body.includes('Kulit Singkong'), 'Impact page must feature Kulit Singkong');
+  assert(resImpact.body.includes('Sisik Ikan'), 'Impact page must feature Sisik Ikan');
+  assert(!resImpact.body.toLowerCase().includes('algae') && !resImpact.body.toLowerCase().includes('rumput laut'), 'Zero algae/seaweed in /impact');
+
+  const impactQrPng = path.join(__dirname, 'assets', 'qr', 'qpack-impact-qr.png');
+  const impactQrSvg = path.join(__dirname, 'assets', 'qr', 'qpack-impact-qr.svg');
+  assert(fs.existsSync(impactQrPng), 'assets/qr/qpack-impact-qr.png must exist');
+  assert(fs.existsSync(impactQrSvg), 'assets/qr/qpack-impact-qr.svg must exist');
+  console.log('✅ CRITERION N PASSED: Impact Gateway route, biomaterial story, and general QR assets verified.\n');
+
+  // ----------------------------------------------------
+  // CRITERION O: Authentication Flow (Consumer & Merchant Register + Login)
+  // ----------------------------------------------------
+  console.log('VERIFYING O: Authentication APIs for Consumer and Merchant...');
+  
+  // 1. Register Consumer
+  const testConsumerEmail = `user_${Date.now()}@test.id`;
+  const regRes = await request('POST', '/api/auth/register-consumer', {
+    name: 'Siti Sirkular',
+    email: testConsumerEmail,
+    password: 'securePassword123'
+  });
+  assert(regRes.status === 201 || regRes.status === 200, `Expected 201/200 for consumer register, got ${regRes.status}`);
+  assert(regRes.body.success === true, 'Register must succeed');
+  assert(regRes.body.user.role === 'consumer', 'User role must be consumer');
+  const newConsumerId = regRes.body.user.id;
+
+  // 2. Login Consumer
+  const loginRes = await request('POST', '/api/auth/login', {
+    email: testConsumerEmail,
+    password: 'securePassword123',
+    role: 'consumer'
+  });
+  assert(loginRes.status === 200, 'Consumer login must return 200');
+  assert(loginRes.body.success === true, 'Consumer login must succeed');
+  assert(loginRes.body.user.id === newConsumerId, 'Logged in user ID mismatch');
+
+  // 3. Login with wrong password
+  const failLogin = await request('POST', '/api/auth/login', {
+    email: testConsumerEmail,
+    password: 'wrongPassword',
+    role: 'consumer'
+  });
+  assert(failLogin.status === 401, 'Wrong password must return 401');
+
+  // 4. Register Merchant
+  const testMerchantEmail = `merchant_${Date.now()}@test.id`;
+  const regMerch = await request('POST', '/api/auth/register-merchant', {
+    brand_name: 'Hijau Lestari Store',
+    contact_name: 'Dewi Lestari',
+    email: testMerchantEmail,
+    password: 'merchantPassword123'
+  });
+  assert(regMerch.status === 201 || regMerch.status === 200, `Expected 201/200 for merchant register, got ${regMerch.status}`);
+  assert(regMerch.body.user.role === 'merchant', 'User role must be merchant');
+
+  // 5. Login Merchant
+  const loginMerch = await request('POST', '/api/auth/login', {
+    email: testMerchantEmail,
+    password: 'merchantPassword123',
+    role: 'merchant'
+  });
+  assert(loginMerch.status === 200, 'Merchant login must return 200');
+  assert(loginMerch.body.user.brand_name === 'Hijau Lestari Store', 'Brand name mismatch');
+
+  console.log('✅ CRITERION O PASSED: Working Consumer & Merchant authentication verified.\n');
+
+  // ----------------------------------------------------
+  // CRITERION P: Canonical Unique Code Claim Flow (POST /api/claim)
+  // ----------------------------------------------------
+  console.log('VERIFYING P: Canonical Unique Code Claim flow with anti-duplicate...');
+
+  // 1. Claim QP-2027-000001 with newConsumerId
+  const claim1 = await request('POST', '/api/claim', {
+    unique_code: 'QP-2027-000001',
+    consumer_id: newConsumerId
+  });
+  assert(claim1.status === 200, `Claim QP-001 must return 200, got ${claim1.status}`);
+  assert(claim1.body.data.claim.is_first_scan === true, 'First claim must have is_first_scan = true');
+  assert(claim1.body.data.claim.points_awarded === 50, 'First claim must award +50 points');
+  assert(claim1.body.data.consumer.points === 50, 'Consumer balance must be 50');
+
+  // 2. Duplicate claim of QP-2027-000001
+  const claim1Dup = await request('POST', '/api/claim', {
+    unique_code: 'QP-2027-000001',
+    consumer_id: newConsumerId
+  });
+  assert(claim1Dup.status === 200, 'Duplicate claim request must return 200');
+  assert(claim1Dup.body.data.claim.is_first_scan === false, 'Duplicate claim must have is_first_scan = false');
+  assert(claim1Dup.body.data.claim.points_awarded === 0, 'Duplicate claim must award 0 points');
+  assert(claim1Dup.body.data.consumer.points === 50, 'Consumer balance must remain 50');
+
+  // 3. Claim QP-2027-000002
+  const claim2 = await request('POST', '/api/claim', {
+    unique_code: 'QP-2027-000002',
+    consumer_id: newConsumerId
+  });
+  assert(claim2.body.data.claim.is_first_scan === true, 'Claim QP-002 must be first scan');
+  assert(claim2.body.data.claim.points_awarded === 50, 'QP-002 claim must award +50 points');
+  assert(claim2.body.data.consumer.points === 100, 'Consumer balance must now be 100');
+  assert(claim2.body.data.consumer.collection_progress === '2/10', 'Collection progress must be 2/10');
+
+  // 4. Test invalid unique code
+  const claimInvalid = await request('POST', '/api/claim', {
+    unique_code: 'QP-NONEXISTENT-999',
+    consumer_id: newConsumerId
+  });
+  assert(claimInvalid.status === 404, 'Invalid unique code must return 404');
+
+  console.log('✅ CRITERION P PASSED: Canonical Unique Code claim, points, and duplicate prevention verified.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-M) PASSED!');
+  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-P) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {

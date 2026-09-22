@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS merchants (
   brand_name TEXT NOT NULL,
   email TEXT,
   logo_url TEXT,
+  password_hash TEXT,
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -54,6 +55,7 @@ CREATE TABLE IF NOT EXISTS consumers (
   name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
   points INTEGER NOT NULL DEFAULT 0,
+  password_hash TEXT,
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 

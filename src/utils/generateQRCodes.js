@@ -54,6 +54,32 @@ export async function generateDemoQRCodes(customBaseUrl = null) {
 
     console.log(`✅ Generated QR for ${pkg.id} -> ${canonicalUrl}`);
   }
+
+  // Generate One General Impact QR Code
+  const impactUrl = `${baseUrl.replace(/\/$/, '')}/impact`;
+  const impactPngPath = path.join(qrDir, 'qpack-impact-qr.png');
+  const impactSvgPath = path.join(qrDir, 'qpack-impact-qr.svg');
+
+  await QRCode.toFile(impactPngPath, impactUrl, {
+    width: 500,
+    margin: 2,
+    color: {
+      dark: '#0e350c', // Deep forest green
+      light: '#ffffff'
+    }
+  });
+
+  const impactSvgString = await QRCode.toString(impactUrl, {
+    type: 'svg',
+    margin: 2,
+    color: {
+      dark: '#0e350c',
+      light: '#ffffff'
+    }
+  });
+  fs.writeFileSync(impactSvgPath, impactSvgString, 'utf8');
+
+  console.log(`✅ Generated General Impact QR -> ${impactUrl}`);
 }
 
 // Run if directly called

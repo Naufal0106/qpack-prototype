@@ -103,3 +103,59 @@ export async function resetDemo() {
   return await res.json();
 }
 
+// 7. Klaim poin reward menggunakan kode unik kemasan fisik
+export async function claimUniqueCode(uniqueCode, consumerId = null) {
+  const consumer = consumerId ? { id: consumerId } : getActiveConsumer();
+  const res = await fetch(`${API_BASE}/api/claim`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      unique_code: uniqueCode,
+      consumer_id: consumer.id
+    })
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Gagal mengklaim kode kemasan.');
+  }
+  return data;
+}
+
+// 8. Auth State Management
+export function getActiveUser() {
+  const saved = localStorage.getItem('qpack_auth_user');
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch {}
+  }
+  return null;
+}
+
+export function logout() {
+  localStorage.removeItem('qpack_auth_user');
+  window.location.href = '/login.html';
+}
+
+export async function login(email, password, role = 'consumer') {
+  const res = await fetch(`${API_BASE}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, role })
+  });
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Login gagal.');
+  }
+  localStorage.setItem('qpack_auth_user', JSON.stringify(data.user));
+  if (data.user.role === 'consumer') {
+    setActiveConsumer({
+      id: data.user.id,
+      name: data.user.name,
+      email: data.user.email
+    });
+  }
+  return data.user;
+}
+
+

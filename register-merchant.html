@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Daftar Kemitraan Merchant — Q-Pack Ekosistem Kemasan Sirkular" />
+    <title>Daftar Merchant — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .auth-card {
+        background: #ffffff;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-xl, 20px);
+        padding: clamp(24px, 4vw, 36px);
+        box-shadow: var(--shadow-sm);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell" style="max-width: 540px;">
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/index.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+        </div>
+        <div class="q-header__right">
+          <a href="/login.html" style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark); text-decoration: none;">
+            Sudah Punya Akun? Masuk
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content" style="padding-top: 24px; padding-bottom: 40px;">
+        <div class="auth-card">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span class="status-badge status-badge--success" style="margin-bottom: 8px;">Kemitraan Bisnis &amp; Brand</span>
+            <h1 style="font-size: var(--fs-xl); font-weight: 700; margin-top: 4px;">Daftar Akun Merchant</h1>
+            <p class="text-muted" style="font-size: var(--fs-xs); margin-top: 4px;">
+              Gunakan kemasan ramah lingkungan Q-Pack, cetak QR Impact umum, dan pantau interaksi konsumen.
+            </p>
+          </div>
+
+          <!-- Alert Box -->
+          <div id="auth-alert" class="hidden" style="padding: 10px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 16px; font-weight: 500;"></div>
+
+          <!-- Registration Form -->
+          <form id="register-merchant-form">
+            <div style="margin-bottom: 14px;">
+              <label for="input-pic-name" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Nama Penanggung Jawab</label>
+              <input
+                type="text"
+                id="input-pic-name"
+                class="form-control"
+                placeholder="Contoh: Rian Pratama"
+                required
+                style="width: 100%;"
+              />
+            </div>
+
+            <div style="margin-bottom: 14px;">
+              <label for="input-brand-name" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Nama Brand / Bisnis</label>
+              <input
+                type="text"
+                id="input-brand-name"
+                class="form-control"
+                placeholder="Contoh: Nusantara Organics"
+                required
+                style="width: 100%;"
+              />
+            </div>
+
+            <div style="margin-bottom: 14px;">
+              <label for="input-email" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Email Bisnis</label>
+              <input
+                type="email"
+                id="input-email"
+                class="form-control"
+                placeholder="sustainability@brand.id"
+                required
+                style="width: 100%;"
+              />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label for="input-password" class="form-label" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Password (min. 6 karakter)</label>
+              <input
+                type="password"
+                id="input-password"
+                class="form-control"
+                placeholder="Minimal 6 karakter"
+                required
+                minlength="6"
+                style="width: 100%;"
+              />
+            </div>
+
+            <button type="submit" id="btn-submit-merchant-reg" class="btn btn--primary btn--full" style="padding: 12px; font-size: 14px; font-weight: 600;">
+              Daftar sebagai Merchant
+            </button>
+          </form>
+
+          <div style="margin-top: 20px; text-align: center; font-size: 12px; color: var(--color-text-muted);">
+            Sudah terdaftar? <a href="/login.html" style="color: var(--color-primary-dark); font-weight: 600; text-decoration: underline;">Masuk ke Portal</a>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="/index.html" class="btn btn--outline btn--sm" style="font-size: 11px; padding: 6px 14px;">
+            &larr; Kembali ke Beranda Portal
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <script type="module">
+      const form = document.getElementById('register-merchant-form');
+      const picInput = document.getElementById('input-pic-name');
+      const brandInput = document.getElementById('input-brand-name');
+      const emailInput = document.getElementById('input-email');
+      const passwordInput = document.getElementById('input-password');
+      const alertBox = document.getElementById('auth-alert');
+      const btnSubmit = document.getElementById('btn-submit-merchant-reg');
+
+      function showAlert(msg, isError = true) {
+        alertBox.textContent = msg;
+        alertBox.className = isError ? 'status-badge--danger' : 'status-badge--success';
+        alertBox.style.background = isError ? '#fdecec' : '#eaf6e5';
+        alertBox.style.color = isError ? 'var(--color-danger)' : 'var(--color-primary-dark)';
+        alertBox.style.display = 'block';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertBox.style.display = 'none';
+
+        const name = picInput.value.trim();
+        const brand_name = brandInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (password.length < 6) {
+          showAlert('Password minimal 6 karakter.', true);
+          return;
+        }
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Mendaftarkan...';
+
+        try {
+          const res = await fetch('/api/auth/register-merchant', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, brand_name, email, password })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok || !data.success) {
+            throw new Error(data.message || 'Registrasi merchant gagal.');
+          }
+
+          localStorage.setItem('qpack_auth_user', JSON.stringify(data.user));
+
+          showAlert('Pendaftaran merchant berhasil! Mengalihkan ke Dashboard...', false);
+          setTimeout(() => {
+            window.location.href = '/merchant/dashboard.html';
+          }, 600);
+        } catch (err) {
+          showAlert(err.message, true);
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Daftar sebagai Merchant';
+        }
+      });
+    </script>
+  </body>
+</html>

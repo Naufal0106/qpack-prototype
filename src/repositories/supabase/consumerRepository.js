@@ -18,6 +18,55 @@ export class SupabaseConsumerRepository {
     return data;
   }
 
+  async findByEmail(email) {
+    if (!email) return null;
+    const client = this.getClient();
+    const { data, error } = await client
+      .from('consumers')
+      .select('*')
+      .ilike('email', email.trim())
+      .maybeSingle();
+
+    if (error || !data) return null;
+    return data;
+  }
+
+  async createConsumer({ id, name, email, passwordHash = null, points = 0 }) {
+    const client = this.getClient();
+    const payload = {
+      id,
+      name,
+      email: email.trim(),
+      points
+    };
+    if (passwordHash) {
+      payload.password_hash = passwordHash;
+    }
+
+    let { data, error } = await client
+      .from('consumers')
+      .insert(payload)
+      .select()
+      .single();
+
+    if (error && payload.password_hash && error.message?.includes('password_hash')) {
+      delete payload.password_hash;
+      const retry = await client
+        .from('consumers')
+        .insert(payload)
+        .select()
+        .single();
+      data = retry.data;
+      error = retry.error;
+    }
+
+    if (error) {
+      throw new Error(`Failed to create consumer: ${error.message}`);
+    }
+
+    return data || payload;
+  }
+
   async findOrCreate(id, defaultData = {}) {
     let consumer = await this.findById(id);
     if (!consumer) {

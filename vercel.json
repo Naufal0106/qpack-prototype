@@ -22,6 +22,22 @@
       "destination": "/bank-sampah.html"
     },
     {
+      "source": "/impact",
+      "destination": "/impact.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/register-consumer",
+      "destination": "/register-consumer.html"
+    },
+    {
+      "source": "/register-merchant",
+      "destination": "/register-merchant.html"
+    },
+    {
       "source": "/consumer",
       "destination": "/consumer/dashboard.html"
     },
