@@ -55,21 +55,26 @@ export async function generateDemoQRCodes(customBaseUrl = null) {
     console.log(`✅ Generated QR for ${pkg.id} -> ${canonicalUrl}`);
   }
 
-  // Generate One General Impact QR Code
-  const impactUrl = `${baseUrl.replace(/\/$/, '')}/impact`;
-  const impactPngPath = path.join(qrDir, 'qpack-impact-qr.png');
-  const impactSvgPath = path.join(qrDir, 'qpack-impact-qr.svg');
+  // Generate Universal Packaging QR Code (Target: /scan)
+  const scanUrl = `${baseUrl.replace(/\/$/, '')}/scan`;
+  const qrPngPath = path.join(qrDir, 'qpack-qr.png');
+  const qrSvgPath = path.join(qrDir, 'qpack-qr.svg');
+  const legacyPngPath = path.join(qrDir, 'qpack-impact-qr.png');
+  const legacySvgPath = path.join(qrDir, 'qpack-impact-qr.svg');
 
-  await QRCode.toFile(impactPngPath, impactUrl, {
+  const qrOptions = {
     width: 500,
     margin: 2,
     color: {
       dark: '#0e350c', // Deep forest green
       light: '#ffffff'
     }
-  });
+  };
 
-  const impactSvgString = await QRCode.toString(impactUrl, {
+  await QRCode.toFile(qrPngPath, scanUrl, qrOptions);
+  await QRCode.toFile(legacyPngPath, scanUrl, qrOptions);
+
+  const qrSvgString = await QRCode.toString(scanUrl, {
     type: 'svg',
     margin: 2,
     color: {
@@ -77,9 +82,10 @@ export async function generateDemoQRCodes(customBaseUrl = null) {
       light: '#ffffff'
     }
   });
-  fs.writeFileSync(impactSvgPath, impactSvgString, 'utf8');
+  fs.writeFileSync(qrSvgPath, qrSvgString, 'utf8');
+  fs.writeFileSync(legacySvgPath, qrSvgString, 'utf8');
 
-  console.log(`✅ Generated General Impact QR -> ${impactUrl}`);
+  console.log(`✅ Generated Universal Packaging QR -> ${scanUrl}`);
 }
 
 // Run if directly called

@@ -160,21 +160,34 @@ try {
   assert(prodPkg1.materials.some(m => m.name === 'Sisik Ikan'), 'Must include Sisik Ikan');
   console.log('✅ TEST P9 PASSED: Production QR Management API verified with full metadata and URLs.\n');
 
-  // 10. Verify /impact and / are completely free of -65% and CO2 claims
-  console.log('TEST P10: Verifying Complete Absence of -65% and CO2 claims on Production...');
+  // 10. Verify /scan, /impact, bank-sampah, and home page on production
+  console.log('TEST P10: Verifying /scan, decoupled official home, bank-sampah, and absence of CO2 claims...');
+  // Primary QR Scan Result Page (/scan)
+  const scanRes = await request('/scan');
+  assert(scanRes.status === 200, `Expected 200 for /scan, got ${scanRes.status}`);
+  assert(scanRes.text.includes('Kulit Singkong'), '/scan must feature Kulit Singkong');
+  assert(scanRes.text.includes('Sisik Ikan'), '/scan must feature Sisik Ikan');
+  assert(!scanRes.text.includes('-65%') && !scanRes.text.includes('65%'), '/scan must NOT contain 65%');
+  assert(!scanRes.text.toLowerCase().includes('co2') && !scanRes.text.toLowerCase().includes('co₂'), '/scan must NOT contain CO2 or CO₂');
+
+  // Backward-compatible /impact alias
   const impactRes = await request('/impact');
   assert(impactRes.status === 200, `Expected 200 for /impact, got ${impactRes.status}`);
-  assert(!impactRes.text.includes('-65%'), '/impact must NOT contain -65%');
-  assert(!impactRes.text.includes('65%'), '/impact must NOT contain 65%');
-  assert(!impactRes.text.toLowerCase().includes('co2') && !impactRes.text.toLowerCase().includes('co₂'), '/impact must NOT contain CO2 or CO₂');
+  assert(!impactRes.text.includes('-65%') && !impactRes.text.includes('65%'), '/impact must NOT contain 65%');
 
+  // Official Home page
   const homeRes = await request('/');
   assert(homeRes.status === 200, `Expected 200 for /, got ${homeRes.status}`);
-  assert(!homeRes.text.includes('-65%'), 'Home page must NOT contain -65%');
-  assert(!homeRes.text.includes('65%'), 'Home page must NOT contain 65%');
+  assert(!homeRes.text.includes('href="/impact"') && !homeRes.text.includes("href='/impact'"), 'Home page must NOT link to /impact');
+  assert(!homeRes.text.includes('-65%') && !homeRes.text.includes('65%'), 'Home page must NOT contain 65%');
   assert(!homeRes.text.toLowerCase().includes('co2') && !homeRes.text.toLowerCase().includes('co₂'), 'Home page must NOT contain CO2 or CO₂');
 
-  console.log('✅ TEST P10 PASSED: Verified production /impact and home have ZERO -65% or CO2 claims.\n');
+  // Mitra Bank Sampah return form
+  const bankSampahRes = await request('/bank-sampah');
+  assert(bankSampahRes.status === 200, `Expected 200 for /bank-sampah, got ${bankSampahRes.status}`);
+  assert(bankSampahRes.text.includes('Form Pengembalian Kemasan'), 'Bank sampah must have return form');
+
+  console.log('✅ TEST P10 PASSED: Verified production /scan, decoupled official home, bank-sampah form, and zero CO2 claims.\n');
 
   console.log('======================================================');
   console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P10) PASSED!');

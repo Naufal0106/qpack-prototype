@@ -502,9 +502,14 @@ app.post('/api/demo/reset', async (req, res) => {
 // FRONTEND ROUTING
 // ==========================================
 
-// Route /impact -> Impact Awareness Gateway (One QR Destination)
+// Route /scan & /qr -> QR Scan Result Page (Physical Packaging QR Destination)
+app.get(['/scan', '/qr'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'scan.html'));
+});
+
+// Route /impact -> Backward-compatible alias for existing QR scans and tests
 app.get('/impact', (req, res) => {
-  res.sendFile(path.join(__dirname, 'impact.html'));
+  res.sendFile(path.join(__dirname, 'scan.html'));
 });
 
 // Route /login -> Login Page

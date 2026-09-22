@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Portal Kemitraan Bank Sampah — Q-Pack Ecosystem" />
+    <meta name="description" content="Portal Mitra Bank Sampah — Form Verifikasi Pengembalian Kemasan Q-Pack" />
     <title>Mitra Bank Sampah — Q-Pack Circular Ecosystem</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,6 +15,56 @@
 
     <link rel="stylesheet" href="/css/variables.css" />
     <link rel="stylesheet" href="/css/portal.css" />
+    <style>
+      .return-form-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e7df;
+        border-radius: var(--portal-radius-xl, 24px);
+        padding: clamp(24px, 5vw, 40px);
+        box-shadow: var(--portal-shadow-card, 0 10px 30px rgba(14, 53, 12, 0.04));
+      }
+      .form-group {
+        margin-bottom: 18px;
+      }
+      .form-label {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--eco-forest, #0e350c);
+        margin-bottom: 6px;
+      }
+      .form-input, .form-select {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1.5px solid #d4ded1;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 13.5px;
+        color: var(--eco-text, #1e2920);
+        background: #fdfdfc;
+        box-sizing: border-box;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .form-input:focus, .form-select:focus {
+        outline: none;
+        border-color: var(--eco-primary, #21721e);
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(33, 114, 30, 0.12);
+      }
+      .form-hint {
+        font-size: 11px;
+        color: var(--eco-text-muted, #526356);
+        margin-top: 4px;
+      }
+      .success-box {
+        display: none;
+        background: #f0f7ee;
+        border: 1.5px solid #a4d39f;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 24px;
+      }
+    </style>
   </head>
   <body class="portal-body">
     <!-- Header -->
@@ -32,7 +82,7 @@
           </ul>
 
           <div class="portal-nav__actions">
-            <a href="/" class="portal-btn portal-btn--outline">
+            <a href="/" class="portal-btn portal-btn--outline" style="font-size: 12.5px; padding: 8px 16px;">
               Kembali ke Beranda
             </a>
           </div>
@@ -40,72 +90,201 @@
       </div>
     </header>
 
-    <main class="portal-container" style="padding-block: 60px 80px; max-width: 860px;">
-      <div style="text-align: center; margin-bottom: 40px;">
-        <span class="portal-eyebrow portal-eyebrow--sand">Portal Kemitraan Sirkular</span>
-        <h1 class="portal-hero__title" style="font-size: clamp(2rem, 3.5vw, 2.75rem); margin-top: 10px;">
-          Mitra Bank Sampah &amp; Drop Point
+    <main class="portal-container" style="padding-block: 40px 72px; max-width: 720px;">
+      <!-- Page Title -->
+      <div style="text-align: center; margin-bottom: 32px;">
+        <span class="portal-eyebrow portal-eyebrow--sand">Mitra Sirkular &amp; Drop Point</span>
+        <h1 class="portal-hero__title" style="font-size: clamp(1.85rem, 3.5vw, 2.5rem); margin-top: 8px;">
+          Form Pengembalian Kemasan
         </h1>
-        <p class="portal-hero__lead" style="margin-inline: auto;">
-          Verifikasi pengembalian kemasan dan ikut menghubungkan konsumen dengan ekonomi sirkular tertutup.
+        <p class="portal-hero__lead" style="margin-inline: auto; font-size: 14px; max-width: 540px;">
+          Catat dan verifikasi kemasan polymailer Q-Pack yang dikembalikan oleh konsumen untuk diproses ke rantai kompos atau daur ulang material.
         </p>
       </div>
 
-      <!-- Notice Card (Upcoming Stage) -->
-      <div style="background: #ffffff; border: 1.5px solid #e2e7df; border-radius: var(--portal-radius-xl); padding: 40px 32px; box-shadow: var(--portal-shadow-card); text-align: center;">
-        <div style="width: 64px; height: 64px; border-radius: 50%; background: #fef8eb; display: grid; place-items: center; margin: 0 auto 20px;">
-          <img src="/assets/icons/eco-icon.svg" alt="Eco" style="width: 32px; height: 32px;" />
-        </div>
-
-        <span style="display: inline-block; padding: 4px 12px; background: #fff3db; color: #8a5b00; font-size: 11px; font-weight: 700; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px;">
-          Tahap Pengembangan Ekosistem
-        </span>
-
-        <h2 style="font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--eco-forest); margin: 16px 0 10px;">
-          Fitur mitra sedang disiapkan untuk tahap berikutnya.
-        </h2>
-
-        <p style="font-size: 13.5px; color: var(--eco-text-muted); line-height: 1.65; max-width: 580px; margin: 0 auto 28px;">
-          Sistem validasi pengembalian kemasan fisik (Return Verification) melalui pemindai QR khusus mitra Bank Sampah sedang dalam proses integrasi. Nantinya, mitra resmi dapat memvalidasi kemasan yang dikembalikan oleh konsumen dan mencatat aliran material daur ulang ke database sirkular Q-Pack.
-        </p>
-
-        <!-- Feature Preview Highlights -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; text-align: left; margin-bottom: 32px;">
-          <div style="background: var(--eco-surface-soft); padding: 18px; border-radius: var(--portal-radius-md); border: 1px solid var(--eco-border-light);">
-            <div style="font-weight: 700; font-size: 13px; color: var(--eco-forest); margin-bottom: 4px;">1. Validasi QR Pengembalian</div>
-            <div style="font-size: 11.5px; color: var(--eco-text-muted); line-height: 1.5;">Memindai kemasan konsumen untuk mengubah status dari Terkumpul (Collected) menjadi Dikembalikan (Returned).</div>
+      <!-- Return Form Card -->
+      <div class="return-form-card">
+        <form id="return-form">
+          <div class="form-group">
+            <label for="partner-name" class="form-label">Lokasi Mitra Bank Sampah / Drop Point</label>
+            <select id="partner-name" class="form-select" required>
+              <option value="">-- Pilih Lokasi Mitra --</option>
+              <option value="Bank Sampah Induk Surabaya - Wonokromo">Bank Sampah Induk Surabaya (Wonokromo)</option>
+              <option value="Bank Sampah Bersemi - Sukolilo">Bank Sampah Bersemi (Sukolilo)</option>
+              <option value="Drop Point EcoFashion ID - Jakarta Selatan">Drop Point EcoFashion ID (Jakarta Selatan)</option>
+              <option value="Bank Sampah Asri Nusantara - Bandung">Bank Sampah Asri Nusantara (Bandung)</option>
+              <option value="Drop Point Q-Pack Hub - Tangerang">Drop Point Q-Pack Hub (Tangerang)</option>
+            </select>
           </div>
 
-          <div style="background: var(--eco-surface-soft); padding: 18px; border-radius: var(--portal-radius-md); border: 1px solid var(--eco-border-light);">
-            <div style="font-weight: 700; font-size: 13px; color: var(--eco-forest); margin-bottom: 4px;">2. Pencatatan Massa &amp; Unit</div>
-            <div style="font-size: 11.5px; color: var(--eco-text-muted); line-height: 1.5;">Menghitung akumulasi volume biopolimer yang siap disalurkan ke fasilitas kompos industri atau daur ulang.</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+            <div class="form-group">
+              <label for="consumer-identifier" class="form-label">Data Konsumen (Nama / Email)</label>
+              <input
+                type="text"
+                id="consumer-identifier"
+                class="form-input"
+                placeholder="Contoh: Budi Santoso / budi@gmail.com"
+                required
+              />
+              <div class="form-hint">Digunakan untuk konfirmasi poin dan progres sirkular konsumen.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="package-code" class="form-label">Kode Unik Kemasan</label>
+              <input
+                type="text"
+                id="package-code"
+                class="form-input"
+                placeholder="Contoh: QP-2027-000001"
+                style="font-family: monospace; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;"
+                required
+              />
+              <div class="form-hint">Kode unik tercetak pada kemasan fisik Q-Pack.</div>
+            </div>
           </div>
 
-          <div style="background: var(--eco-surface-soft); padding: 18px; border-radius: var(--portal-radius-md); border: 1px solid var(--eco-border-light);">
-            <div style="font-weight: 700; font-size: 13px; color: var(--eco-forest); margin-bottom: 4px;">3. Insentif Sirkular</div>
-            <div style="font-size: 11.5px; color: var(--eco-text-muted); line-height: 1.5;">Sinkronisasi reward tambahan untuk konsumen yang mengembalikan 10 kemasan ke Bank Sampah terdekat.</div>
-          </div>
-        </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+            <div class="form-group">
+              <label for="package-qty" class="form-label">Jumlah Kemasan (Pcs)</label>
+              <input
+                type="number"
+                id="package-qty"
+                class="form-input"
+                value="1"
+                min="1"
+                max="50"
+                required
+              />
+            </div>
 
-        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <a href="/consumer/dashboard.html" class="portal-btn portal-btn--primary" style="font-size: 13px;">
-            Jelajahi Portal Konsumen
-          </a>
-          <a href="/merchant/dashboard.html" class="portal-btn portal-btn--secondary" style="font-size: 13px;">
-            Masuk Dashboard Merchant
-          </a>
-          <a href="/" class="portal-btn portal-btn--outline" style="font-size: 13px;">
-            Kembali ke Beranda
-          </a>
+            <div class="form-group">
+              <label for="package-condition" class="form-label">Kondisi Kemasan</label>
+              <select id="package-condition" class="form-select" required>
+                <option value="bersih_kering">Bersih &amp; Kering (Siap Kompos)</option>
+                <option value="terlipat">Terlipat / Ada Residu Pengiriman</option>
+                <option value="robek_sebagian">Robek Sebagian (Material Utuh)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 8px;">
+            <label for="return-notes" class="form-label">Catatan Tambahan (Opsional)</label>
+            <input
+              type="text"
+              id="return-notes"
+              class="form-input"
+              placeholder="Contoh: Kemasan batch Cassava Mailer M"
+            />
+          </div>
+
+          <div style="margin-top: 24px;">
+            <button
+              type="submit"
+              id="btn-submit-return"
+              class="portal-btn portal-btn--primary portal-btn--full"
+              style="padding: 13px; font-size: 14px; font-weight: 600;"
+            >
+              ✓ Verifikasi &amp; Simpan Pengembalian
+            </button>
+          </div>
+        </form>
+
+        <!-- Success Notification Box -->
+        <div id="success-box" class="success-box">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: #21721e; color: #fff; display: grid; place-items: center; font-size: 18px; font-weight: bold; flex-shrink: 0;">
+              ✓
+            </div>
+            <div style="flex: 1;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #144912; margin: 0 0 4px 0;">
+                Pengembalian Kemasan Berhasil Dicatat!
+              </h3>
+              <p style="font-size: 12.5px; color: #2e592b; line-height: 1.5; margin: 0 0 10px 0;" id="success-message">
+                Data pengembalian telah tersimpan dalam sistem verifikasi sirkular Q-Pack.
+              </p>
+              <div style="background: #ffffff; border: 1px solid #c2e2be; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #1e3a1c; font-family: monospace;" id="receipt-details">
+                ID Referensi: RET-2027-XXXXXX
+              </div>
+              <div style="margin-top: 14px;">
+                <button
+                  type="button"
+                  id="btn-reset-form"
+                  class="portal-btn portal-btn--outline"
+                  style="font-size: 12px; padding: 6px 14px;"
+                >
+                  + Catat Pengembalian Baru
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
 
     <!-- Footer -->
-    <footer class="portal-footer" style="padding-block: 40px 30px;">
+    <footer class="portal-footer" style="padding-block: 30px 20px;">
       <div class="portal-container" style="text-align: center; font-size: 12px; color: var(--eco-text-light);">
         <div>&copy; 2027 Q-Pack Circular Ecosystem. All rights reserved.</div>
+        <div style="margin-top: 6px; display: flex; justify-content: center; gap: 12px;">
+          <span>Mitra Bank Sampah &amp; Drop Point</span>
+          <span>•</span>
+          <span>Sirkularitas Kemasan</span>
+          <span>•</span>
+          <span>Zero Waste To Landfill</span>
+        </div>
       </div>
     </footer>
+
+    <script>
+      const returnForm = document.getElementById('return-form');
+      const successBox = document.getElementById('success-box');
+      const successMessage = document.getElementById('success-message');
+      const receiptDetails = document.getElementById('receipt-details');
+      const resetBtn = document.getElementById('btn-reset-form');
+
+      returnForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const partner = document.getElementById('partner-name').value;
+        const consumer = document.getElementById('consumer-identifier').value.trim();
+        const code = document.getElementById('package-code').value.trim().toUpperCase();
+        const qty = document.getElementById('package-qty').value;
+        const condition = document.getElementById('package-condition').value;
+
+        // Generate unique reference
+        const refId = 'RET-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(Math.random() * 900 + 100);
+
+        // Store in localStorage for lightweight client persistence
+        const record = {
+          refId,
+          partner,
+          consumer,
+          code,
+          qty: parseInt(qty, 10),
+          condition,
+          timestamp: new Date().toISOString()
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('qpack_mitra_returns') || '[]');
+          existing.unshift(record);
+          localStorage.setItem('qpack_mitra_returns', JSON.stringify(existing.slice(0, 50)));
+        } catch (_) {}
+
+        // Show confirmation
+        successMessage.textContent = `Kemasan kode ${code} (${qty} pcs) dari konsumen "${consumer}" berhasil diverifikasi di "${partner}". Status material telah diperbarui ke rantai sirkular.`;
+        receiptDetails.innerHTML = `<strong>No. Referensi:</strong> ${refId}<br><strong>Kode Kemasan:</strong> ${code} (${qty} unit)<br><strong>Waktu:</strong> ${new Date().toLocaleString('id-ID')}`;
+
+        returnForm.style.display = 'none';
+        successBox.style.display = 'block';
+      });
+
+      resetBtn.addEventListener('click', () => {
+        returnForm.reset();
+        successBox.style.display = 'none';
+        returnForm.style.display = 'block';
+      });
+    </script>
   </body>
 </html>

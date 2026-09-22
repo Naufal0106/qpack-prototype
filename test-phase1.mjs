@@ -311,33 +311,47 @@ try {
   console.log('✅ CRITERION M PASSED: Merchant QR Management API, schema, URLs, and filtering verified.\n');
 
   // ----------------------------------------------------
-  // CRITERION N: Impact Awareness Gateway (/impact & QR Asset)
+  // CRITERION N: Packaging QR Scan Result Page (/scan), Official Web Decoupling & QR Asset
   // ----------------------------------------------------
-  console.log('VERIFYING N: Impact Awareness Gateway route, General QR asset & complete absence of CO2 claims...');
+  console.log('VERIFYING N: Packaging QR Scan Result Page (/scan), Official Web Decoupling & absence of CO2 claims...');
+  // 1. Primary QR Scan Result Page (/scan)
+  const resScan = await request('GET', '/scan');
+  assert(resScan.status === 200, `Expected 200 for /scan, got ${resScan.status}`);
+  assert(resScan.body.includes('Q-Pack'), 'Scan page must contain Q-Pack branding');
+  assert(resScan.body.includes('Kulit Singkong'), 'Scan page must feature Kulit Singkong');
+  assert(resScan.body.includes('Sisik Ikan'), 'Scan page must feature Sisik Ikan');
+  assert(!resScan.body.toLowerCase().includes('algae') && !resScan.body.toLowerCase().includes('rumput laut'), 'Zero algae/seaweed in /scan');
+  assert(!resScan.body.includes('-65%') && !resScan.body.includes('65%'), '/scan must NOT contain 65%');
+  assert(!resScan.body.toLowerCase().includes('co2') && !resScan.body.toLowerCase().includes('co₂'), '/scan must NOT contain CO2 or CO₂');
+  assert(resScan.body.includes('Kode Unik'), '/scan must guide consumer to claim via Kode Unik');
+
+  // 2. Backward-compatible /impact route
   const resImpact = await request('GET', '/impact');
   assert(resImpact.status === 200, `Expected 200 for /impact, got ${resImpact.status}`);
-  assert(resImpact.body.includes('Impact Gateway') || resImpact.body.includes('Q-Pack'), 'Impact page must contain Q-Pack branding');
   assert(resImpact.body.includes('Kulit Singkong'), 'Impact page must feature Kulit Singkong');
   assert(resImpact.body.includes('Sisik Ikan'), 'Impact page must feature Sisik Ikan');
-  assert(!resImpact.body.toLowerCase().includes('algae') && !resImpact.body.toLowerCase().includes('rumput laut'), 'Zero algae/seaweed in /impact');
+  assert(!resImpact.body.includes('-65%') && !resImpact.body.includes('65%'), '/impact must NOT contain 65%');
 
-  // Verify complete absence of 65% and CO2 claims in /impact
-  assert(!resImpact.body.includes('-65%'), '/impact must NOT contain "-65%"');
-  assert(!resImpact.body.includes('65%'), '/impact must NOT contain "65%"');
-  assert(!resImpact.body.toLowerCase().includes('co2') && !resImpact.body.toLowerCase().includes('co₂'), '/impact must NOT contain CO2 or CO₂');
-
-  // Verify complete absence of 65% and CO2 claims in index.html
+  // 3. Official Website (index.html) must NOT have Impact Gateway in navigation
   const resHome = await request('GET', '/');
   assert(resHome.status === 200, 'Home page must return 200');
-  assert(!resHome.body.includes('-65%'), 'index.html must NOT contain "-65%"');
-  assert(!resHome.body.includes('65%'), 'index.html must NOT contain "65%"');
+  assert(!resHome.body.includes('href="/impact"') && !resHome.body.includes("href='/impact'"), 'index.html must NOT link to "/impact"');
+  assert(!resHome.body.includes('-65%') && !resHome.body.includes('65%'), 'index.html must NOT contain 65%');
   assert(!resHome.body.toLowerCase().includes('co2') && !resHome.body.toLowerCase().includes('co₂'), 'index.html must NOT contain CO2 or CO₂');
 
+  // 4. Mitra Bank Sampah return form verification
+  const resBankSampah = await request('GET', '/bank-sampah');
+  assert(resBankSampah.status === 200, 'Bank sampah portal must return 200');
+  assert(resBankSampah.body.includes('Form Pengembalian Kemasan'), 'Bank sampah must have return form');
+
+  // 5. Universal Packaging QR assets existence
+  const qrPng = path.join(__dirname, 'assets', 'qr', 'qpack-qr.png');
+  const qrSvg = path.join(__dirname, 'assets', 'qr', 'qpack-qr.svg');
   const impactQrPng = path.join(__dirname, 'assets', 'qr', 'qpack-impact-qr.png');
-  const impactQrSvg = path.join(__dirname, 'assets', 'qr', 'qpack-impact-qr.svg');
+  assert(fs.existsSync(qrPng), 'assets/qr/qpack-qr.png must exist');
+  assert(fs.existsSync(qrSvg), 'assets/qr/qpack-qr.svg must exist');
   assert(fs.existsSync(impactQrPng), 'assets/qr/qpack-impact-qr.png must exist');
-  assert(fs.existsSync(impactQrSvg), 'assets/qr/qpack-impact-qr.svg must exist');
-  console.log('✅ CRITERION N PASSED: Impact Gateway verified with ZERO CO2 or -65% claims, and general QR assets verified.\n');
+  console.log('✅ CRITERION N PASSED: Packaging QR Scan Result Page (/scan), clean official web, bank sampah form, and QR assets verified.\n');
 
   // ----------------------------------------------------
   // CRITERION O: Authentication Flow (Consumer & Merchant Register + Login)

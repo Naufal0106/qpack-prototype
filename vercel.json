@@ -22,8 +22,16 @@
       "destination": "/bank-sampah.html"
     },
     {
+      "source": "/scan",
+      "destination": "/scan.html"
+    },
+    {
+      "source": "/qr",
+      "destination": "/scan.html"
+    },
+    {
       "source": "/impact",
-      "destination": "/impact.html"
+      "destination": "/scan.html"
     },
     {
       "source": "/login",
