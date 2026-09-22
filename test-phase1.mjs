@@ -454,8 +454,36 @@ try {
 
   console.log('✅ CRITERION P PASSED: Canonical Unique Code claim, points, and duplicate prevention verified.\n');
 
+  // ----------------------------------------------------
+  // CRITERION Q: Consumer Dashboard "Tukar" Navigation & Camera-Free Claim Page
+  // ----------------------------------------------------
+  console.log('VERIFYING Q: Consumer Dashboard "Tukar" navigation and camera-free claim page...');
+
+  // 1. Check dashboard bottom nav has "Tukar" and no "Scan"
+  const resDash = await request('GET', '/consumer/dashboard.html');
+  assert(resDash.status === 200, 'Consumer dashboard must return 200');
+  assert(resDash.body.includes('Tukar'), 'Dashboard bottom nav must have "Tukar"');
+  assert(resDash.body.includes('tukar-icon.svg'), 'Dashboard must use tukar-icon.svg');
+  assert(!resDash.body.includes('Buka Scanner QR'), 'Dashboard must not have "Buka Scanner QR"');
+
+  // 2. Check Tukar page (consumer/scan.html)
+  const resTukar = await request('GET', '/consumer/scan.html');
+  assert(resTukar.status === 200, 'Tukar page must return 200');
+  assert(resTukar.body.includes('Tukar Kode Kemasan'), 'Tukar page must have title "Tukar Kode Kemasan"');
+  assert(resTukar.body.includes('Tukar +50 Coin'), 'Tukar page must have button "Tukar +50 Coin"');
+  assert(!resTukar.body.includes('qr-scanner'), 'Tukar page must NOT contain camera scanner');
+  assert(!resTukar.body.includes('scanner-overlay-line'), 'Tukar page must NOT contain scanner overlay');
+
+  // 3. Check reward and account pages
+  const resReward = await request('GET', '/consumer/reward.html');
+  assert(resReward.body.includes('Tukar'), 'Reward page must have "Tukar" in bottom nav');
+  const resAkun = await request('GET', '/consumer/akun.html');
+  assert(resAkun.body.includes('Tukar'), 'Akun page must have "Tukar" in bottom nav');
+
+  console.log('✅ CRITERION Q PASSED: Consumer navigation changed to "Tukar", camera-free code claim page verified.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-P) PASSED!');
+  console.log('🎉 ALL REVIEW ACCEPTANCE CRITERIA (A-Q) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {

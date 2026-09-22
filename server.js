@@ -547,6 +547,11 @@ app.get('/consumer', (req, res) => {
   res.redirect('/consumer/dashboard.html');
 });
 
+// Route /consumer/tukar -> Consumer Tukar Kode Page
+app.get(['/consumer/tukar', '/consumer/tukar.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'consumer', 'scan.html'));
+});
+
 // Route /merchant -> Merchant Dashboard
 app.get('/merchant', (req, res) => {
   res.redirect('/merchant/dashboard.html');

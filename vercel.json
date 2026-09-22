@@ -46,6 +46,10 @@
       "destination": "/register-merchant.html"
     },
     {
+      "source": "/consumer/tukar",
+      "destination": "/consumer/scan.html"
+    },
+    {
       "source": "/consumer",
       "destination": "/consumer/dashboard.html"
     },

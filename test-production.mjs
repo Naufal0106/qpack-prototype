@@ -189,8 +189,26 @@ try {
 
   console.log('✅ TEST P10 PASSED: Verified production /scan, decoupled official home, bank-sampah form, and zero CO2 claims.\n');
 
+  // 11. Verify Consumer "Tukar" bottom nav and camera-free claim page on production
+  console.log('TEST P11: Verifying Consumer "Tukar" navigation and camera-free claim page on Production...');
+  const prodDashRes = await request('/consumer/dashboard.html');
+  assert(prodDashRes.status === 200, 'Production dashboard must return 200');
+  assert(prodDashRes.text.includes('Tukar'), 'Dashboard must have "Tukar" in bottom nav');
+  assert(prodDashRes.text.includes('tukar-icon.svg'), 'Dashboard must use tukar-icon.svg');
+
+  const prodTukarRes = await request('/consumer/scan.html');
+  assert(prodTukarRes.status === 200, 'Tukar page must return 200');
+  assert(prodTukarRes.text.includes('Tukar Kode Kemasan'), 'Tukar page must have title "Tukar Kode Kemasan"');
+  assert(prodTukarRes.text.includes('Tukar +50 Coin'), 'Tukar page must have button "Tukar +50 Coin"');
+  assert(!prodTukarRes.text.includes('qr-scanner'), 'Tukar page must NOT contain camera scanner');
+
+  const prodTukarRouteRes = await request('/consumer/tukar');
+  assert(prodTukarRouteRes.status === 200, 'Route /consumer/tukar must return 200');
+
+  console.log('✅ TEST P11 PASSED: Verified production Consumer Tukar navigation and camera-free claim page.\n');
+
   console.log('======================================================');
-  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P10) PASSED!');
+  console.log('🎉 ALL PRODUCTION VERIFICATION TESTS (P1-P11) PASSED!');
   console.log('======================================================\n');
   process.exit(0);
 } catch (err) {
