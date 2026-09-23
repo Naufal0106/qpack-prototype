@@ -72,17 +72,19 @@
       <!-- Header -->
       <header class="q-header">
         <div class="q-header__left">
-          <a href="/consumer/dashboard.html" aria-label="Kembali ke Dashboard">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
+          <a href="/consumer/dashboard.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
           </a>
-          <span style="font-weight: 700; font-size: 15px; margin-left: 8px;">Tukar Kode Kemasan</span>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/consumer/dashboard.html" class="q-header__nav-link">Home</a>
+            <a href="/consumer/scan.html" class="q-header__nav-link is-active">Tukar</a>
+            <a href="/consumer/reward.html" class="q-header__nav-link">Reward</a>
+            <a href="/consumer/akun.html" class="q-header__nav-link">Akun</a>
+          </nav>
         </div>
         <div class="q-header__right">
-          <a href="/consumer/akun.html" title="Akun Saya">
-            <img src="/assets/icons/cust-role-icon.svg" alt="User" class="q-header__icon" />
+          <a href="/consumer/akun.html" title="Akun Saya" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="/assets/icons/cust-role-icon.svg" alt="Profil" class="q-header__icon" />
           </a>
         </div>
       </header>
