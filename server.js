@@ -557,6 +557,29 @@ app.get('/merchant', (req, res) => {
   res.redirect('/merchant/dashboard.html');
 });
 
+// Clean Merchant Routes
+app.get(['/merchant/dashboard', '/merchant/dashboard.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'dashboard.html'));
+});
+app.get(['/merchant/produk', '/merchant/produk.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'produk.html'));
+});
+app.get(['/merchant/pesanan', '/merchant/status-order', '/merchant/status-order.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'status-order.html'));
+});
+app.get(['/merchant/checkout', '/merchant/checkout.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'checkout.html'));
+});
+app.get(['/merchant/esg', '/merchant/esg.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'esg.html'));
+});
+app.get(['/merchant/laporan', '/merchant/ai-report', '/merchant/laporan.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'laporan.html'));
+});
+app.get(['/merchant/akun', '/merchant/akun.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant', 'akun.html'));
+});
+
 // Route /404 -> Package Not Found
 app.get('/404', (req, res) => {
   res.sendFile(path.join(__dirname, '404.html'));

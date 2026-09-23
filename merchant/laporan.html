@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Laporan Keberlanjutan Berbasis AI — Q-Pack" />
+    <title>AI Sustainability Report — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .badge-circular {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        background: #eaf6e5;
+        color: #1d5d18;
+        padding: 3px 8px;
+        border-radius: 999px;
+      }
+      .esg-toggle-tabs {
+        display: flex;
+        background: #eaf6e5;
+        border-radius: var(--radius-md);
+        padding: 4px;
+        margin-bottom: 20px;
+        gap: 4px;
+      }
+      .esg-toggle-btn {
+        flex: 1;
+        text-align: center;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--color-primary-dark);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .esg-toggle-btn.is-active {
+        background: #ffffff;
+        color: var(--color-primary);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      }
+      .report-paper {
+        background: #ffffff;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      }
+      .report-header {
+        border-bottom: 2px solid var(--color-primary-soft);
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .report-meta-tag {
+        font-size: 11px;
+        color: var(--color-text-muted);
+        line-height: 1.5;
+      }
+      .ai-insight-box {
+        background: #f7fbf6;
+        border-left: 3px solid var(--color-primary);
+        padding: 14px 16px;
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        margin-bottom: 16px;
+      }
+      .ai-insight-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--color-primary-dark);
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .rec-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 10px;
+      }
+      @media (min-width: 640px) {
+        .rec-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .rec-card {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 12px;
+        background: #ffffff;
+      }
+      @media print {
+        .q-header, .bottom-nav, .esg-toggle-tabs, .no-print {
+          display: none !important;
+        }
+        .app-shell {
+          padding: 0 !important;
+        }
+        .report-paper {
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/merchant/dashboard.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/merchant/dashboard.html" class="q-header__nav-link">Dashboard</a>
+            <a href="/merchant/produk.html" class="q-header__nav-link">Produk</a>
+            <a href="/merchant/status-order.html" class="q-header__nav-link">Pesanan</a>
+            <a href="/merchant/qr" class="q-header__nav-link">Kemasan &amp; QR</a>
+            <a href="/merchant/esg.html" class="q-header__nav-link">ESG</a>
+            <a href="/merchant/laporan.html" class="q-header__nav-link is-active">AI Report</a>
+            <a href="/merchant/akun.html" class="q-header__nav-link">Akun</a>
+          </nav>
+        </div>
+        <div class="q-header__right">
+          <div style="text-align: right;">
+            <div id="header-brand-name" style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
+            <div style="font-size: 9px; color: var(--color-text-muted);">Verified Green Partner</div>
+          </div>
+          <a href="/merchant/akun.html" style="display: flex; align-items: center;">
+            <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Sub-nav Toggle between ESG Metrics & AI Report -->
+        <div class="esg-toggle-tabs no-print">
+          <a href="/merchant/esg.html" class="esg-toggle-btn">
+            &larr; Metrik ESG &amp; Sirkularitas
+          </a>
+          <a href="/merchant/laporan.html" class="esg-toggle-btn is-active">
+            AI Sustainability Report
+          </a>
+        </div>
+
+        <!-- Greeting & Actions -->
+        <div class="dashboard-greeting no-print">
+          <div class="row-between" style="align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <span class="badge-circular" style="margin-bottom: 8px;">AI-Driven Sustainability Synthesis</span>
+              <h1 class="dashboard-greeting__title" style="margin-top: 6px;">Laporan Keberlanjutan AI</h1>
+              <p class="dashboard-greeting__desc">
+                Ringkasan eksekutif otomatis berbasis data penggunaan kemasan, penyerapan limbah pangan, dan sentimen pemindaian konsumen.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button type="button" id="btn-generate-ai" class="btn btn--secondary btn--sm" style="font-size: 11px; padding: 7px 12px; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Generate AI Baru
+              </button>
+              <button type="button" onclick="window.print()" class="btn btn--primary btn--sm" style="font-size: 11px; padding: 7px 14px; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Ekspor PDF
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Printable Report Paper -->
+        <div class="report-paper">
+          <!-- Report Header -->
+          <div class="report-header">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span class="badge-circular" style="background: var(--color-primary); color: #fff;">EXECUTIVE SUMMARY</span>
+                <span style="font-size: 11px; color: var(--color-text-muted); font-family: monospace;">Dokumen ID: QP-REP-2026-Q1</span>
+              </div>
+              <h2 style="font-size: 18px; font-weight: 700; color: var(--color-primary-dark); margin: 0 0 4px 0;">
+                Laporan Kinerja Sirkularitas &amp; Kemasan Berkelanjutan
+              </h2>
+              <div style="font-size: 12px; color: var(--color-text-muted);">
+                Mitra Resmi: <strong id="report-brand-name" style="color: var(--color-text);">EcoFashion ID</strong> • Status: Terverifikasi Sirkular
+              </div>
+            </div>
+            <div class="report-meta-tag" style="text-align: right;">
+              <div>Periode: <strong>Q1 2026 (Jan - Mar)</strong></div>
+              <div>Engine: <strong>Q-Pack AI Analytics v2.4</strong></div>
+              <div>Tanggal Terbit: <strong>23 Maret 2026</strong></div>
+            </div>
+          </div>
+
+          <!-- Section 1: Ringkasan Eksekutif AI -->
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 13px; font-weight: 700; color: var(--color-text); margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">
+              1. Ringkasan Eksekutif Sirkularitas
+            </h3>
+            <div class="ai-insight-box">
+              <div class="ai-insight-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                Sintesis Narasi Dampak Lingkungan
+              </div>
+              <p style="font-size: 11px; color: #374151; line-height: 1.6; margin: 0;">
+                Sepanjang periode kuartal berjalan, brand Anda berhasil mengonversi <strong>100% kebutuhan polymailer pengiriman e-commerce</strong> dari plastik konvensional non-terurai ke kemasan biodegradable komposit biomassa alami. Inisiatif ini secara langsung memanfaatkan estimasi <strong>87,5 kg limbah kulit singkong dan sisik ikan</strong> dari sektor agro-maritim domestik, mencegah penumpukan limbah organik di tempat pembuangan akhir dan meniadakan polusi mikroplastik dari kemasan yang sampai ke konsumen.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 2: Keterlibatan Konsumen & Transparansi Scan -->
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 13px; font-weight: 700; color: var(--color-text); margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">
+              2. Keterlibatan Konsumen (Consumer Engagement)
+            </h3>
+            <p style="font-size: 11px; color: var(--color-text-muted); line-height: 1.5; margin: 0 0 10px 0;">
+              Analisis rekaman pemindaian kode QR resmi menunjukkan respon konsumen yang sangat positif terhadap transparansi bahan kemasan Anda:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; font-size: 11px;">
+              <div style="padding: 10px; background: #f8fafc; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+                <div style="color: var(--color-text-muted); font-size: 10px;">Tingkat Interaksi Scan</div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--color-primary-dark); margin-top: 2px;">Tinggi (High)</div>
+                <div style="color: var(--color-text-muted); font-size: 10px; margin-top: 2px;">Konsumen aktif membaca asal bahan kemasan</div>
+              </div>
+              <div style="padding: 10px; background: #f8fafc; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+                <div style="color: var(--color-text-muted); font-size: 10px;">Klaim Kode Unik Kemasan</div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--color-accent); margin-top: 2px;">+50 Poin Konsumen</div>
+                <div style="color: var(--color-text-muted); font-size: 10px; margin-top: 2px;">Meningkatkan loyalitas pelanggan berulang</div>
+              </div>
+              <div style="padding: 10px; background: #f8fafc; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+                <div style="color: var(--color-text-muted); font-size: 10px;">Penyaluran Bank Sampah</div>
+                <div style="font-size: 14px; font-weight: 700; color: #0284c7; margin-top: 2px;">Aktif Sirkular</div>
+                <div style="color: var(--color-text-muted); font-size: 10px; margin-top: 2px;">Mitra bank sampah mencatat retur kemasan</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Rekomendasi Aksi AI (AI Recommendations) -->
+          <div>
+            <h3 style="font-size: 13px; font-weight: 700; color: var(--color-text); margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">
+              3. Rekomendasi Strategis AI untuk Kuartal Berikutnya
+            </h3>
+            <div class="rec-grid">
+              <div class="rec-card">
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark); margin-bottom: 4px;">1. Optimasi Ukuran Batch (Size M)</div>
+                <p style="font-size: 10px; color: var(--color-text-muted); line-height: 1.4; margin: 0;">
+                  Data pesanan menunjukkan 70% pengiriman Anda menggunakan Size M. Menambah proporsi pesanan Size M dapat memangkas biaya per unit kemasan hingga 8%.
+                </p>
+              </div>
+
+              <div class="rec-card">
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark); margin-bottom: 4px;">2. Edukasi Kompos Rumah</div>
+                <p style="font-size: 10px; color: var(--color-text-muted); line-height: 1.4; margin: 0;">
+                  Tambahkan ajakan singkat pada slip pesanan: "Kemasan ini dapat dikomposkan di pekarangan Anda dalam 90 hari" untuk menggenjot reputasi ramah lingkungan brand.
+                </p>
+              </div>
+
+              <div class="rec-card">
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark); margin-bottom: 4px;">3. Kolaborasi Drop-Point</div>
+                <p style="font-size: 10px; color: var(--color-text-muted); line-height: 1.4; margin: 0;">
+                  Buka titik kumpul pengembalian kemasan di toko ritel fisik Anda bekerjasama dengan Mitra Bank Sampah untuk meningkatkan retur sirkular.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certification Footer -->
+          <div style="margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: var(--color-text-muted);">
+            <div>Q-Pack Sustainability Intelligence Platform • Disahkan secara digital</div>
+            <div style="font-weight: 600; color: var(--color-primary-dark);">Verified Green Business Standard</div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation Merchant -->
+      <nav class="bottom-nav bottom-nav--merchant no-print" aria-label="Navigasi Mitra">
+        <a href="/merchant/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/merchant/produk.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-product-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Produk</span>
+        </a>
+        <a href="/merchant/status-order.html" class="bottom-nav__item">
+          <img src="/assets/icons/cart-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Pesanan</span>
+        </a>
+        <a href="/merchant/qr" class="bottom-nav__item">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Kemasan &amp; QR</span>
+        </a>
+        <a href="/merchant/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Script Execution -->
+    <script type="module">
+      import { getActiveUser } from '/js/app.js';
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const authUser = getActiveUser();
+        if (authUser && authUser.brand_name) {
+          const brandEl = document.getElementById('header-brand-name');
+          if (brandEl) brandEl.textContent = authUser.brand_name;
+          const repBrandEl = document.getElementById('report-brand-name');
+          if (repBrandEl) repBrandEl.textContent = authUser.brand_name;
+        }
+
+        const btnGen = document.getElementById('btn-generate-ai');
+        if (btnGen) {
+          btnGen.addEventListener('click', () => {
+            const origText = btnGen.innerHTML;
+            btnGen.disabled = true;
+            btnGen.innerHTML = 'Menganalisis Data Sirkular...';
+            setTimeout(() => {
+              btnGen.disabled = false;
+              btnGen.innerHTML = '✓ Laporan Terbaru Dibuat';
+              setTimeout(() => { btnGen.innerHTML = origText; }, 2000);
+            }, 1000);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

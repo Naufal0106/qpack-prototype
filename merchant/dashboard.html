@@ -17,27 +17,79 @@
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/layout.css" />
     <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .quick-actions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 14px;
+      }
+      @media (min-width: 600px) {
+        .quick-actions-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .quick-action-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        background: #ffffff;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .quick-action-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--color-primary);
+        box-shadow: 0 4px 12px rgba(45, 138, 62, 0.08);
+      }
+      .quick-action-card__icon {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 10px;
+      }
+      .quick-action-card__title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--color-text);
+        margin-bottom: 4px;
+      }
+      .quick-action-card__desc {
+        font-size: 11px;
+        color: var(--color-text-muted);
+        line-height: 1.4;
+      }
+    </style>
   </head>
   <body>
     <div class="app-shell">
       <!-- Header -->
       <header class="q-header">
         <div class="q-header__left">
-          <a href="/index.html">
+          <a href="/merchant/dashboard.html">
             <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
           </a>
           <nav class="q-header__nav" aria-label="Navigasi Desktop">
-            <a href="/merchant/dashboard.html" class="q-header__nav-link is-active">Dashboard Analitik</a>
-            <a href="/merchant/qr" class="q-header__nav-link">Manajemen QR</a>
-            <a href="/consumer/dashboard.html" class="q-header__nav-link">Tampilan Konsumen</a>
+            <a href="/merchant/dashboard.html" class="q-header__nav-link is-active">Dashboard</a>
+            <a href="/merchant/produk.html" class="q-header__nav-link">Produk</a>
+            <a href="/merchant/status-order.html" class="q-header__nav-link">Pesanan</a>
+            <a href="/merchant/qr" class="q-header__nav-link">Kemasan &amp; QR</a>
+            <a href="/merchant/esg.html" class="q-header__nav-link">ESG</a>
+            <a href="/merchant/laporan.html" class="q-header__nav-link">AI Report</a>
+            <a href="/merchant/akun.html" class="q-header__nav-link">Akun</a>
           </nav>
         </div>
         <div class="q-header__right">
           <div style="text-align: right;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
+            <div id="header-brand-name" style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
             <div style="font-size: 9px; color: var(--color-text-muted);">Verified Green Partner</div>
           </div>
-          <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+          <a href="/merchant/akun.html" style="display: flex; align-items: center;">
+            <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+          </a>
         </div>
       </header>
 
@@ -85,6 +137,48 @@
           Diperbarui dari rekaman interaksi QR (Updated from recorded QR interactions)
         </div>
 
+        <!-- Quick Access to B2B Ecosystem -->
+        <div style="margin-top: 24px;">
+          <h3 class="section-title">Akses Cepat Pengelolaan B2B</h3>
+          <div class="quick-actions-grid">
+            <a href="/merchant/produk.html" class="quick-action-card">
+              <img src="/assets/icons/bottom-navbar-product-icon.svg" class="quick-action-card__icon" alt="" />
+              <div class="quick-action-card__title">Katalog Produk</div>
+              <div class="quick-action-card__desc">Pesan kemasan biodegradable Kulit Singkong &amp; Sisik Ikan.</div>
+            </a>
+
+            <a href="/merchant/status-order.html" class="quick-action-card">
+              <img src="/assets/icons/cart-icon.svg" class="quick-action-card__icon" alt="" />
+              <div class="quick-action-card__title">Status Pesanan</div>
+              <div class="quick-action-card__desc">Lacak proses produksi, QC kemasan, dan pengiriman batch.</div>
+            </a>
+
+            <a href="/merchant/qr" class="quick-action-card">
+              <img src="/assets/icons/scan-icon.svg" class="quick-action-card__icon" alt="" />
+              <div class="quick-action-card__title">Kemasan &amp; QR</div>
+              <div class="quick-action-card__desc">Unduh Universal QR resmi kemasan &amp; cetak stiker demo.</div>
+            </a>
+
+            <a href="/merchant/esg.html" class="quick-action-card">
+              <img src="/assets/icons/bottom-navbar-ESG-icon.svg" class="quick-action-card__icon" alt="" />
+              <div class="quick-action-card__title">Metrik ESG</div>
+              <div class="quick-action-card__desc">Transparansi sirkularitas, biomassa limbah &amp; pengembalian.</div>
+            </a>
+
+            <a href="/merchant/laporan.html" class="quick-action-card">
+              <img src="/assets/icons/bottom-navbar-report-icon.svg" class="quick-action-card__icon" alt="" />
+              <div class="quick-action-card__title">AI Report</div>
+              <div class="quick-action-card__desc">Laporan keberlanjutan eksekutif berbasis narasi AI Q-Pack.</div>
+            </a>
+
+            <a href="/merchant/akun.html" class="quick-action-card">
+              <img src="/assets/icons/merchant-role-icon.svg" class="quick-action-card__icon" alt="" />
+              <div class="quick-action-card__title">Profil Akun</div>
+              <div class="quick-action-card__desc">Pengaturan brand, kontak kemitraan hijau, dan API store.</div>
+            </a>
+          </div>
+        </div>
+
         <!-- Recorded Scan Event Activity Stream -->
         <div style="margin-top: 24px;">
           <div class="row-between" style="margin-bottom: 10px;">
@@ -104,7 +198,7 @@
           <div class="row-between" style="margin-bottom: 10px;">
             <h3 class="section-title" style="margin-bottom: 0;">Daftar Kemasan Digital Aktif</h3>
             <a href="/merchant/qr" style="font-size: 11px; font-weight: 600; color: var(--color-primary-dark); text-decoration: underline;">
-              Kelola & Cetak QR &rarr;
+              Kelola Kemasan &amp; QR &rarr;
             </a>
           </div>
           <div class="menu-list">
@@ -136,13 +230,6 @@
             </a>
           </div>
         </div>
-
-        <!-- Switch View Button -->
-        <div style="margin-top: 20px;">
-          <a href="/consumer/dashboard.html" class="btn btn--outline btn--full">
-            Beralih ke Tampilan Konsumen
-          </a>
-        </div>
       </main>
 
       <!-- Bottom Navigation Merchant -->
@@ -155,13 +242,13 @@
           <img src="/assets/icons/bottom-navbar-product-icon.svg" class="bottom-nav__icon" alt="" />
           <span class="bottom-nav__label">Produk</span>
         </a>
-        <a href="/merchant/esg.html" class="bottom-nav__item">
-          <img src="/assets/icons/bottom-navbar-ESG-icon.svg" class="bottom-nav__icon" alt="" />
-          <span class="bottom-nav__label">ESG</span>
+        <a href="/merchant/status-order.html" class="bottom-nav__item">
+          <img src="/assets/icons/cart-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Pesanan</span>
         </a>
-        <a href="/merchant/laporan.html" class="bottom-nav__item">
-          <img src="/assets/icons/bottom-navbar-report-icon.svg" class="bottom-nav__icon" alt="" />
-          <span class="bottom-nav__label">Laporan</span>
+        <a href="/merchant/qr" class="bottom-nav__item">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Kemasan &amp; QR</span>
         </a>
         <a href="/merchant/akun.html" class="bottom-nav__item">
           <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
@@ -172,10 +259,16 @@
 
     <!-- Script Execution -->
     <script type="module">
-      import { getMerchantAnalytics } from '/js/app.js';
+      import { getMerchantAnalytics, getActiveUser } from '/js/app.js';
 
       async function loadMerchantData() {
         try {
+          const authUser = getActiveUser();
+          if (authUser && authUser.brand_name) {
+            const brandEl = document.getElementById('header-brand-name');
+            if (brandEl) brandEl.textContent = authUser.brand_name;
+          }
+
           const analytics = await getMerchantAnalytics();
 
           document.getElementById('stat-total-scans').textContent = analytics.total_scans;

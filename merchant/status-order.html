@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Status & Riwayat Pesanan Kemasan B2B — Q-Pack" />
+    <title>Status Pesanan — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .badge-circular {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        background: #eaf6e5;
+        color: #1d5d18;
+        padding: 3px 8px;
+        border-radius: 999px;
+      }
+      .order-card {
+        background: #ffffff;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 18px;
+        margin-bottom: 14px;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .order-card:hover {
+        border-color: var(--color-primary);
+        box-shadow: 0 4px 14px rgba(45, 138, 62, 0.06);
+      }
+      .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .order-id {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--color-text);
+      }
+      .order-date {
+        font-size: 10px;
+        color: var(--color-text-muted);
+        margin-top: 2px;
+      }
+      .order-timeline {
+        display: flex;
+        justify-content: space-between;
+        margin: 16px 0 12px 0;
+        position: relative;
+        padding: 0 10px;
+      }
+      .order-timeline::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        right: 20px;
+        height: 2px;
+        background: #e5e7eb;
+        z-index: 1;
+      }
+      .timeline-step {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 70px;
+      }
+      .timeline-dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        border: 2px solid #fff;
+      }
+      .timeline-step.is-done .timeline-dot {
+        background: var(--color-primary);
+        color: #fff;
+      }
+      .timeline-step.is-active .timeline-dot {
+        background: #f59e0b;
+        color: #fff;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+      }
+      .timeline-label {
+        font-size: 9px;
+        color: var(--color-text-muted);
+        line-height: 1.2;
+      }
+      .timeline-step.is-done .timeline-label,
+      .timeline-step.is-active .timeline-label {
+        color: var(--color-text);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/merchant/dashboard.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/merchant/dashboard.html" class="q-header__nav-link">Dashboard</a>
+            <a href="/merchant/produk.html" class="q-header__nav-link">Produk</a>
+            <a href="/merchant/status-order.html" class="q-header__nav-link is-active">Pesanan</a>
+            <a href="/merchant/qr" class="q-header__nav-link">Kemasan &amp; QR</a>
+            <a href="/merchant/esg.html" class="q-header__nav-link">ESG</a>
+            <a href="/merchant/laporan.html" class="q-header__nav-link">AI Report</a>
+            <a href="/merchant/akun.html" class="q-header__nav-link">Akun</a>
+          </nav>
+        </div>
+        <div class="q-header__right">
+          <div style="text-align: right;">
+            <div id="header-brand-name" style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
+            <div style="font-size: 9px; color: var(--color-text-muted);">Verified Green Partner</div>
+          </div>
+          <a href="/merchant/akun.html" style="display: flex; align-items: center;">
+            <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Success Alert if navigated from Checkout -->
+        <div id="new-order-alert" class="ui-card hidden" style="background: #eaf6e5; border-color: #bfe3bb; padding: 14px; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <img src="/assets/icons/check-icon.svg" alt="" style="width: 20px; height: 20px;" />
+            <div style="font-size: 12px; font-weight: 600; color: #1d5d18;" id="alert-order-text">
+              Pesanan baru berhasil dibuat! Tim produksi segera memverifikasi kustomisasi kemasan.
+            </div>
+          </div>
+        </div>
+
+        <!-- Greeting & Header Actions -->
+        <div class="dashboard-greeting">
+          <div class="row-between" style="align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <span class="badge-circular" style="margin-bottom: 8px;">B2B Batch Fulfillment Hub</span>
+              <h1 class="dashboard-greeting__title" style="margin-top: 6px;">Status &amp; Riwayat Pesanan</h1>
+              <p class="dashboard-greeting__desc">
+                Pantau progres manufaktur ramah lingkungan, proses cetak Universal QR &amp; Unique Code, hingga pengiriman batch.
+              </p>
+            </div>
+            <div>
+              <a href="/merchant/checkout.html" class="btn btn--primary btn--sm" style="font-size: 12px; padding: 8px 14px; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Buat Pesanan Baru
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs" id="order-filter-tabs">
+          <button class="filter-tab is-active" data-status="all">Semua Pesanan (<span id="count-all">0</span>)</button>
+          <button class="filter-tab" data-status="active">Sedang Berjalan (<span id="count-active">0</span>)</button>
+          <button class="filter-tab" data-status="completed">Selesai (<span id="count-completed">0</span>)</button>
+        </div>
+
+        <!-- Order List Container -->
+        <div id="orders-container" style="margin-top: 14px;">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-orders" class="hidden" style="text-align: center; padding: 40px 16px; background: #fafafa; border-radius: var(--radius-lg); border: 1px dashed var(--color-border);">
+          <p style="font-size: 13px; font-weight: 600; color: var(--color-text);">Belum ada pesanan pada kategori ini.</p>
+          <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 4px;">Pesan polymailer ramah lingkungan melalui tombol "Buat Pesanan Baru".</p>
+          <div style="margin-top: 12px;">
+            <a href="/merchant/checkout.html" class="btn btn--primary btn--sm">Pesan Sekarang &rarr;</a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation Merchant -->
+      <nav class="bottom-nav bottom-nav--merchant" aria-label="Navigasi Mitra">
+        <a href="/merchant/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/merchant/produk.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-product-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Produk</span>
+        </a>
+        <a href="/merchant/status-order.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/cart-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Pesanan</span>
+        </a>
+        <a href="/merchant/qr" class="bottom-nav__item">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Kemasan &amp; QR</span>
+        </a>
+        <a href="/merchant/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Script Execution -->
+    <script type="module">
+      import { getActiveUser } from '/js/app.js';
+
+      // Default realistic demo orders
+      const DEFAULT_ORDERS = [
+        {
+          id: 'ORD-2026-0891',
+          date: new Date(Date.now() - 2 * 24 * 3600 * 1000).toISOString(),
+          product_name: 'Cassava & Marine Mailer (Size M)',
+          size: 'M',
+          quantity: 2500,
+          has_custom_logo: true,
+          ink_color: 'Hijau Sirkular',
+          total_price: 4050000,
+          status: 'Dalam Produksi',
+          recipient: 'EcoFashion ID Fulfillment',
+          tracking_no: 'TRK-QP-891024',
+          eta: '26 Mar 2026'
+        },
+        {
+          id: 'ORD-2026-0850',
+          date: new Date(Date.now() - 42 * 24 * 3600 * 1000).toISOString(),
+          product_name: 'Cassava & Marine Mailer (Size L)',
+          size: 'L',
+          quantity: 1000,
+          has_custom_logo: true,
+          ink_color: 'Hitam Organik',
+          total_price: 2045000,
+          status: 'Selesai',
+          recipient: 'EcoFashion ID Fulfillment',
+          tracking_no: 'TRK-QP-850119',
+          eta: 'Telah Diterima'
+        }
+      ];
+
+      function getOrders() {
+        try {
+          const stored = localStorage.getItem('qpack_merchant_orders');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch {}
+        localStorage.setItem('qpack_merchant_orders', JSON.stringify(DEFAULT_ORDERS));
+        return DEFAULT_ORDERS;
+      }
+
+      function formatRupiah(num) {
+        return 'Rp ' + Number(num).toLocaleString('id-ID');
+      }
+
+      function formatDate(isoStr) {
+        try {
+          return new Date(isoStr).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          });
+        } catch {
+          return isoStr;
+        }
+      }
+
+      let currentTab = 'all';
+
+      function renderOrders() {
+        const orders = getOrders();
+        const container = document.getElementById('orders-container');
+        const emptyEl = document.getElementById('empty-orders');
+
+        const countAll = orders.length;
+        const countActive = orders.filter(o => o.status !== 'Selesai').length;
+        const countCompleted = orders.filter(o => o.status === 'Selesai').length;
+
+        document.getElementById('count-all').textContent = countAll;
+        document.getElementById('count-active').textContent = countActive;
+        document.getElementById('count-completed').textContent = countCompleted;
+
+        let filtered = orders;
+        if (currentTab === 'active') {
+          filtered = orders.filter(o => o.status !== 'Selesai');
+        } else if (currentTab === 'completed') {
+          filtered = orders.filter(o => o.status === 'Selesai');
+        }
+
+        if (filtered.length === 0) {
+          container.innerHTML = '';
+          emptyEl.classList.remove('hidden');
+          return;
+        }
+
+        emptyEl.classList.add('hidden');
+
+        container.innerHTML = filtered.map(order => {
+          const isCompleted = order.status === 'Selesai';
+          const isProduction = order.status === 'Dalam Produksi';
+          const isPending = order.status === 'Menunggu Konfirmasi';
+          
+          let badgeClass = 'status-badge--success';
+          if (isProduction || isPending) badgeClass = 'status-badge--warning';
+
+          // Timeline logic
+          // 1: Konfirmasi, 2: Produksi, 3: QC & QR, 4: Siap Kirim, 5: Selesai
+          let stepIndex = 1;
+          if (isProduction) stepIndex = 2;
+          if (order.status === 'Quality Check & QR Encoding') stepIndex = 3;
+          if (order.status === 'Siap Kirim') stepIndex = 4;
+          if (isCompleted) stepIndex = 5;
+
+          return `
+            <div class="order-card">
+              <div class="order-header">
+                <div>
+                  <div class="order-id">${order.id}</div>
+                  <div class="order-date">Tanggal Pemesanan: ${formatDate(order.date)} • Resi: <strong style="color: var(--color-primary-dark); font-family: monospace;">${order.tracking_no || '-'}</strong></div>
+                </div>
+                <span class="status-badge ${badgeClass}">${order.status}</span>
+              </div>
+
+              <!-- Visual Production Timeline -->
+              <div class="order-timeline">
+                <div class="timeline-step ${stepIndex >= 1 ? (stepIndex === 1 ? 'is-active' : 'is-done') : ''}">
+                  <div class="timeline-dot">1</div>
+                  <div class="timeline-label">Konfirmasi</div>
+                </div>
+                <div class="timeline-step ${stepIndex >= 2 ? (stepIndex === 2 ? 'is-active' : 'is-done') : ''}">
+                  <div class="timeline-dot">2</div>
+                  <div class="timeline-label">Produksi</div>
+                </div>
+                <div class="timeline-step ${stepIndex >= 3 ? (stepIndex === 3 ? 'is-active' : 'is-done') : ''}">
+                  <div class="timeline-dot">3</div>
+                  <div class="timeline-label">QC &amp; QR</div>
+                </div>
+                <div class="timeline-step ${stepIndex >= 4 ? (stepIndex === 4 ? 'is-active' : 'is-done') : ''}">
+                  <div class="timeline-dot">4</div>
+                  <div class="timeline-label">Kirim</div>
+                </div>
+                <div class="timeline-step ${stepIndex >= 5 ? 'is-done' : ''}">
+                  <div class="timeline-dot">5</div>
+                  <div class="timeline-label">Selesai</div>
+                </div>
+              </div>
+
+              <!-- Order Summary Row -->
+              <div style="background: #f8fafc; border: 1px solid var(--color-border-light); border-radius: var(--radius-md); padding: 12px; margin-top: 10px; font-size: 11px;">
+                <div class="row-between">
+                  <span>Produk: <strong>${order.product_name}</strong></span>
+                  <span>Kuantitas: <strong>${Number(order.quantity).toLocaleString('id-ID')} pcs</strong></span>
+                </div>
+                <div class="row-between" style="margin-top: 4px;">
+                  <span>Kustomisasi: <strong>${order.has_custom_logo ? `Cetak Logo (${order.ink_color || 'Soy Ink'})` : 'Standar Polos'}</strong></span>
+                  <span>Total Biaya: <strong style="color: var(--color-primary-dark); font-size: 12px;">${formatRupiah(order.total_price)}</strong></span>
+                </div>
+                <div class="row-between" style="margin-top: 4px; color: var(--color-text-muted);">
+                  <span>Tujuan: ${order.recipient || 'Gudang Merchant'}</span>
+                  <span>Estimasi: ${order.eta || '3-5 hari kerja'}</span>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px;">
+                <a href="/merchant/qr" class="btn btn--secondary btn--sm" style="font-size: 11px; padding: 6px 12px;">
+                  Akses Universal QR &rarr;
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Check URL parameters for new order creation notification
+      const urlParams = new URLSearchParams(window.location.search);
+      const createdId = urlParams.get('created');
+      if (createdId) {
+        const alertEl = document.getElementById('new-order-alert');
+        const alertText = document.getElementById('alert-order-text');
+        if (alertEl && alertText) {
+          alertText.textContent = `Pesanan #${createdId} berhasil dikonfirmasi! Tim manufaktur Q-Pack sedang menyiapkan bahan baku sirkular Anda.`;
+          alertEl.classList.remove('hidden');
+        }
+      }
+
+      // Tab handling
+      document.querySelectorAll('#order-filter-tabs .filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('#order-filter-tabs .filter-tab').forEach(t => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+          currentTab = tab.getAttribute('data-status');
+          renderOrders();
+        });
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const authUser = getActiveUser();
+        if (authUser && authUser.brand_name) {
+          const brandEl = document.getElementById('header-brand-name');
+          if (brandEl) brandEl.textContent = authUser.brand_name;
+        }
+        renderOrders();
+      });
+    </script>
+  </body>
+</html>

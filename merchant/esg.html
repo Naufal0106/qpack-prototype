@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Dashboard Metrik ESG & Sirkularitas B2B — Q-Pack" />
+    <title>Metrik ESG &amp; Sirkularitas — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .badge-circular {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        background: #eaf6e5;
+        color: #1d5d18;
+        padding: 3px 8px;
+        border-radius: 999px;
+      }
+      .esg-toggle-tabs {
+        display: flex;
+        background: #eaf6e5;
+        border-radius: var(--radius-md);
+        padding: 4px;
+        margin-bottom: 20px;
+        gap: 4px;
+      }
+      .esg-toggle-btn {
+        flex: 1;
+        text-align: center;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--color-primary-dark);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .esg-toggle-btn.is-active {
+        background: #ffffff;
+        color: var(--color-primary);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      }
+      .circular-flow {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 14px;
+      }
+      @media (min-width: 640px) {
+        .circular-flow {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .flow-card {
+        background: #ffffff;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .flow-step-num {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--color-primary-soft);
+        color: var(--color-primary-dark);
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 4px;
+      }
+      .composition-bar {
+        height: 12px;
+        border-radius: 999px;
+        display: flex;
+        overflow: hidden;
+        margin: 10px 0;
+        background: #f1f5f0;
+      }
+      .composition-seg-1 { background: #2d8a3e; width: 60%; }
+      .composition-seg-2 { background: #60a5fa; width: 30%; }
+      .composition-seg-3 { background: #fbbf24; width: 10%; }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/merchant/dashboard.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/merchant/dashboard.html" class="q-header__nav-link">Dashboard</a>
+            <a href="/merchant/produk.html" class="q-header__nav-link">Produk</a>
+            <a href="/merchant/status-order.html" class="q-header__nav-link">Pesanan</a>
+            <a href="/merchant/qr" class="q-header__nav-link">Kemasan &amp; QR</a>
+            <a href="/merchant/esg.html" class="q-header__nav-link is-active">ESG</a>
+            <a href="/merchant/laporan.html" class="q-header__nav-link">AI Report</a>
+            <a href="/merchant/akun.html" class="q-header__nav-link">Akun</a>
+          </nav>
+        </div>
+        <div class="q-header__right">
+          <div style="text-align: right;">
+            <div id="header-brand-name" style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
+            <div style="font-size: 9px; color: var(--color-text-muted);">Verified Green Partner</div>
+          </div>
+          <a href="/merchant/akun.html" style="display: flex; align-items: center;">
+            <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Sub-nav Toggle between ESG Metrics & AI Report -->
+        <div class="esg-toggle-tabs">
+          <a href="/merchant/esg.html" class="esg-toggle-btn is-active">
+            Metrik ESG &amp; Sirkularitas
+          </a>
+          <a href="/merchant/laporan.html" class="esg-toggle-btn">
+            AI Sustainability Report &rarr;
+          </a>
+        </div>
+
+        <!-- Greeting -->
+        <div class="dashboard-greeting">
+          <div class="row-between" style="align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <span class="badge-circular" style="margin-bottom: 8px;">ESG &amp; Circular Supply Chain</span>
+              <h1 class="dashboard-greeting__title" style="margin-top: 6px;">Metrik Keberlanjutan Mitra</h1>
+              <p class="dashboard-greeting__desc">
+                Akumulasi data empiris penggunaan kemasan sirkular ramah lingkungan, pemanfaatan biomassa limbah lokal, dan keterlibatan konsumen.
+              </p>
+            </div>
+            <div>
+              <a href="/merchant/laporan.html" class="btn btn--primary btn--sm" style="font-size: 12px; padding: 8px 14px; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Buka AI Report
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Stat Cards Grid -->
+        <div class="stat-grid">
+          <!-- Metric 1: Total Kemasan Sirkular Digunakan -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Total Kemasan Digunakan</div>
+            <div class="stat-card__value" style="color: var(--color-primary);" id="esg-stat-packages">3.500</div>
+            <div class="stat-card__meta">Unit polymailer terdistribusi</div>
+          </div>
+
+          <!-- Metric 2: Biomassa Limbah Termaksimalkan -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Biomassa Termaksimalkan</div>
+            <div class="stat-card__value" style="color: var(--color-accent);" id="esg-stat-biomass">87,5 kg</div>
+            <div class="stat-card__meta">Kulit singkong &amp; sisik ikan</div>
+          </div>
+
+          <!-- Metric 3: Consumer Return Rate -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Pengembalian Bank Sampah</div>
+            <div class="stat-card__value" style="color: #0284c7;" id="esg-stat-returns">420 unit</div>
+            <div class="stat-card__meta">Tersalurkan ke kompos &amp; daur ulang</div>
+          </div>
+
+          <!-- Metric 4: Kemampuan Terurai Alami -->
+          <div class="stat-card">
+            <div class="stat-card__label text-muted">Biodegradabilitas Tanah</div>
+            <div class="stat-card__value" style="color: #059669;">100%</div>
+            <div class="stat-card__meta">90–180 hari di tanah alami</div>
+          </div>
+        </div>
+
+        <!-- Data Transparency Notice -->
+        <div style="margin-top: 10px; font-size: 10px; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--color-primary);"></span>
+          Metrik dihitung berbasis volume pesanan batch kemasan dan rekaman interaksi scan ekosistem sirkular Q-Pack.
+        </div>
+
+        <!-- Composition Card -->
+        <div class="ui-card" style="margin-top: 24px; padding: 20px;">
+          <div class="row-between" style="align-items: center;">
+            <h3 class="section-title" style="margin: 0;">Komposisi Biomaterial Kemasan</h3>
+            <span class="badge-circular">Bahan Baku Organik</span>
+          </div>
+
+          <p style="font-size: 11px; color: var(--color-text-muted); line-height: 1.5; margin: 8px 0 0 0;">
+            Kemasan Q-Pack mengeliminasi resin polietilena berbasis minyak bumi konvensional, menggantikannya dengan komposit limbah alami pangan:
+          </p>
+
+          <div class="composition-bar">
+            <div class="composition-seg-1" title="Biopolimer Kulit Singkong (60%)"></div>
+            <div class="composition-seg-2" title="Kitosan Sisik Ikan (30%)"></div>
+            <div class="composition-seg-3" title="Plastisizer Nabati Alami (10%)"></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 10px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 2px; background: #2d8a3e; flex-shrink: 0;"></span>
+              <div>
+                <strong>60% Pati Kulit Singkong</strong>
+                <div style="color: var(--color-text-muted); font-size: 10px;">Substrat biodegradasi terurai tanah</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 2px; background: #60a5fa; flex-shrink: 0;"></span>
+              <div>
+                <strong>30% Kitosan Sisik Ikan</strong>
+                <div style="color: var(--color-text-muted); font-size: 10px;">Integritas mekanik, anti-air &amp; elastisitas</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 2px; background: #fbbf24; flex-shrink: 0;"></span>
+              <div>
+                <strong>10% Plastisizer Nabati</strong>
+                <div style="color: var(--color-text-muted); font-size: 10px;">Gliserol nabati alami non-toksik</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Circular Ecosystem Lifecycle Flow -->
+        <div style="margin-top: 24px;">
+          <h3 class="section-title">Alur Ekosistem Sirkular Kemasan Anda</h3>
+          <div class="circular-flow">
+            <div class="flow-card">
+              <div class="flow-step-num">1</div>
+              <strong style="font-size: 12px; color: var(--color-text);">Penyelamatan Limbah Organik</strong>
+              <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
+                Kulit singkong dan sisik ikan dikumpulkan dari sentra industri pangan rakyat lokal sebelum terbuang ke TPA.
+              </p>
+            </div>
+
+            <div class="flow-card">
+              <div class="flow-step-num">2</div>
+              <strong style="font-size: 12px; color: var(--color-text);">Manufaktur Polymailer</strong>
+              <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
+                Ekstraksi biopolimer ramah lingkungan dicetak menjadi polymailer dengan sablon soy ink dan Universal QR resmi.
+              </p>
+            </div>
+
+            <div class="flow-card">
+              <div class="flow-step-num">3</div>
+              <strong style="font-size: 12px; color: var(--color-text);">Fulfillment Mitra Merchant</strong>
+              <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
+                Merchant mengemas produk e-commerce menggunakan kemasan sirkular ini untuk dikirimkan ke konsumen akhir.
+              </p>
+            </div>
+
+            <div class="flow-card">
+              <div class="flow-step-num">4</div>
+              <strong style="font-size: 12px; color: var(--color-text);">Pindai QR Edukasi Konsumen</strong>
+              <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
+                Konsumen memindai QR kemasan untuk mempelajari transparansi material dan mengklaim reward kode unik fisik.
+              </p>
+            </div>
+
+            <div class="flow-card">
+              <div class="flow-step-num">5</div>
+              <strong style="font-size: 12px; color: var(--color-text);">Siklus Akhir: Kompos Alami</strong>
+              <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
+                Kemasan dapat langsung dijadikan kompos di tanah pekarangan rumah, terurai menjadi nutrisi tanah tanpa mikroplastik.
+              </p>
+            </div>
+
+            <div class="flow-card">
+              <div class="flow-step-num">6</div>
+              <strong style="font-size: 12px; color: var(--color-text);">Atau Disetor ke Bank Sampah</strong>
+              <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
+                Konsumen dapat mengembalikan kemasan ke jaringan Mitra Bank Sampah binaan untuk pengolahan sirkular terverifikasi.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation Merchant -->
+      <nav class="bottom-nav bottom-nav--merchant" aria-label="Navigasi Mitra">
+        <a href="/merchant/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/merchant/produk.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-product-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Produk</span>
+        </a>
+        <a href="/merchant/status-order.html" class="bottom-nav__item">
+          <img src="/assets/icons/cart-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Pesanan</span>
+        </a>
+        <a href="/merchant/qr" class="bottom-nav__item">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Kemasan &amp; QR</span>
+        </a>
+        <a href="/merchant/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Script Execution -->
+    <script type="module">
+      import { getActiveUser } from '/js/app.js';
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const authUser = getActiveUser();
+        if (authUser && authUser.brand_name) {
+          const brandEl = document.getElementById('header-brand-name');
+          if (brandEl) brandEl.textContent = authUser.brand_name;
+        }
+
+        // Calculate dynamic estimates based on orders in localStorage
+        try {
+          const stored = localStorage.getItem('qpack_merchant_orders');
+          if (stored) {
+            const orders = JSON.parse(stored);
+            const totalQty = orders.reduce((sum, o) => sum + (o.quantity || 0), 0);
+            if (totalQty > 0) {
+              document.getElementById('esg-stat-packages').textContent = Number(totalQty).toLocaleString('id-ID');
+              // Each package uses approx 25 grams of upcycled waste biomass
+              const biomassKg = ((totalQty * 25) / 1000).toFixed(1);
+              document.getElementById('esg-stat-biomass').textContent = `${Number(biomassKg).toLocaleString('id-ID')} kg`;
+              // Approx 12% return rate to bank sampah
+              const returns = Math.round(totalQty * 0.12);
+              document.getElementById('esg-stat-returns').textContent = `${returns.toLocaleString('id-ID')} unit`;
+            }
+          }
+        } catch {}
+      });
+    </script>
+  </body>
+</html>

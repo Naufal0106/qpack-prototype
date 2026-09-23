@@ -54,6 +54,42 @@
       "destination": "/consumer/dashboard.html"
     },
     {
+      "source": "/merchant/dashboard",
+      "destination": "/merchant/dashboard.html"
+    },
+    {
+      "source": "/merchant/produk",
+      "destination": "/merchant/produk.html"
+    },
+    {
+      "source": "/merchant/pesanan",
+      "destination": "/merchant/status-order.html"
+    },
+    {
+      "source": "/merchant/status-order",
+      "destination": "/merchant/status-order.html"
+    },
+    {
+      "source": "/merchant/checkout",
+      "destination": "/merchant/checkout.html"
+    },
+    {
+      "source": "/merchant/esg",
+      "destination": "/merchant/esg.html"
+    },
+    {
+      "source": "/merchant/laporan",
+      "destination": "/merchant/laporan.html"
+    },
+    {
+      "source": "/merchant/ai-report",
+      "destination": "/merchant/laporan.html"
+    },
+    {
+      "source": "/merchant/akun",
+      "destination": "/merchant/akun.html"
+    },
+    {
       "source": "/merchant",
       "destination": "/merchant/dashboard.html"
     }

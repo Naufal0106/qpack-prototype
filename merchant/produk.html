@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Katalog Produk Kemasan Biodegradable B2B — Q-Pack" />
+    <title>Katalog Produk — Q-Pack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <style>
+      .badge-circular {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        background: #eaf6e5;
+        color: #1d5d18;
+        padding: 3px 8px;
+        border-radius: 999px;
+      }
+      .product-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-top: 16px;
+      }
+      @media (min-width: 640px) {
+        .product-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .product-card {
+        background: #ffffff;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .product-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--color-primary);
+        box-shadow: 0 8px 24px rgba(45, 138, 62, 0.08);
+      }
+      .product-card__thumb {
+        width: 100%;
+        height: 180px;
+        background: #f4f8f3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        border-bottom: 1px solid var(--color-border-light);
+        position: relative;
+      }
+      .product-card__thumb img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+      .product-card__body {
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .product-card__tag {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--color-primary);
+        margin-bottom: 4px;
+      }
+      .product-card__title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--color-text);
+        margin-bottom: 6px;
+      }
+      .product-card__desc {
+        font-size: 11px;
+        color: var(--color-text-muted);
+        line-height: 1.5;
+        margin-bottom: 14px;
+      }
+      .spec-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 16px 0;
+        font-size: 11px;
+        color: #4b5563;
+        display: grid;
+        gap: 6px;
+      }
+      .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .spec-item svg {
+        flex-shrink: 0;
+        color: var(--color-primary);
+      }
+      .product-price-box {
+        margin-top: auto;
+        padding-top: 14px;
+        border-top: 1px dashed var(--color-border);
+      }
+      .product-price {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-primary-dark);
+      }
+      .product-moq {
+        font-size: 10px;
+        color: var(--color-text-muted);
+        margin-top: 2px;
+      }
+      .material-hero-card {
+        background: linear-gradient(135deg, #f7fbf6 0%, #ffffff 100%);
+        border: 1.5px solid #d1e7cf;
+        border-radius: var(--radius-lg);
+        padding: 18px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Header -->
+      <header class="q-header">
+        <div class="q-header__left">
+          <a href="/merchant/dashboard.html">
+            <img src="/assets/logo/Qpack Logo FINAL.png" alt="Q-Pack" class="q-header__logo" />
+          </a>
+          <nav class="q-header__nav" aria-label="Navigasi Desktop">
+            <a href="/merchant/dashboard.html" class="q-header__nav-link">Dashboard</a>
+            <a href="/merchant/produk.html" class="q-header__nav-link is-active">Produk</a>
+            <a href="/merchant/status-order.html" class="q-header__nav-link">Pesanan</a>
+            <a href="/merchant/qr" class="q-header__nav-link">Kemasan &amp; QR</a>
+            <a href="/merchant/esg.html" class="q-header__nav-link">ESG</a>
+            <a href="/merchant/laporan.html" class="q-header__nav-link">AI Report</a>
+            <a href="/merchant/akun.html" class="q-header__nav-link">Akun</a>
+          </nav>
+        </div>
+        <div class="q-header__right">
+          <div style="text-align: right;">
+            <div id="header-brand-name" style="font-size: 11px; font-weight: 700; color: var(--color-primary-dark);">EcoFashion ID</div>
+            <div style="font-size: 9px; color: var(--color-text-muted);">Verified Green Partner</div>
+          </div>
+          <a href="/merchant/akun.html" style="display: flex; align-items: center;">
+            <img src="/assets/icons/merchant-role-icon.svg" alt="Merchant" class="q-header__icon" />
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Page Greeting -->
+        <div class="dashboard-greeting">
+          <span class="badge-circular" style="margin-bottom: 8px;">Katalog Kemasan B2B Berkelanjutan</span>
+          <h1 class="dashboard-greeting__title" style="margin-top: 6px;">Katalog Kemasan Q-Pack</h1>
+          <p class="dashboard-greeting__desc">
+            Pesan polymailer biodegradable ramah lingkungan berbahan biomassa limbah Kulit Singkong &amp; Sisik Ikan dengan pra-cetak Universal QR resmi dan slot kode unik fisik.
+          </p>
+        </div>
+
+        <!-- Material Innovation Banner -->
+        <div class="material-hero-card">
+          <div class="row-between" style="align-items: center; margin-bottom: 10px;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--color-primary-dark); display: flex; align-items: center; gap: 6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+              Inovasi Biomaterial Sirkular Q-Pack
+            </div>
+            <span class="badge-circular">100% Home Compostable</span>
+          </div>
+          <p style="font-size: 11px; color: var(--color-text-muted); line-height: 1.5; margin: 0;">
+            Setiap kemasan diproduksi dari upcycling limbah organik lokal: pati biopolimer kulit singkong memberikan fleksibilitas terurai tanah dalam 90–180 hari, sedangkan kitosan sisik ikan memberi kekuatan mekanis, elastisitas tahan sobek, dan ketahanan air alami.
+          </p>
+        </div>
+
+        <!-- Product Cards -->
+        <div class="product-grid">
+          <!-- Card 1: Size M -->
+          <div class="product-card" style="border-color: #bfe3bb;">
+            <div class="product-card__thumb">
+              <span class="badge-circular" style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: #fff;">Paling Populer</span>
+              <img src="/assets/images/Prototype Polymailer.png" alt="Q-Pack Poly Mailer M" />
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__tag">Size M • 25 × 35 cm</div>
+              <h3 class="product-card__title">Cassava &amp; Marine Mailer (M)</h3>
+              <p class="product-card__desc">Ukuran standar e-commerce ideal untuk pakaian, kaos, kemeja, celana, kosmetik, dan barang ritel menengah.</p>
+              
+              <ul class="spec-list">
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Tebal 45 micron, tahan regang &amp; waterproof
+                </li>
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Perekat permanen ramah lingkungan
+                </li>
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Termasuk cetak Universal QR &amp; Unique Code
+                </li>
+              </ul>
+
+              <div class="product-price-box">
+                <div class="product-price">Rp 1.450 <span style="font-size: 11px; font-weight: 500; color: var(--color-text-muted);">/ pcs</span></div>
+                <div class="product-moq">Minimum Order: 500 pcs (Rp 725.000 / pack)</div>
+                <div style="margin-top: 12px;">
+                  <a href="/merchant/checkout.html?size=M" class="btn btn--primary btn--full" style="font-size: 12px; padding: 10px;">
+                    Pesan Size M &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Size L -->
+          <div class="product-card">
+            <div class="product-card__thumb">
+              <img src="/assets/images/Prototype Polymailer.png" alt="Q-Pack Poly Mailer L" />
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__tag">Size L • 30 × 40 cm</div>
+              <h3 class="product-card__title">Cassava &amp; Marine Mailer (L)</h3>
+              <p class="product-card__desc">Kapasitas besar cocok untuk jaket tebal, hoodie, sweater, totebag, kotak sepatu, dan pesanan multi-item.</p>
+              
+              <ul class="spec-list">
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Tebal 50 micron, daya beban ekstra kokoh
+                </li>
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Perekat ganda (double seal) untuk retur
+                </li>
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Termasuk cetak Universal QR &amp; Unique Code
+                </li>
+              </ul>
+
+              <div class="product-price-box">
+                <div class="product-price">Rp 1.850 <span style="font-size: 11px; font-weight: 500; color: var(--color-text-muted);">/ pcs</span></div>
+                <div class="product-moq">Minimum Order: 500 pcs (Rp 925.000 / pack)</div>
+                <div style="margin-top: 12px;">
+                  <a href="/merchant/checkout.html?size=L" class="btn btn--primary btn--full" style="font-size: 12px; padding: 10px;">
+                    Pesan Size L &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Size S -->
+          <div class="product-card">
+            <div class="product-card__thumb">
+              <img src="/assets/images/Prototype Polymailer.png" alt="Q-Pack Poly Mailer S" />
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__tag">Size S • 17 × 30 cm</div>
+              <h3 class="product-card__title">Cassava &amp; Marine Mailer (S)</h3>
+              <p class="product-card__desc">Format ringkas efisien untuk perhiasan, aksesoris kecil, kosmetik travel-size, scarf, dan dokumen ramah lingkungan.</p>
+              
+              <ul class="spec-list">
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Tebal 40 micron, ringan &amp; hemat ongkir
+                </li>
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Tahan air hujan &amp; kelembapan ekspedisi
+                </li>
+                <li class="spec-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Termasuk cetak Universal QR &amp; Unique Code
+                </li>
+              </ul>
+
+              <div class="product-price-box">
+                <div class="product-price">Rp 1.150 <span style="font-size: 11px; font-weight: 500; color: var(--color-text-muted);">/ pcs</span></div>
+                <div class="product-moq">Minimum Order: 500 pcs (Rp 575.000 / pack)</div>
+                <div style="margin-top: 12px;">
+                  <a href="/merchant/checkout.html?size=S" class="btn btn--primary btn--full" style="font-size: 12px; padding: 10px;">
+                    Pesan Size S &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- B2B Service Highlights -->
+        <div class="ui-card" style="margin-top: 24px; padding: 20px;">
+          <h3 class="section-title" style="margin-bottom: 12px;">Fasilitas Kemitraan Pabrik Q-Pack</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+            <div style="font-size: 11px;">
+              <strong style="display: block; color: var(--color-text); font-size: 12px; margin-bottom: 3px;">Kustomisasi Sablon Brand</strong>
+              Tersedia cetak logo brand menggunakan tinta organik ramah lingkungan berbahan dasar kedelai (Soy-based ink).
+            </div>
+            <div style="font-size: 11px;">
+              <strong style="display: block; color: var(--color-text); font-size: 12px; margin-bottom: 3px;">Sirkulasi Digital Terintegrasi</strong>
+              Setiap kemasan siap dipindai konsumen untuk transparansi bahan dan terhubung ke bank sampah terverifikasi.
+            </div>
+            <div style="font-size: 11px;">
+              <strong style="display: block; color: var(--color-text); font-size: 12px; margin-bottom: 3px;">ESG Audit Ready</strong>
+              Dapatkan data biomassa limbah yang berhasil diselamatkan untuk melengkapi laporan keberlanjutan tahunan perusahaan Anda.
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation Merchant -->
+      <nav class="bottom-nav bottom-nav--merchant" aria-label="Navigasi Mitra">
+        <a href="/merchant/dashboard.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-home-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Home</span>
+        </a>
+        <a href="/merchant/produk.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/bottom-navbar-product-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Produk</span>
+        </a>
+        <a href="/merchant/status-order.html" class="bottom-nav__item">
+          <img src="/assets/icons/cart-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Pesanan</span>
+        </a>
+        <a href="/merchant/qr" class="bottom-nav__item">
+          <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Kemasan &amp; QR</span>
+        </a>
+        <a href="/merchant/akun.html" class="bottom-nav__item">
+          <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">Akun</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Script Execution -->
+    <script type="module">
+      import { getActiveUser } from '/js/app.js';
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const authUser = getActiveUser();
+        if (authUser && authUser.brand_name) {
+          const brandEl = document.getElementById('header-brand-name');
+          if (brandEl) brandEl.textContent = authUser.brand_name;
+        }
+      });
+    </script>
+  </body>
+</html>
