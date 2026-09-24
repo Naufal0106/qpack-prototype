@@ -176,6 +176,13 @@ export class SupabaseScanRepository {
     });
   }
 
+  async getClaimedPackageIds() {
+    const client = this.getClient();
+    const { data, error } = await client.from('scan_events').select('package_id');
+    if (error || !data) return new Set();
+    return new Set(data.map(r => r.package_id));
+  }
+
   async clearAll() {
     const client = this.getClient();
     await client.from('scan_events').delete().neq('id', '___');

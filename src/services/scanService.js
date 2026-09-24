@@ -166,7 +166,10 @@ export class ScanService {
       unique_consumers: uniqueConsumers,
       consumer_engagement_rate: `${engagementRate}%`,
       data_source_disclaimer: 'Diperbarui dari rekaman interaksi QR',
-      recent_scans: recentScans
+      recent_scans: recentScans,
+      claimed_codes_count: uniquePackagesScanned,
+      unclaimed_codes_count: Math.max(0, totalPackagesCreated - uniquePackagesScanned),
+      total_unique_codes: totalPackagesCreated
     };
   }
 

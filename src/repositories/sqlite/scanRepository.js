@@ -137,6 +137,11 @@ export class SQLiteScanRepository {
     );
   }
 
+  async getClaimedPackageIds() {
+    const rows = queryAll('SELECT DISTINCT package_id FROM scan_events');
+    return new Set(rows.map(r => r.package_id));
+  }
+
   async clearAll() {
     execute('DELETE FROM scan_events');
   }

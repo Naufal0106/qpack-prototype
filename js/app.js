@@ -84,7 +84,7 @@ export async function getMerchantAnalytics(merchantId = null) {
   return data.analytics;
 }
 
-// 5. Ambil daftar kemasan & QR untuk manajemen merchant
+// 5. Ambil daftar kemasan untuk manajemen merchant
 export async function getMerchantPackages(merchantId = null) {
   const url = merchantId 
     ? `${API_BASE}/api/merchant/packages?merchant_id=${encodeURIComponent(merchantId)}`

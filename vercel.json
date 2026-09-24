@@ -10,6 +10,10 @@
       "destination": "/consumer/hasil-scan.html"
     },
     {
+      "source": "/merchant/kemasan",
+      "destination": "/merchant/qr.html"
+    },
+    {
       "source": "/merchant/qr",
       "destination": "/merchant/qr.html"
     },

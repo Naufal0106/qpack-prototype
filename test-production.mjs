@@ -15,26 +15,36 @@ function assert(condition, message) {
   }
 }
 
-async function request(path, options = {}) {
+async function request(path, options = {}, retries = 2) {
   const url = `${TARGET_URL}${path}`;
-  await new Promise(r => setTimeout(r, 400));
-  const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 QPackVerifier/1.0',
-      ...options.headers
-    },
-    signal: AbortSignal.timeout(20000),
-    ...options
-  });
-  const text = await res.text();
-  let body;
+  await new Promise(r => setTimeout(r, 800));
   try {
-    body = JSON.parse(text);
-  } catch {
-    body = text;
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Connection': 'close',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 QPackVerifier/1.0',
+        ...options.headers
+      },
+      signal: AbortSignal.timeout(25000),
+      ...options
+    });
+    const text = await res.text();
+    let body;
+    try {
+      body = JSON.parse(text);
+    } catch {
+      body = text;
+    }
+    return { status: res.status, body, text };
+  } catch (err) {
+    if (retries > 0) {
+      console.log(`[request retry] Error requesting ${path}: ${err.message}. Retrying (${retries} left)...`);
+      await new Promise(r => setTimeout(r, 2000));
+      return request(path, options, retries - 1);
+    }
+    throw err;
   }
-  return { status: res.status, body, text };
 }
 
 try {

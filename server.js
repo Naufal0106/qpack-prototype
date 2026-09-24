@@ -465,11 +465,20 @@ app.get('/api/merchant/packages', async (req, res) => {
     const protocol = req.protocol || 'http';
     const baseUrl = process.env.APP_BASE_URL || `${protocol}://${host}`;
 
-    const formattedPackages = packages.map(pkg => ({
-      ...pkg,
-      qr_image_url: `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`,
-      destination_url: `${baseUrl}/p/${encodeURIComponent(pkg.qr_code)}`
-    }));
+    const claimedSet = typeof scanRepository.getClaimedPackageIds === 'function'
+      ? await scanRepository.getClaimedPackageIds()
+      : new Set();
+
+    const formattedPackages = packages.map(pkg => {
+      const isClaimed = claimedSet.has(pkg.package_id);
+      return {
+        ...pkg,
+        is_claimed: isClaimed,
+        claim_status: isClaimed ? 'Diklaim' : 'Belum Diklaim',
+        qr_image_url: `/assets/qr/${encodeURIComponent(pkg.qr_code)}.png`,
+        destination_url: `${baseUrl}/p/${encodeURIComponent(pkg.qr_code)}`
+      };
+    });
 
     res.json({
       success: true,
@@ -532,8 +541,8 @@ app.get('/p/:qr_code', (req, res) => {
   res.sendFile(path.join(__dirname, 'consumer', 'hasil-scan.html'));
 });
 
-// Route /merchant/qr & /merchant/packages -> QR Management Dashboard
-app.get(['/merchant/qr', '/merchant/packages'], (req, res) => {
+// Route /merchant/kemasan, /merchant/qr & /merchant/packages -> Kemasan Dashboard
+app.get(['/merchant/kemasan', '/merchant/kemasan.html', '/merchant/qr', '/merchant/packages'], (req, res) => {
   res.sendFile(path.join(__dirname, 'merchant', 'qr.html'));
 });
 
