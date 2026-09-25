@@ -47,7 +47,20 @@
   border-top: 1px solid var(--color-border);
 }
 .bottom-nav--merchant {
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+}
+.bottom-nav--merchant .bottom-nav__item {
+  padding: 6px 1px;
+  gap: 2px;
+}
+.bottom-nav--merchant .bottom-nav__icon {
+  width: 20px;
+  height: 20px;
+}
+.bottom-nav--merchant .bottom-nav__label {
+  font-size: 8.5px;
+  white-space: nowrap;
+  letter-spacing: -0.2px;
 }
 .bottom-nav--consumer {
   grid-template-columns: repeat(4, 1fr);

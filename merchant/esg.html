@@ -143,67 +143,66 @@
         <div class="dashboard-greeting">
           <div class="row-between" style="align-items: flex-start; flex-wrap: wrap; gap: 12px;">
             <div>
-              <span class="badge-circular" style="margin-bottom: 8px;">ESG &amp; Circular Supply Chain</span>
-              <h1 class="dashboard-greeting__title" style="margin-top: 6px;">Metrik Keberlanjutan Mitra</h1>
+              <span class="badge-circular" style="margin-bottom: 8px;">Material &amp; Circularity Data</span>
+              <h1 class="dashboard-greeting__title" style="margin-top: 6px;">Metrik ESG &amp; Sirkularitas</h1>
               <p class="dashboard-greeting__desc">
-                Akumulasi data empiris penggunaan kemasan sirkular ramah lingkungan, pemanfaatan biomassa limbah lokal, dan keterlibatan konsumen.
+                Transparansi data empiris pengadaan kemasan ramah lingkungan, material limbah organik lokal, dan aktivitas sirkular yang terverifikasi.
               </p>
             </div>
             <div>
               <a href="/merchant/laporan.html" class="btn btn--primary btn--sm" style="font-size: 12px; padding: 8px 14px; gap: 6px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                Buka AI Report
+                Generate AI Report &rarr;
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Metric Stat Cards Grid -->
-        <div class="stat-grid">
-          <!-- Metric 1: Total Kemasan Sirkular Digunakan -->
-          <div class="stat-card">
-            <div class="stat-card__label text-muted">Total Kemasan Digunakan</div>
-            <div class="stat-card__value" style="color: var(--color-primary);" id="esg-stat-packages">3.500</div>
-            <div class="stat-card__meta">Unit polymailer terdistribusi</div>
-          </div>
+        <!-- Bagian A: Data Pengadaan Kemasan (Packaging Overview) -->
+        <div style="margin-top: 10px;">
+          <h2 class="section-title" style="margin-bottom: 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-primary-dark);">
+            A. Data Pengadaan Kemasan (Packaging)
+          </h2>
+          <div class="stat-grid">
+            <!-- Metric 1: Total Pesanan Kemasan -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Total Pesanan Kemasan</div>
+              <div class="stat-card__value" style="color: var(--color-primary-dark);" id="esg-stat-orders">2</div>
+              <div class="stat-card__meta">Pesanan batch tercatat</div>
+            </div>
 
-          <!-- Metric 2: Biomassa Limbah Termaksimalkan -->
-          <div class="stat-card">
-            <div class="stat-card__label text-muted">Biomassa Termaksimalkan</div>
-            <div class="stat-card__value" style="color: var(--color-accent);" id="esg-stat-biomass">87,5 kg</div>
-            <div class="stat-card__meta">Kulit singkong &amp; sisik ikan</div>
-          </div>
+            <!-- Metric 2: Total Unit Kemasan Dipesan -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Total Unit Kemasan</div>
+              <div class="stat-card__value" style="color: var(--color-primary);" id="esg-stat-packages">3.500</div>
+              <div class="stat-card__meta">Volume polymailer terdaftar</div>
+            </div>
 
-          <!-- Metric 3: Consumer Return Rate -->
-          <div class="stat-card">
-            <div class="stat-card__label text-muted">Pengembalian Bank Sampah</div>
-            <div class="stat-card__value" style="color: #0284c7;" id="esg-stat-returns">420 unit</div>
-            <div class="stat-card__meta">Tersalurkan ke kompos &amp; daur ulang</div>
-          </div>
+            <!-- Metric 3: Material Biodegradable -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Bahan Baku Organik</div>
+              <div class="stat-card__value" style="font-size: 14px; font-weight: 700; color: #15803d; line-height: 1.3; margin-top: 4px;">Singkong &amp; Sisik Ikan</div>
+              <div class="stat-card__meta">Upcycled waste biopolymer</div>
+            </div>
 
-          <!-- Metric 4: Kemampuan Terurai Alami -->
-          <div class="stat-card">
-            <div class="stat-card__label text-muted">Biodegradabilitas Tanah</div>
-            <div class="stat-card__value" style="color: #059669;">100%</div>
-            <div class="stat-card__meta">90–180 hari di tanah alami</div>
+            <!-- Metric 4: Kemampuan Terurai Alami -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Kompostabilitas Tanah</div>
+              <div class="stat-card__value" style="color: #059669;">100%</div>
+              <div class="stat-card__meta">90–180 hari di tanah alami</div>
+            </div>
           </div>
-        </div>
-
-        <!-- Data Transparency Notice -->
-        <div style="margin-top: 10px; font-size: 10px; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px;">
-          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--color-primary);"></span>
-          Metrik dihitung berbasis volume pesanan batch kemasan dan rekaman interaksi scan ekosistem sirkular Q-Pack.
         </div>
 
         <!-- Composition Card -->
-        <div class="ui-card" style="margin-top: 24px; padding: 20px;">
+        <div class="ui-card" style="margin-top: 16px; padding: 18px;">
           <div class="row-between" style="align-items: center;">
-            <h3 class="section-title" style="margin: 0;">Komposisi Biomaterial Kemasan</h3>
-            <span class="badge-circular">Bahan Baku Organik</span>
+            <h3 class="section-title" style="margin: 0; font-size: 13px;">Komposisi Biomaterial Kemasan</h3>
+            <span class="badge-circular">Bahan Baku Alami</span>
           </div>
 
           <p style="font-size: 11px; color: var(--color-text-muted); line-height: 1.5; margin: 8px 0 0 0;">
-            Kemasan Q-Pack mengeliminasi resin polietilena berbasis minyak bumi konvensional, menggantikannya dengan komposit limbah alami pangan:
+            Kemasan Q-Pack mengeliminasi polimer plastik murni berbasis minyak bumi, menggunakan komposit limbah pangan lokal:
           </p>
 
           <div class="composition-bar">
@@ -224,7 +223,7 @@
               <span style="width: 10px; height: 10px; border-radius: 2px; background: #60a5fa; flex-shrink: 0;"></span>
               <div>
                 <strong>30% Kitosan Sisik Ikan</strong>
-                <div style="color: var(--color-text-muted); font-size: 10px;">Integritas mekanik, anti-air &amp; elastisitas</div>
+                <div style="color: var(--color-text-muted); font-size: 10px;">Integritas mekanik &amp; resistensi air</div>
               </div>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -237,13 +236,70 @@
           </div>
         </div>
 
+        <!-- Bagian B: Aktivitas Sirkular & Klaim Konsumen (Circular Activity) -->
+        <div style="margin-top: 24px;">
+          <h2 class="section-title" style="margin-bottom: 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-primary-dark);">
+            B. Aktivitas Sirkular &amp; Keterlibatan Konsumen (Circular Activity)
+          </h2>
+          <div class="stat-grid">
+            <!-- Metric 1: Kode Berhasil Diklaim -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Unique Codes Berhasil Diklaim</div>
+              <div class="stat-card__value" style="color: var(--color-accent);" id="esg-stat-claimed">0</div>
+              <div class="stat-card__meta">Klaim reward poin oleh konsumen</div>
+            </div>
+
+            <!-- Metric 2: Estimasi Keterlibatan -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Keterlibatan Konsumen</div>
+              <div class="stat-card__value" style="color: #0284c7;" id="esg-stat-engagement">0%</div>
+              <div class="stat-card__meta">Rasio klaim per total kemasan</div>
+            </div>
+
+            <!-- Metric 3: Return Data -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Pengembalian Bank Sampah</div>
+              <div class="stat-card__value" style="font-size: 13px; font-weight: 600; color: #64748b; line-height: 1.4; margin-top: 4px;" id="esg-stat-returns">Data belum tersedia</div>
+              <div class="stat-card__meta">Pencatatan batch fisik tahap berikutnya</div>
+            </div>
+
+            <!-- Metric 4: Klaim Reduksi Emisi -->
+            <div class="stat-card">
+              <div class="stat-card__label text-muted">Estimasi Reduksi Emisi CO₂</div>
+              <div class="stat-card__value" style="font-size: 13px; font-weight: 600; color: #64748b; line-height: 1.4; margin-top: 4px;">Tidak Ditampilkan</div>
+              <div class="stat-card__meta">Menunggu sertifikasi LCA terverifikasi</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bagian C: Pelaporan Keberlanjutan (Reporting) -->
+        <div class="ui-card" style="margin-top: 24px; padding: 20px; border: 1.5px solid #d1e7cf; background: linear-gradient(135deg, #f7fbf6 0%, #ffffff 100%);">
+          <div class="row-between" style="align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span class="badge-circular">C. ESG Reporting</span>
+                <span style="font-size: 11px; color: var(--color-text-muted);">Format Eksekutif</span>
+              </div>
+              <h3 style="font-size: 15px; font-weight: 700; color: var(--color-primary-dark); margin: 0 0 4px 0;">
+                Generate AI Sustainability Report
+              </h3>
+              <p style="font-size: 11px; color: var(--color-text-muted); line-height: 1.5; margin: 0; max-width: 520px;">
+                Susun laporan terstruktur berbasis data pesanan, pemakaian bahan baku singkong dan sisik ikan, serta rekam klaim konsumen untuk kebutuhan audit dan presentasi manajemen.
+              </p>
+            </div>
+            <a href="/merchant/laporan.html" class="btn btn--primary btn--sm" style="font-size: 12px; padding: 10px 18px; white-space: nowrap;">
+              Buka Laporan AI &rarr;
+            </a>
+          </div>
+        </div>
+
         <!-- Circular Ecosystem Lifecycle Flow -->
         <div style="margin-top: 24px;">
           <h3 class="section-title">Alur Ekosistem Sirkular Kemasan Anda</h3>
           <div class="circular-flow">
             <div class="flow-card">
               <div class="flow-step-num">1</div>
-              <strong style="font-size: 12px; color: var(--color-text);">Penyelamatan Limbah Organik</strong>
+              <strong style="font-size: 12px; color: var(--color-text);">Pemanfaatan Limbah Organik</strong>
               <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
                 Kulit singkong dan sisik ikan dikumpulkan dari sentra industri pangan rakyat lokal sebelum terbuang ke TPA.
               </p>
@@ -269,7 +325,7 @@
               <div class="flow-step-num">4</div>
               <strong style="font-size: 12px; color: var(--color-text);">Pindai QR Edukasi Konsumen</strong>
               <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
-                Konsumen memindai QR kemasan untuk mempelajari transparansi material dan mengklaim reward kode unik fisik.
+                Konsumen memindai QR kemasan untuk mempelajari transparansi material dan memasukkan kode unik untuk reward.
               </p>
             </div>
 
@@ -277,15 +333,15 @@
               <div class="flow-step-num">5</div>
               <strong style="font-size: 12px; color: var(--color-text);">Siklus Akhir: Kompos Alami</strong>
               <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
-                Kemasan dapat langsung dijadikan kompos di tanah pekarangan rumah, terurai menjadi nutrisi tanah tanpa mikroplastik.
+                Kemasan dapat langsung dijadikan kompos di pekarangan rumah, terurai menjadi nutrisi tanah tanpa mikroplastik.
               </p>
             </div>
 
             <div class="flow-card">
               <div class="flow-step-num">6</div>
-              <strong style="font-size: 12px; color: var(--color-text);">Atau Disetor ke Bank Sampah</strong>
+              <strong style="font-size: 12px; color: var(--color-text);">Penyaluran Bank Sampah</strong>
               <p style="font-size: 11px; color: var(--color-text-muted); margin: 0; line-height: 1.4;">
-                Konsumen dapat mengembalikan kemasan ke jaringan Mitra Bank Sampah binaan untuk pengolahan sirkular terverifikasi.
+                Konsumen juga dapat menyetorkan kemasan ke jaringan Mitra Bank Sampah binaan untuk pengolahan sirkular terpadu.
               </p>
             </div>
           </div>
@@ -310,6 +366,14 @@
           <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
           <span class="bottom-nav__label">Kemasan</span>
         </a>
+        <a href="/merchant/esg.html" class="bottom-nav__item is-active">
+          <img src="/assets/icons/bottom-navbar-ESG-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">ESG</span>
+        </a>
+        <a href="/merchant/laporan.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-report-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">AI Report</span>
+        </a>
         <a href="/merchant/akun.html" class="bottom-nav__item">
           <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
           <span class="bottom-nav__label">Akun</span>
@@ -319,32 +383,55 @@
 
     <!-- Script Execution -->
     <script type="module">
-      import { getActiveUser } from '/js/app.js';
+      import { getActiveUser, getMerchantAnalytics } from '/js/app.js';
 
-      window.addEventListener('DOMContentLoaded', () => {
+      window.addEventListener('DOMContentLoaded', async () => {
         const authUser = getActiveUser();
         if (authUser && authUser.brand_name) {
           const brandEl = document.getElementById('header-brand-name');
           if (brandEl) brandEl.textContent = authUser.brand_name;
         }
 
-        // Calculate dynamic estimates based on orders in localStorage
         try {
-          const stored = localStorage.getItem('qpack_merchant_orders');
-          if (stored) {
-            const orders = JSON.parse(stored);
-            const totalQty = orders.reduce((sum, o) => sum + (o.quantity || 0), 0);
-            if (totalQty > 0) {
-              document.getElementById('esg-stat-packages').textContent = Number(totalQty).toLocaleString('id-ID');
-              // Each package uses approx 25 grams of upcycled waste biomass
-              const biomassKg = ((totalQty * 25) / 1000).toFixed(1);
-              document.getElementById('esg-stat-biomass').textContent = `${Number(biomassKg).toLocaleString('id-ID')} kg`;
-              // Approx 12% return rate to bank sampah
-              const returns = Math.round(totalQty * 0.12);
-              document.getElementById('esg-stat-returns').textContent = `${returns.toLocaleString('id-ID')} unit`;
-            }
+          // 1. Order and volume data from localStorage or fallback database
+          let totalOrders = 'Data belum tersedia';
+          let totalUnits = 'Data belum tersedia';
+
+          let storedOrders = null;
+          try {
+            const raw = localStorage.getItem('qpack_merchant_orders');
+            if (raw) storedOrders = JSON.parse(raw);
+          } catch {}
+
+          if (storedOrders && Array.isArray(storedOrders) && storedOrders.length > 0) {
+            totalOrders = storedOrders.length;
+            const sumUnits = storedOrders.reduce((sum, o) => sum + (Number(o.quantity) || 0), 0);
+            totalUnits = sumUnits > 0 ? Number(sumUnits).toLocaleString('id-ID') : 'Data belum tersedia';
+          } else {
+            // Default recorded demo orders
+            totalOrders = 2;
+            totalUnits = '3.500';
           }
-        } catch {}
+
+          document.getElementById('esg-stat-orders').textContent = totalOrders;
+          document.getElementById('esg-stat-packages').textContent = totalUnits;
+
+          // 2. Verified claim activity from backend analytics
+          const analytics = await getMerchantAnalytics();
+          const claimedCount = analytics.claimed_codes_count !== undefined 
+            ? analytics.claimed_codes_count 
+            : (analytics.unique_packages_scanned || 0);
+
+          document.getElementById('esg-stat-claimed').textContent = `${claimedCount} Kode`;
+
+          if (analytics.consumer_engagement_rate) {
+            document.getElementById('esg-stat-engagement').textContent = analytics.consumer_engagement_rate;
+          } else {
+            document.getElementById('esg-stat-engagement').textContent = '< 1%';
+          }
+        } catch (err) {
+          console.error('[ESG] Error loading metrics:', err);
+        }
       });
     </script>
   </body>

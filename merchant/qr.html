@@ -306,6 +306,12 @@
             <button class="filter-tab" data-filter="unclaimed">Belum Diklaim (<span id="count-unclaimed-codes">0</span>)</button>
           </div>
 
+          <!-- Status Definition Legend -->
+          <div style="font-size: 11px; color: var(--color-text-muted); margin: 8px 0 16px 0; background: #f8fafc; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 8px 12px; display: flex; flex-direction: column; gap: 4px;">
+            <div><strong style="color: var(--color-primary-dark);">Diklaim</strong> — Konsumen telah memasukkan kode unik ke sistem reward.</div>
+            <div><strong style="color: #64748b;">Belum Diklaim</strong> — Unique Code belum pernah diklaim.</div>
+          </div>
+
           <!-- Loading State -->
           <div id="loading-codes" style="text-align: center; padding: 40px 16px;">
             <div style="width: 32px; height: 32px; margin: 0 auto 10px; border: 3px solid var(--color-primary-soft); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
@@ -354,6 +360,14 @@
         <a href="/merchant/kemasan" class="bottom-nav__item is-active">
           <img src="/assets/icons/scan-icon.svg" class="bottom-nav__icon" alt="" />
           <span class="bottom-nav__label">Kemasan</span>
+        </a>
+        <a href="/merchant/esg.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-ESG-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">ESG</span>
+        </a>
+        <a href="/merchant/laporan.html" class="bottom-nav__item">
+          <img src="/assets/icons/bottom-navbar-report-icon.svg" class="bottom-nav__icon" alt="" />
+          <span class="bottom-nav__label">AI Report</span>
         </a>
         <a href="/merchant/akun.html" class="bottom-nav__item">
           <img src="/assets/icons/merchant-role-icon.svg" class="bottom-nav__icon" alt="" />
@@ -445,8 +459,10 @@
         tableBodyEl.innerHTML = filtered.map(pkg => {
           const isClaimed = pkg.is_claimed;
           const statusBadge = isClaimed
-            ? `<span class="status-badge status-badge--success">Diklaim</span>`
-            : `<span class="status-badge" style="background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1;">Belum Diklaim</span>`;
+            ? `<span class="status-badge status-badge--success">Diklaim</span>
+               <div style="font-size: 10px; color: var(--color-primary-dark); margin-top: 3px;">Konsumen telah memasukkan kode unik ke sistem reward.</div>`
+            : `<span class="status-badge" style="background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1;">Belum Diklaim</span>
+               <div style="font-size: 10px; color: #64748b; margin-top: 3px;">Unique Code belum pernah diklaim.</div>`;
 
           return `
             <tr>
