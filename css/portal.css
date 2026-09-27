@@ -307,14 +307,12 @@ body.portal-body {
   height: auto;
   max-height: 460px;
   object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  filter: drop-shadow(0 16px 28px rgba(14, 53, 12, 0.15));
+  transition: transform 0.3s ease;
 }
 
 .portal-hero__img:hover {
-  transform: scale(1.015);
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
 }
 
 .portal-hero__badge-tag {
